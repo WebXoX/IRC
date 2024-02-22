@@ -1,15 +1,21 @@
-bind the socket-listen()
-int bind(int sockfd, const struct sockaddr *addr,socklen_t addrlen);
+listen the socket - listen()
+int listen(int sockfd, int backlog);
 headers
-#include <sys/types.h> 
 #include <sys/socket.h>
 
-for more info :-> https://manual.cs50.io/2/bind
-when a socket is created it exists in a name space 
-but it has no address assigned to it. 
-bind()assigns the address specified by addr to the 
-socket referred to by the file descriptor sockfd. 
-addrlen specifies the size, in bytes, of the
-address structure pointed to by addr. 
-Traditionally, this operation is 
-called “assigning a name to a socket”.
+for more info :-> https://manual.cs50.io/2/listen
+listen() marks the socket referred to by sockfd as a 
+passive socket, that is, as a socket that will be used 
+to accept incoming connection requests using accept(2).
+
+The sockfd argument is a file descriptor that refers
+ to a socket of type SOCK_STREAM or SOCK_SEQPACKET.
+
+The backlog argument defines the maximum length to 
+which the queue of pending connections for sockfd
+may grow. If a connection request arrives when the
+queue is full, the client may receive an error with 
+an indication of ECONNREFUSED or, if the underlying 
+protocol supports retransmission, the request may be 
+ignored so that a later reattempt at connection succeeds.
+

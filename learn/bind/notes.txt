@@ -1,4 +1,4 @@
-bind the socket-listen()
+bind the socket - bind()
 int bind(int sockfd, const struct sockaddr *addr,socklen_t addrlen);
 headers
 #include <sys/types.h> 
