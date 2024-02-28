@@ -18,6 +18,7 @@ int main()
     // InetPton(AF_INET,_T("127.0.0.1"),&service.sin_addr);
     inet_pton(AF_INET, "127.0.0.1", &service.sin_addr);
 
+    // service.sin_port = htons(3490);
     service.sin_port = htons(27015);
     if(connect(socket_fd, (sockaddr*)&service, sizeof(service)) == -1)
     {
@@ -25,44 +26,35 @@ int main()
         close(socket_fd);
         return 0;
     }
-    else
-    {
-        std::cout << "connected to server" << std::endl;
-        char buffer[200] = "";
-        if(recv(socket_fd, buffer, 13, 0) <= 0)
-        {
-            std::cerr << "Error receiving message" << std::endl;
-            close(socket_fd);
-            return -1;
-        }
-        else
-        {
-            std::cout << buffer << std::endl;
-            if(send(socket_fd, "received", 13, 0) <= 0)
+            std::cout << "Message sent" << std::endl;
+            char buffer[200] = "";
+            if(recv(socket_fd, buffer, 1000, 0) <= 0)
             {
-                std::cerr << "Error sending message" << std::endl;
+                std::cerr << "Error receiving message" << std::endl;
                 close(socket_fd);
                 return -1;
             }
             else
             {
-                std::cout << "Message sent" << std::endl;
-                char  buffer[200] = "";
-                std::string buf;
-
-                if(recv(socket_fd, (char *)buf.c_str(), 1000, 0) <= 0)
-                {
-                    std::cerr << "Error receiving message" << std::endl;
-                    close(socket_fd);
-                    return -1;
-                }
-                else
-                {
-                    std::cout << buf << std::endl;
-                }
+                std::cout << buffer << std::endl;
             }
+    while (1)
+    {
+        std::string message;
+        std::cout << "Enter message: ";
+        std::getline(std::cin, message);
+        if(message == "exit" || message.empty())
+        {
+            break;
+        }
+        if(send(socket_fd, message.c_str(), message.size() + 1, 0) <= 0)
+        {
+            std::cerr << "Error sending message" << std::endl;
+            close(socket_fd);
+            return -1;
         }
     }
+        
     close(socket_fd);
     return 0;
 }
