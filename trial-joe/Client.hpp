@@ -13,8 +13,10 @@ class Client
 {
 	/* VARIABLES*/
 	private:
-		std::map<std::string, int> KeyVal;
+		int client_fd;
+		char buffer[1024];
 		
+		int port;
     /* VARIABLES*/
 	public:
 	/*orth form*/

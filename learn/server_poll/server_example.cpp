@@ -42,7 +42,7 @@ int main()
     }
     while(1)
     {
-         poll(&mypoll, 1, 100);
+        poll(&mypoll, 1, 100);
                     std::cout << "client " <<client  << std::endl;
             
                 if (mypoll.revents & POLLIN && client == -1)

@@ -17,7 +17,7 @@ server:: creates a new socket and the client uses the new one
 
 server functions
 
-1. initialize wsa - wsaStartup().
+1. initialize wsa - wsaStartup(). --windows
 2. Create a socket - socket()
 3. bind the socket -listen()
 4. Accept a connection - accept(),connect().
@@ -27,7 +27,7 @@ server functions
 
 client functions
 
-1. initialize wsa - wsaStartup().
+1. initialize wsa - wsaStartup(). --windows
 2. Create a socket - socket()
 4. Connect to the server - connect().
 5. Send and receive data - recv(),send(),recvfrom,sendto().

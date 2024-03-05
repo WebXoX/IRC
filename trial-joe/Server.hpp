@@ -13,6 +13,7 @@
 #include <algorithm>
 #include <vector>
 #include <map>
+#include <fcntl.h>
 
 /*
 */
@@ -21,8 +22,12 @@ class Server
 	/* VARIABLES*/
 	private:
 		int server;
-		std::map<std::string, int> client;
+		// std::map<std::string, int> client;
+		int client;
+		int number_of_clients;
+		int port;
 		sockaddr_in service;
+		struct pollfd fd_poll[10241];
     /* VARIABLES*/
 	public:
 	/*orth form*/
@@ -34,6 +39,8 @@ class Server
 	/*exception*/
 		int serverInit();
 		int runServer();
+		int	serverLoop();
+
 
 
 	
