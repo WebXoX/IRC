@@ -1,29 +1,40 @@
 #pragma once
-#ifndef __T1_HPP__
-#define __T1_HPP__
+#ifndef __SERVER_HPP__
+#define __SERVER_HPP__
+#include <sys/socket.h>
 #include <iostream>
+#include <unistd.h>
+#include <poll.h>
 #include <string>
+#include <netinet/in.h>
+#include <arpa/inet.h>
+#include <sys/select.h>
 #include <stdlib.h>
 #include <algorithm>
+#include <vector>
 #include <map>
 
 /*
 */
-class T2
+class Server
 {
 	/* VARIABLES*/
 	private:
-		std::map<std::string, int> KeyVal;
-		
+		int server;
+		std::map<std::string, int> client;
+		sockaddr_in service;
     /* VARIABLES*/
 	public:
 	/*orth form*/
-    	T2 ();
-    	T2 (const T2 &a);
-    	~T2 ();
-		T2& operator=(const T2 &a);
-	/*orth T2*/
+    	Server ();
+    	Server (const Server &a);
+    	~Server ();
+		Server& operator=(const Server &a);
+	/*orth Server*/
 	/*exception*/
+		int serverInit();
+		int runServer();
+
 
 	
 	/*exception*/

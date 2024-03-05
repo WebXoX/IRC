@@ -1,6 +1,6 @@
 #pragma once
-#ifndef __T1_HPP__
-#define __T1_HPP__
+#ifndef __CLIENT_HPP__
+#define __CLIENT_HPP__
 #include <iostream>
 #include <string>
 #include <stdlib.h>
@@ -9,7 +9,7 @@
 
 /*
 */
-class T2
+class Client
 {
 	/* VARIABLES*/
 	private:
@@ -18,11 +18,11 @@ class T2
     /* VARIABLES*/
 	public:
 	/*orth form*/
-    	T2 ();
-    	T2 (const T2 &a);
-    	~T2 ();
-		T2& operator=(const T2 &a);
-	/*orth T2*/
+    	Client ();
+    	Client (const Client &a);
+    	~Client ();
+		Client& operator=(const Client &a);
+	/*orth Client*/
 	/*exception*/
 
 	

@@ -1,33 +1,41 @@
-#include "T1.hpp"
+#include "Server.hpp"
 
-/* orth T1 / constructor*/
-T1::T1 ()
+/* orth Server / constructor*/
+Server::Server ()
 {
-	std::cout << "T1 default constructor" << std::endl;
+	std::cout << "Server default constructor" << std::endl;
 }
 
-T1::T1 (const T1 &a)
+Server::Server (const Server &a)
 {
-	std::cout << "T1 copy constructor " << std::endl;
+	std::cout << "Server copy constructor " << std::endl;
 	*this = a;
 }
 
-T1::~T1 ()
+Server::~Server ()
 {
-	std::cout << "T1 distructor called" << std::endl;
+	std::cout << "Server distructor called" << std::endl;
 }
 
-T1& T1::operator=(const T1& rhs)
+Server& Server::operator=(const Server& rhs)
 {
     if (this != &rhs)
     {
-        std::cout << "T1 copy assignment operator = " << std::endl;
+        std::cout << "Server copy assignment operator = " << std::endl;
 		*this = rhs;
     }
     return *this;
 }
-/* orth T1 */
+/* orth Server */
 /*extra*/
+int Server::serverInit()
+{
+
+}
+int Server::runServer()
+{
+
+}
 /*extra*/
 /*getter and setters*/
 /*getter and setters*/

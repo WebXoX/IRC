@@ -1,33 +1,34 @@
-#include "T1.hpp"
+#include "Client.hpp"
 
-/* orth T1 / constructor*/
-T1::T1 ()
+/* orth Client / constructor*/
+Client::Client ()
 {
-	std::cout << "T1 default constructor" << std::endl;
+	std::cout << "Client default constructor" << std::endl;
 }
 
-T1::T1 (const T1 &a)
+Client::Client (const Client &a)
 {
-	std::cout << "T1 copy constructor " << std::endl;
+	std::cout << "Client copy constructor " << std::endl;
 	*this = a;
 }
 
-T1::~T1 ()
+Client::~Client ()
 {
-	std::cout << "T1 distructor called" << std::endl;
+	std::cout << "Client distructor called" << std::endl;
 }
 
-T1& T1::operator=(const T1& rhs)
+Client& Client::operator=(const Client& rhs)
 {
     if (this != &rhs)
     {
-        std::cout << "T1 copy assignment operator = " << std::endl;
+        std::cout << "Client copy assignment operator = " << std::endl;
 		*this = rhs;
     }
     return *this;
 }
-/* orth T1 */
+/* orth Client */
 /*extra*/
+
 /*extra*/
 /*getter and setters*/
 /*getter and setters*/
