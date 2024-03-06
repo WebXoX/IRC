@@ -1,5 +1,6 @@
 ### 1. IRC Protocol:
 - [RFC 1459](https://tools.ietf.org/html/rfc1459) - The Internet Relay Chat Protocol Specification.
+- [RFC horse](https://modern.ircdocs.horse/#servers)
 - [IRCv3 Specifications](https://ircv3.net/specs/) - Updated specifications for modern IRC features.
 - [IRC Protocol Tutorial](https://www.irchelp.org/irchelp/rfc/index.html) - A comprehensive guide to the IRC protocol.
 
