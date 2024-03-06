@@ -14,6 +14,10 @@ class Client
 	/* VARIABLES*/
 	private:
 		int client_fd;
+		std::string hostname; // Real name/address of the host
+		std::string username;  // Username of the client on the host
+		std::string server;    // Server to which the client is connected
+		std::string nickname;   // Nickname chosen by the client
 		char buffer[1024];
 		
 		int port;
