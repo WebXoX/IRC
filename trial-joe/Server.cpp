@@ -30,6 +30,7 @@ Server& Server::operator=(const Server& rhs)
 /*extra*/
 int Server::serverInit(int port, std::string pass)
 {
+    // initization of server socket port poll 
     this->port = 27015;
     this->pass = pass;
     this->server = socket(AF_INET, SOCK_STREAM, IPPROTO_TCP);
@@ -46,6 +47,7 @@ int Server::serverInit(int port, std::string pass)
 		return 1;
 	}
     //socket config
+	// memset(&(this->service), 0, sizeof(this->service));
     this->service.sin_family = AF_INET;
     this->service.sin_addr.s_addr = INADDR_ANY;
     service.sin_port = htons(this->port);
@@ -58,12 +60,14 @@ int Server::serverInit(int port, std::string pass)
 }
 int Server::runServer()
 {
+    // binds the socket to the port
 	if(bind(this->server, (sockaddr*)&this->service, sizeof(this->service)) == -1)
     {
         std::cerr << "Error binding socket" << std::endl;
         close(this->server);
         return 1;
     }
+    // listen for incoming connections
     if(listen(this->server, 1) == -1)
     {
         std::cerr << "Error listening on socket" << std::endl;
@@ -72,33 +76,111 @@ int Server::runServer()
     }
     return 0;
 }
+// int Server::connectionEvent()
+// {
+//     // checking for new connections events
+//     if (this->fd_poll[0].revents & POLLIN)
+//     {
+//         this->client[this->number_of_clients - 1] = accept(this->server, nullptr, nullptr);
+//         if(this->client[this->number_of_clients - 1] == -1)
+//         {
+//             std::cerr << "Error accepting client" << std::endl;
+//             return 1;
+//         }
+//         int flags = fcntl(this->client[this->number_of_clients - 1], F_GETFL, 0);
+//         if (fcntl(this->client[this->number_of_clients - 1], F_SETFL, flags | O_NONBLOCK) == -1)
+//         {
+//             std::cerr << "Error setting client socket to non-blocking" << std::endl;
+//             return 1;
+//         }
+//         std::cerr << " accepting client" << std::endl;
+//         // client registration 
+
+//         std::string message = "Hello from server";
+
+//         send(this->client[this->number_of_clients - 1], message.c_str(), message.size() + 1, 0);
+//         // setting poll for tracking events of the new client
+//         this->fd_poll[number_of_clients].fd = this->client[this->number_of_clients - 1];
+//         this->fd_poll[number_of_clients].events = POLLIN | POLLOUT;
+//         this->number_of_clients++;
+//     }
+//     return 0;
+// }
+
 int Server::connectionEvent()
 {
+    // checking for new connections events
     if (this->fd_poll[0].revents & POLLIN)
     {
-        this->client[this->number_of_clients - 1] = accept(this->server, nullptr, nullptr);
-        if(this->client[this->number_of_clients - 1] == -1)
+        Client *new_client = new Client();
+        new_client->client_fd = accept(this->server, nullptr, nullptr);
+        if(new_client->client_fd == -1)
         {
             std::cerr << "Error accepting client" << std::endl;
             return 1;
         }
-        int flags = fcntl(this->client[this->number_of_clients - 1], F_GETFL, 0);
-        if (fcntl(this->client[this->number_of_clients - 1], F_SETFL, flags | O_NONBLOCK) == -1)
+        int flags = fcntl(new_client->client_fd, F_GETFL, 0);
+        if (fcntl(new_client->client_fd, F_SETFL, flags | O_NONBLOCK) == -1)
         {
             std::cerr << "Error setting client socket to non-blocking" << std::endl;
             return 1;
         }
-        // fcntl(this->client, F_SETFL, O_NONBLOCK);
-            std::cerr << " accepting client" << std::endl;
+        this->client.push_back(new_client);
+        std::cerr << " accepting client" << std::endl;
+        // client registration 
 
-        std::string message = "Hello from server";
-        send(this->client[this->number_of_clients - 1], message.c_str(), message.size() + 1, 0);
-        this->fd_poll[number_of_clients].fd = this->client[this->number_of_clients - 1];
+        // std::string message = "Hello from server";
+
+        // send(new_client->client_fd, message.c_str(), message.size() + 1, 0);
+        // setting poll for tracking events of the new client
+        this->fd_poll[number_of_clients].fd = new_client->client_fd;
         this->fd_poll[number_of_clients].events = POLLIN | POLLOUT;
         this->number_of_clients++;
     }
     return 0;
 }
+// int Server::serverLoop()
+// {
+//     int j = 0;
+//     char buffer[1024];
+
+// 	while(1)
+//     {
+//         j++;
+//         if (poll((this->fd_poll), this->number_of_clients, 1000) == -1)
+//         {
+//             std::cerr << "Error in poll" << std::endl;
+//             return 1;
+//         }
+//         connectionEvent();
+//         for(int i = 1; i < this->number_of_clients; i++)
+//         {
+//             if (this->fd_poll[i].revents & POLLIN )
+//             {
+//                 std::cout << "Received message from client" << std::endl;
+//                 memset(buffer, 0, 1024);
+//                 int bytes = recv(this->client[i - 1], buffer, 1024, 0);
+//                 if(bytes > 0)
+//                 {
+//                     std::cout << "Received: " << std::string(buffer, 0, bytes) << std::endl;
+//                 }
+//             }
+//             if (this->fd_poll[i].revents & POLLHUP)
+//             {
+//                 std::cerr << "Client disconnected" << std::endl;
+//                 close(this->client[i - 1]);
+//                 this->client[i - 1] = -1;
+//                 for(int j = i; j < this->number_of_clients; j++)
+//                 {
+//                     this->client[j - 1] = this->client[j];
+//                 }
+//                 this->number_of_clients--;
+//             }
+//         }
+//     }
+//     close(this->server);
+//     return 0;
+// }
 int Server::serverLoop()
 {
     int j = 0;
@@ -115,12 +197,11 @@ int Server::serverLoop()
         connectionEvent();
         for(int i = 1; i < this->number_of_clients; i++)
         {
-            // std::cerr << "i " << i << std::endl;
             if (this->fd_poll[i].revents & POLLIN )
             {
                 std::cout << "Received message from client" << std::endl;
                 memset(buffer, 0, 1024);
-                int bytes = recv(this->client[i - 1], buffer, 1024, 0);
+                int bytes = recv(this->client[i - 1]->client_fd, buffer, 1024, 0);
                 if(bytes > 0)
                 {
                     std::cout << "Received: " << std::string(buffer, 0, bytes) << std::endl;
@@ -129,12 +210,9 @@ int Server::serverLoop()
             if (this->fd_poll[i].revents & POLLHUP)
             {
                 std::cerr << "Client disconnected" << std::endl;
-                close(this->client[i - 1]);
-                this->client[i - 1] = -1;
-                for(int j = i; j < this->number_of_clients; j++)
-                {
-                    this->client[j - 1] = this->client[j];
-                }
+                close(this->client[i - 1]->client_fd);
+                this->client[i - 1]->client_fd = -1;
+                this->client.erase(this->client.begin() + i - 1);
                 this->number_of_clients--;
             }
         }

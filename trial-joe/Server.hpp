@@ -14,6 +14,7 @@
 #include <vector>
 #include <map>
 #include <fcntl.h>
+#include "Client.hpp"
 
 /*
 */
@@ -22,10 +23,10 @@ class Server
 	/* VARIABLES*/
 	private:
 		int server;
-		// std::map<std::string, int> client;
-		int client[1024];
+		std::vector <Client*> client;
 		int number_of_clients;
 		int port;
+		int message_code;
 		std::string pass;
 		sockaddr_in service;
 		struct pollfd fd_poll[10241];
