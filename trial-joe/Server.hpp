@@ -30,6 +30,25 @@ class Server
 		std::string pass;
 		sockaddr_in service;
 		struct pollfd fd_poll[10241];
+
+		/*Capability Negotiation Settings for IRSSI SERVER SIDE*/
+		bool multi_prefix;
+		bool extended_join;
+		bool away_notify;
+		bool chghost;
+		bool account_notify;
+		bool server_time;
+		std::string sasl;
+		/*complex settings*/
+		
+		// bool tls;
+		// bool account_tag;
+		// bool cap_notify;
+		// bool echo_message;
+
+		/*complex settings*/
+
+		/*Capability Negotiation Settings*/
     /* VARIABLES*/
 	public:
 	/*orth form*/

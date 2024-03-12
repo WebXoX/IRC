@@ -22,6 +22,15 @@ class Client
 		char buffer[1024];
 		
 		int port;
+		/*Capability Negotiation Settings for IRSSI CLIENT SIDE*/
+		bool multi_prefix;
+		bool extended_join;
+		bool away_notify;
+		bool chghost;
+		bool account_notify;
+		bool server_time;
+		/*Capability Negotiation Settings*/
+
     /* VARIABLES*/
 	// public:
 	/*orth form*/
