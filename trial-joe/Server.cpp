@@ -107,6 +107,28 @@ int Server::runServer()
 //     return 0;
 // }
 
+// int Server::register_user(Client *user)
+// {
+//     char buffer[1024];
+//     memset(buffer, 0, 1024);
+//     int bytes = recv(user->client_fd, buffer, 1024, 0); 
+//     if(bytes > 0)
+//     {
+        // std::string str = buffer;
+//         if(str.compare("CAP LS 302") == 0)
+//         {
+//             id_check(user);
+//             cap_ls(user);
+//             memset(buffer, 0, 1024);
+//             int bytes = recv(user->client_fd, buffer, 1024, 0);
+//             str = buffer; 
+//             if(bytes > 0 && str.find("\r\n") !=s )
+//             {
+
+//             }
+//         }
+//     }  
+// }
 int Server::connectionEvent()
 {
     // checking for new connections events
@@ -128,7 +150,7 @@ int Server::connectionEvent()
         this->client.push_back(new_client);
         std::cerr << " accepting client" << std::endl;
         // client registration 
-
+        // this->register_user(new_client);
         // std::string message = "Hello from server";
 
         // send(new_client->client_fd, message.c_str(), message.size() + 1, 0);
@@ -181,11 +203,26 @@ int Server::connectionEvent()
 //     close(this->server);
 //     return 0;
 // }
+std::string Server::Recv_end(int fd)
+{
+    char buffer[1024];
+    memset(buffer, 0, 1024);
+    std::string str = "";
+    while(recv(fd, buffer, 1, 0) > 0 )
+    {
+        str = str + buffer;
+        if(str.find('\n') != std::string::npos || str.find("\r\n") != std::string::npos)
+            break;
+       memset(buffer, 0, 1024);
+    }
+    if(str.find("\r\n") != std::string::npos)
+        str = str.substr(0,str.find("\r\n"));
+    return str;
+}
 int Server::serverLoop()
 {
     int j = 0;
-    char buffer[1024];
-
+    std::string str;
 	while(1)
     {
         j++;
@@ -197,23 +234,31 @@ int Server::serverLoop()
         connectionEvent();
         for(int i = 1; i < this->number_of_clients; i++)
         {
-            if (this->fd_poll[i].revents & POLLIN )
-            {
-                std::cout << "Received message from client" << std::endl;
-                memset(buffer, 0, 1024);
-                int bytes = recv(this->client[i - 1]->client_fd, buffer, 1024, 0);
-                if(bytes > 0)
-                {
-                    std::cout << "Received: " << std::string(buffer, 0, bytes) << std::endl;
-                }
-            }
-            if (this->fd_poll[i].revents & POLLHUP)
+            if (this->fd_poll[i].revents &  (POLLRDHUP | POLLERR))
             {
                 std::cerr << "Client disconnected" << std::endl;
                 close(this->client[i - 1]->client_fd);
-                this->client[i - 1]->client_fd = -1;
+                delete this->client[i - 1];
                 this->client.erase(this->client.begin() + i - 1);
+                for (int j = i + 1; j < this->number_of_clients; j++)
+                {
+                    this->fd_poll[i].fd = this->fd_poll[j].fd;
+                    this->fd_poll[i].events = this->fd_poll[j].events;
+                    i++; // Increment i to overwrite the next element
+                }
                 this->number_of_clients--;
+            }
+            if (this->fd_poll[i].revents & POLLIN )
+            {
+                std::cout << "here: " << (this->fd_poll[i].revents & (POLLRDHUP | POLLERR)) << " "<< i<<  std::endl;
+                // std::cout << "Received message from client " << this->number_of_clients << std::endl;
+               str = this->Recv_end( this->client[i - 1]->client_fd);
+                if(!str.empty() )
+                {
+                    std::cout << "Received: " << str;
+
+                }
+                str.clear();
             }
         }
     }

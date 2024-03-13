@@ -15,7 +15,7 @@
 #include <map>
 #include <fcntl.h>
 #include "Client.hpp"
-
+#include <cstring>
 /*
 */
 class Server
@@ -24,12 +24,14 @@ class Server
 	private:
 		int server;
 		std::vector <Client*> client;
+		// std::vector <struct pollfd> fd_poll;
+
+		struct pollfd fd_poll[10241];
 		int number_of_clients;
 		int port;
 		int message_code;
 		std::string pass;
 		sockaddr_in service;
-		struct pollfd fd_poll[10241];
 
 		/*Capability Negotiation Settings for IRSSI SERVER SIDE*/
 		bool multi_prefix;
@@ -62,7 +64,8 @@ class Server
 		int runServer();
 		int	serverLoop();
 		int	connectionEvent();
-
+		int register_user(Client * user);
+		std::string Recv_end(int fd);
 
 
 	
