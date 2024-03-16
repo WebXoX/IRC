@@ -24,7 +24,7 @@ clean:
 	@ rm -r $(OBJDIR)/*
 	@ rm $(NAME)
 
-fclean:	clean
+fclean:	
 	@ rm -rf $(OBJDIR)
 	@ rm -f $(NAME)
 
