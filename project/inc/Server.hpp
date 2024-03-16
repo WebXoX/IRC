@@ -14,8 +14,8 @@
 #include <vector>
 #include <map>
 #include <fcntl.h>
-#include "Client.hpp"
 #include <cstring>
+#include "../inc/Client.hpp"
 /*
 */
 class Server

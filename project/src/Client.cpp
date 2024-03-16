@@ -1,4 +1,4 @@
-#include "Client.hpp"
+#include "../inc/Client.hpp"
 
 /* orth Client / constructor*/
 Client::Client ()

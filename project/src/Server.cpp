@@ -1,4 +1,5 @@
-#include "Server.hpp"
+#include "../inc/Server.hpp"
+#include <poll.h>
 
 /* orth Server / constructor*/
 Server::Server ()
@@ -30,6 +31,7 @@ Server& Server::operator=(const Server& rhs)
 /*extra*/
 int Server::serverInit(int port, std::string pass)
 {
+    (void)port;
     // initization of server socket port poll 
     this->port = 27015;
     this->pass = pass;
