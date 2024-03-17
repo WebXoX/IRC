@@ -6,7 +6,7 @@ CXXFLAGS = -Wall -Werror -Wextra -std=c++98 -g
 OBJDIR = ./obj/
 SRCDIR = ./src/
 
-SRC = server_test.cpp parsing.cpp
+SRC = server_t.cpp parsing.cpp
 OBJ = $(addprefix $(OBJDIR), $(SRC:.cpp=.o))
 
 all:	$(OBJDIR) $(NAME) 

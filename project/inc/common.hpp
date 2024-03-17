@@ -13,9 +13,4 @@
 #include <cstdio>
 #include <sstream>
 
-#define PORT 4242
-#define SOCKET int
-#define INVALID_SOCKET -1
-#define BUFFER_SIZE 1024
-
 #endif
