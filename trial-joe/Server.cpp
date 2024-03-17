@@ -34,12 +34,12 @@ int Server::serverInit(int port, std::string pass)
     this->port = 27015;
     this->pass = pass;
     this->server = socket(AF_INET, SOCK_STREAM, IPPROTO_TCP);
-    int flags = fcntl(this->server, F_GETFL, 0);
-    if (fcntl(this->server, F_SETFL, flags | O_NONBLOCK) == -1)
-    {
-        std::cerr << "Error setting socket to non-blocking" << std::endl;
-        return 1;
-    }
+    // int flags = fcntl(this->server, F_GETFL, 0);
+    // if (fcntl(this->server, F_SETFL, flags | O_NONBLOCK) == -1)
+    // {
+    //     std::cerr << "Error setting socket to non-blocking" << std::endl;
+    //     return 1;
+    // }
     // this->client = -1;
 	if(this->server == -1)
 	{
@@ -106,29 +106,105 @@ int Server::runServer()
 //     }
 //     return 0;
 // }
+ int           id_check(Client *user)
+ {
+    user->addrlen = sizeof(user->my_addr);
+    if (getsockname(user->client_fd, (struct sockaddr *) & user->my_addr, &user->addrlen ) == -1) {
+        perror("getsockname");
+        return 1;
+    }
+    user->ip =  std::string(inet_ntoa(user->my_addr.sin_addr));
+    user->port = ntohs(user->my_addr.sin_port);
+    return 1;
+ }
 
-// int Server::register_user(Client *user)
+// int           cap_ls(Client *user)
+//  {
+
+//  }
+//  int           id_check(Client *user)
+//  {
+
+//  }
+std::string Server::msg(std::string source, std::string command, std::string param, std::string text)
+{
+    return (":"+source+ " " +command+" :"+param+" "+text + "\r\n");
+}
+
+// std::string Server::cap_ls()
 // {
-//     char buffer[1024];
-//     memset(buffer, 0, 1024);
-//     int bytes = recv(user->client_fd, buffer, 1024, 0); 
-//     if(bytes > 0)
-//     {
-        // std::string str = buffer;
-//         if(str.compare("CAP LS 302") == 0)
-//         {
-//             id_check(user);
-//             cap_ls(user);
-//             memset(buffer, 0, 1024);
-//             int bytes = recv(user->client_fd, buffer, 1024, 0);
-//             str = buffer; 
-//             if(bytes > 0 && str.find("\r\n") !=s )
-//             {
-
-//             }
-//         }
-//     }  
+    
+//     return ("account-notify away-notify chghost extended-join multi-prefix sasl=PLAIN server-time");
 // }
+// std::string Server::welcome_msg()
+// {
+
+//     return ();
+// }
+int Server::register_user(Client *user)
+{
+    std::string line;
+    char host[1000];
+    char service[1000];
+    int bytes = this->Recv_end(user->client_fd, line); 
+    if(bytes > 0)
+    {
+        // if(line.compare("CAP LS 302") == 0)
+        // {
+            // id_check(user);
+            // cap_ls(user);
+            line.clear();
+            int bytes = this->Recv_end(user->client_fd,line);
+            struct sockaddr_in my_addr;
+            socklen_t addrlen = sizeof(my_addr);
+            if (getsockname(user->client_fd, (struct sockaddr *) &my_addr, &addrlen) == -1) {
+                perror("getsockname");
+                return 1;
+            }
+            // if(gethostname())
+            socklen_t  len = sizeof my_addr;
+            getnameinfo((sockaddr *)&my_addr, sizeof my_addr, host, sizeof host, service, sizeof service, 0);
+            std::cout << "sin_addr: " <<   inet_ntoa(my_addr.sin_addr) << std::endl;
+            std::cout << "sin_addr: " << my_addr.sin_family << std::endl;
+            std::cout << "sin_addr: " << ntohs(my_addr.sin_port)<< std::endl;
+            std::cout << "sin_addr: " << my_addr.sin_zero << std::endl;
+
+            struct hostent *he;
+        struct in_addr ipv4addr;
+        struct in6_addr ipv6addr;
+
+        inet_pton(AF_INET, user->ip.c_str(), &ipv4addr);
+        he = gethostbyaddr(&ipv4addr, sizeof ipv4addr, AF_INET);
+        printf("Host name: %s\n", he->h_name);
+    // Extract the hostname from the result
+        std::string message = "Checking Ident";
+            if(send(user->client_fd,msg("irssi","NOTICE *","*** ",message).c_str(), msg("irssi","NOTICE *","***",message).length(), 0) <= 0)
+            {
+                std::cerr << "Error sending message" << std::endl;
+                return -1;
+            }
+        message = "Looking up your hostname...";
+            if(send(user->client_fd,msg("irssi","NOTICE *","*** ",message).c_str(), msg("irssi","NOTICE *","***",message).length(), 0) <= 0)
+            {
+                std::cerr << "Error sending message" << std::endl;
+                return -1;
+            }
+        message = "No Ident response"; 
+            if(send(user->client_fd,msg("irssi","NOTICE *","*** ",message).c_str(), msg("irssi","NOTICE *","***",message).length(), 0) <= 0)
+            {
+                std::cerr << "Error sending message" << std::endl;
+                return -1;
+            }
+         message = "Couldn't look up your hostname";
+            if(send(user->client_fd,msg("irssi","NOTICE *","*** ",message).c_str(), msg("irssi","NOTICE *","***",message).length(), 0) <= 0)
+            {
+                std::cerr << "Error sending message" << std::endl;
+                return -1;
+            }
+        // }
+    }  
+    return 1; 
+}
 int Server::connectionEvent()
 {
     // checking for new connections events
@@ -141,22 +217,22 @@ int Server::connectionEvent()
             std::cerr << "Error accepting client" << std::endl;
             return 1;
         }
-        int flags = fcntl(new_client->client_fd, F_GETFL, 0);
-        if (fcntl(new_client->client_fd, F_SETFL, flags | O_NONBLOCK) == -1)
-        {
-            std::cerr << "Error setting client socket to non-blocking" << std::endl;
-            return 1;
-        }
+        // int flags = fcntl(new_client->client_fd, F_GETFL, 0);
+        // if (fcntl(new_client->client_fd, F_SETFL, flags | O_NONBLOCK) == -1)
+        // {
+        //     std::cerr << "Error setting client socket to non-blocking" << std::endl;
+        //     return 1;
+        // }
         this->client.push_back(new_client);
         std::cerr << " accepting client" << std::endl;
         // client registration 
-        // this->register_user(new_client);
+        this->register_user(new_client);
         // std::string message = "Hello from server";
 
         // send(new_client->client_fd, message.c_str(), message.size() + 1, 0);
         // setting poll for tracking events of the new client
         this->fd_poll[number_of_clients].fd = new_client->client_fd;
-        this->fd_poll[number_of_clients].events = POLLIN | POLLOUT;
+        this->fd_poll[number_of_clients].events = POLLIN | POLLOUT | POLLERR | POLLHUP;;
         this->number_of_clients++;
     }
     return 0;
@@ -203,21 +279,23 @@ int Server::connectionEvent()
 //     close(this->server);
 //     return 0;
 // }
-std::string Server::Recv_end(int fd)
+int Server::Recv_end(int fd, std::string & line)
 {
     char buffer[1024];
     memset(buffer, 0, 1024);
-    std::string str = "";
-    while(recv(fd, buffer, 1, 0) > 0 )
+    int len = 0 ;
+    int total = 0;
+    while(len = recv(fd, buffer, 1, 0) > 0 )
     {
-        str = str + buffer;
-        if(str.find('\n') != std::string::npos || str.find("\r\n") != std::string::npos)
+        line = line + buffer;
+        total += len; 
+        if(line.find('\n') != std::string::npos || line.find("\r\n") != std::string::npos)
             break;
        memset(buffer, 0, 1024);
     }
-    if(str.find("\r\n") != std::string::npos)
-        str = str.substr(0,str.find("\r\n"));
-    return str;
+    if(line.find("\r\n") != std::string::npos)
+        line = line.substr(0,line.find("\r\n"));
+    return total;
 }
 int Server::serverLoop()
 {
@@ -226,7 +304,7 @@ int Server::serverLoop()
 	while(1)
     {
         j++;
-        if (poll((this->fd_poll), this->number_of_clients, 1000) == -1)
+        if (poll((this->fd_poll), this->number_of_clients, 100) == -1)
         {
             std::cerr << "Error in poll" << std::endl;
             return 1;
@@ -234,31 +312,44 @@ int Server::serverLoop()
         connectionEvent();
         for(int i = 1; i < this->number_of_clients; i++)
         {
-            if (this->fd_poll[i].revents &  (POLLRDHUP | POLLERR))
-            {
-                std::cerr << "Client disconnected" << std::endl;
-                close(this->client[i - 1]->client_fd);
-                delete this->client[i - 1];
-                this->client.erase(this->client.begin() + i - 1);
-                for (int j = i + 1; j < this->number_of_clients; j++)
-                {
-                    this->fd_poll[i].fd = this->fd_poll[j].fd;
-                    this->fd_poll[i].events = this->fd_poll[j].events;
-                    i++; // Increment i to overwrite the next element
-                }
-                this->number_of_clients--;
-            }
+            // if (this->fd_poll[i].revents &  (POLLERR | POLLRDHUP))
+            // {
+            //     std::cerr << "Client disconnected" << std::endl;
+            //     close(this->client[i - 1]->client_fd);
+            //     delete this->client[i - 1];
+            //     this->client.erase(this->client.begin() + i - 1);
+            //     for (int j = i + 1; j < this->number_of_clients; j++)
+            //     {
+            //         this->fd_poll[i].fd = this->fd_poll[j].fd;
+            //         this->fd_poll[i].events = this->fd_poll[j].events;
+            //         i++; // Increment i to overwrite the next element
+            //     }
+            //     this->number_of_clients--;
+            // }
+            
             if (this->fd_poll[i].revents & POLLIN )
             {
-                std::cout << "here: " << (this->fd_poll[i].revents & (POLLRDHUP | POLLERR)) << " "<< i<<  std::endl;
-                // std::cout << "Received message from client " << this->number_of_clients << std::endl;
-               str = this->Recv_end( this->client[i - 1]->client_fd);
-                if(!str.empty() )
-                {
-                    std::cout << "Received: " << str;
-
+                std::string	line;
+                int readed = this->Recv_end( this->client[i - 1]->client_fd,line);;
+                if (readed > 0){
+                    std::cout << "Received: " << line;
+                    str.clear();
                 }
-                str.clear();
+                else if (readed <= 0 ){
+                    std::cerr << "Client disconnected" << std::endl;
+                    close(this->client[i - 1]->client_fd);
+                    delete this->client[i - 1];
+                    this->client.erase(this->client.begin() + i - 1);
+                    for (int j = i + 1; j < this->number_of_clients; j++)
+                    {
+                        this->fd_poll[i].fd = this->fd_poll[j].fd;
+                        this->fd_poll[i].events = this->fd_poll[j].events;
+                        i++; // Increment i to overwrite the next element
+                    }
+                    this->number_of_clients--;
+                }
+                else
+                    close(this->fd_poll[i].fd);
             }
         }
     }

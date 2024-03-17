@@ -16,6 +16,8 @@
 #include <fcntl.h>
 #include "Client.hpp"
 #include <cstring>
+
+#include <netdb.h>
 /*
 */
 class Server
@@ -27,11 +29,13 @@ class Server
 		// std::vector <struct pollfd> fd_poll;
 
 		struct pollfd fd_poll[10241];
+		std::string servername;
+		std::string hostname;
+		std::string pass;
+		sockaddr_in service;
 		int number_of_clients;
 		int port;
 		int message_code;
-		std::string pass;
-		sockaddr_in service;
 
 		/*Capability Negotiation Settings for IRSSI SERVER SIDE*/
 		bool multi_prefix;
@@ -65,7 +69,10 @@ class Server
 		int	serverLoop();
 		int	connectionEvent();
 		int register_user(Client * user);
-		std::string Recv_end(int fd);
+		int Recv_end(int fd, std::string& line);
+		std::string msg(std::string source, std::string command, std::string param, std::string text);
+
+
 
 
 	
