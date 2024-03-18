@@ -16,6 +16,8 @@
 #include <fcntl.h>
 #include <cstring>
 #include "../inc/Client.hpp"
+#include "../inc/parsing.hpp"
+
 /*
 */
 class Server
@@ -24,13 +26,13 @@ class Server
 	private:
 		int server;
 		std::vector <Client*> client;
-		// std::vector <struct pollfd> fd_poll;
-
-		struct pollfd fd_poll[10241];
-		int number_of_clients;
+		std::vector <struct pollfd> fd_poll;
 		int port;
-		int message_code;
+		std::string ports;
 		std::string pass;
+
+		int number_of_clients;
+		int message_code;
 		sockaddr_in service;
 
 		/*Capability Negotiation Settings for IRSSI SERVER SIDE*/
@@ -55,17 +57,23 @@ class Server
 	public:
 	/*orth form*/
     	Server ();
+		Server (std::string port,std::string pass);
+
     	Server (const Server &a);
     	~Server ();
 		Server& operator=(const Server &a);
 	/*orth Server*/
 	/*exception*/
-		int serverInit(int port , std::string pass);
+		int serverInit();
 		int runServer();
 		int	serverLoop();
 		int	connectionEvent();
 		int register_user(Client * user);
-		std::string Recv_end(int fd);
+		int Recv_end(int fd, std::string & line);
+		void commandPath(ircMessage msg, Client * user);
+		std::string msg(std::string source, std::string command, std::string param, std::string text);
+		std::string cap_ls();
+		std::string cap_ack(ircMessage cap_list);
 
 
 	

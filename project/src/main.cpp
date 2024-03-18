@@ -1,10 +1,10 @@
 #include "../inc/Server.hpp"
+#include "../inc/Client.hpp"
 
 int main (int argc, char *argv[])
 {
 	if(argc == 3)
 	{
-		Server server;
 		std::string port = argv[1];
 		std::string pass = argv[2];
 		if(port.find_first_not_of("0123456789") != std::string::npos 
@@ -18,7 +18,8 @@ int main (int argc, char *argv[])
 			std::cerr << "Password cannot be empty" << std::endl;
 			return 1;
 		}
-		if(server.serverInit(atoi(argv[1]),pass) == 0)
+		Server server = Server(port,pass);
+		if(server.serverInit() == 0)
 		{
 			server.runServer();
 			server.serverLoop();
