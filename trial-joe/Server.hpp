@@ -27,7 +27,7 @@ class Server
 		int server;
 		std::vector <Client*> client;
 		// std::vector <struct pollfd> fd_poll;
-
+		
 		struct pollfd fd_poll[10241];
 		std::string servername;
 		std::string hostname;
@@ -71,6 +71,8 @@ class Server
 		int register_user(Client * user);
 		int Recv_end(int fd, std::string& line);
 		std::string msg(std::string source, std::string command, std::string param, std::string text);
+		int         id_check(Client *user);
+		std::string cap_ls();
 
 
 
