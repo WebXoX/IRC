@@ -14,6 +14,7 @@ class Client
 	/* VARIABLES*/
 	public:
 		int client_fd;
+		int regi_status;
 		std::string hostname; // Real name/address of the host
 		std::string username;  // Username of the client on the host
 		std::string nickname;   // Nickname chosen by the client

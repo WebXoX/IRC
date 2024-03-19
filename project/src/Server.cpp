@@ -73,8 +73,6 @@ int Server::serverInit()
 	pollfd poll;
 	poll.fd = this->server;
 	poll.events = POLLIN;
-    // this->fd_poll[0].fd = this->server;
-    // this->fd_poll[0].events = POLLIN;
 	this->fd_poll.push_back(poll);
     number_of_clients = 1;
 	return 0;
@@ -203,10 +201,33 @@ void Server::commandPath(ircMessage msg, Client * user)
 				len = str.length();
 				send(user->client_fd,str.c_str(),len,0);
 			}
+            else if(msg.command.compare("PASS") == 0)
+            {
+                if(user->regi_status == 0)
+                {
+                    if(msg.params[0].compare(this->pass) == 0)
+                    {
+                        user->regi_status = 1;
+                    }
+                    else
+                    {
+                        std::cerr << "Invalid password" << std::endl;
+                        close(user->client_fd);
+                        user->client_fd = -1;
+                    }
+                    
+                }
+                else
+                        std::cerr << "No re-registeration" << std::endl;
+            }	
 			else if(msg.command.compare("NICK") == 0)
+            {
 				user->nickname = msg.params[1];
+            }
 			else if(msg.command.compare("USER") == 0)
+            {
 				user->username = msg.params[1];
+            }
 			else
 			{
 				std::cerr << "Invalid command" << std::endl;
