@@ -69,7 +69,7 @@ int Server::serverInit()
     this->service.sin_addr.s_addr = INADDR_ANY;
     service.sin_port = htons(this->port);
     // poll config
-	memset(&(this->fd_poll), 0, sizeof(this->fd_poll));
+	// memset(&(this->fd_poll), 0, sizeof(this->fd_poll));
 	pollfd poll;
 	poll.fd = this->server;
 	poll.events = POLLIN;
@@ -105,7 +105,7 @@ int Server::connectionEvent()
     if (this->fd_poll[0].revents & POLLIN)
     {
         Client *new_client = new Client();
-        new_client->client_fd = accept(this->server, nullptr, nullptr);
+        new_client->client_fd = accept(this->server, NULL, NULL);
         if(new_client->client_fd == -1)
         {
             std::cerr << "Error accepting client" << std::endl;
@@ -148,7 +148,7 @@ std::string Server::cap_ls()
 		cap_list += "extended-join ";
     if(this->multi_prefix)
 		cap_list += "multi-prefix ";
-		cap_list += "sasl="+this->sasl+" server-time";
+    cap_list += "sasl="+this->sasl+" server-time";
     // return ("account-notify away-notify chghost extended-join multi-prefix sasl=PLAIN server-time");
 	return cap_list;
 }
@@ -162,7 +162,7 @@ std::string Server::cap_ack( ircMessage msg)
 	ack = msg.trailing.substr(0, msg.trailing.find_first_of(" "));
 	while (msg.trailing.empty() == false)
 	{
-		if(std::find(std::begin(cap_list), std::end(cap_list), ack) != std::end(cap_list))
+		if(std::find(&cap_list[0], (&cap_list[6]), ack) != &cap_list[6])
 		{
 			str += ack + " ";
 		}
@@ -227,6 +227,7 @@ void Server::commandPath(ircMessage msg, Client * user)
 			else if(msg.command.compare("USER") == 0)
             {
 				user->username = msg.params[1];
+				user->hostname = msg.params[2];
             }
 			else
 			{
