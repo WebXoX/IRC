@@ -57,11 +57,12 @@ Server& Server::operator=(const Server& rhs)
 	if (sig == SIGINT)
 	{
 		// g_signal = 1;
-		
+		exit(0);
 	}
 	else if (sig == SIGTSTP)
 	{
 		// g_signal = 1;
+		exit(0);
 		
 	}
 }
@@ -257,7 +258,7 @@ void Server::commandPath(ircMessage msg, Client * user)
                     len = str.length();
                     send(user->client_fd,str.c_str(),len,0);
                 }
-                else if(msg.params[0].find_first_of("# @:&") == std::string::npos)
+                else if(msg.params[0].find_first_of("# @:&") != std::string::npos)
                 {
                     str = this->msg("irssi", "432", msg.params[0], "Erroneous nickname").c_str();
                     len = str.length();
@@ -310,7 +311,7 @@ void Server::commandPath(ircMessage msg, Client * user)
             {
                 if(user->regi_status == 1)
                 {
-                    str = this->msg("irssi", "PONG", msg.params[0], NULL).c_str();
+                    str = this->msg("irssi", "PONG", msg.params[0], "").c_str();
                     len = str.length();
                     send(user->client_fd,str.c_str(),len,0);
                 }
@@ -326,6 +327,7 @@ void Server::commandPath(ircMessage msg, Client * user)
             len = str.length();
             send(user->client_fd,str.c_str(),len,0);
         }
+        str.clear();
 }
 	
 int Server::Recv_end(int fd, std::string & line)
