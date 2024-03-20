@@ -197,30 +197,32 @@ void Server::commandPath(ircMessage msg, Client * user)
 	std::string		str;
 	size_t			len;
     std::cout << msg.command << std::endl;
-	if(msg.command.compare("CAP") == 0)
-	{
-		if(msg.params.size() > 0)
-		{
-			if(msg.params[0].compare("LS") == 0)
-			{
-				std::string ls = cap_ls();
-				str = this->msg("irssi", "CAP * LS", ls,"").c_str();
-				len = str.length();
-				send(user->client_fd,str.c_str(),len,0);
-			}
-			else if(msg.params[0].compare("REQ") == 0)
-			{
-				std::cout << msg.params[0] << std::endl;
-				str = this->msg("irssi", "CAP * ACK", cap_ack(msg),"").c_str();
-				len = str.length();
-				send(user->client_fd,str.c_str(),len,0);
-			}
-			else if(msg.params[0].compare("END") == 0)
-			{
-				str = this->msg("irssi", "001 user", "Welcome to the IRSSI.Chat Internet Relay Chat Network user","").c_str();
-				len = str.length();
-				send(user->client_fd,str.c_str(),len,0);
-			}
+    if(msg.params.size() > 0)
+    {
+        if(msg.command.compare("CAP") == 0)
+        {
+
+                if(msg.params[0].compare("LS") == 0)
+                {
+                    std::string ls = cap_ls();
+                    str = this->msg("irssi", "CAP * LS", ls,"").c_str();
+                    len = str.length();
+                    send(user->client_fd,str.c_str(),len,0);
+                }
+                else if(msg.params[0].compare("REQ") == 0)
+                {
+                    std::cout << msg.params[0] << std::endl;
+                    str = this->msg("irssi", "CAP * ACK", cap_ack(msg),"").c_str();
+                    len = str.length();
+                    send(user->client_fd,str.c_str(),len,0);
+                }
+                else if(msg.params[0].compare("END") == 0)
+                {
+                    str = this->msg("irssi", "001 user", "Welcome to the IRSSI.Chat Internet Relay Chat Network user","").c_str();
+                    len = str.length();
+                    send(user->client_fd,str.c_str(),len,0);
+                }
+        }
             else if(msg.command.compare("PASS") == 0)
             {
                 if(user->regi_status == 0)
@@ -324,12 +326,8 @@ void Server::commandPath(ircMessage msg, Client * user)
             len = str.length();
             send(user->client_fd,str.c_str(),len,0);
         }
-	}
-	else
-	{
-		std::cerr << "Invalid command" << std::endl;
-	}
 }
+	
 int Server::Recv_end(int fd, std::string & line)
 {
     char buffer[1024];
@@ -366,7 +364,8 @@ int Server::serverLoop()
             {
                 std::string	line;
                 int readed = this->Recv_end( this->client[i - 1]->client_fd,line);;
-                if (readed > 0){
+                if (readed > 0)
+                {
                     std::cout << "Client " << i << " sent: " << line << std::endl;
 					commandPath(parseMessage(line),this->client[i - 1]);
                     line.clear();
