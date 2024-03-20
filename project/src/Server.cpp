@@ -366,6 +366,7 @@ int Server::serverLoop()
                 std::string	line;
                 int readed = this->Recv_end( this->client[i - 1]->client_fd,line);;
                 if (readed > 0){
+                    std::cout << "Client " << i << " sent: " << line << std::endl;
 					commandPath(parseMessage(line),this->client[i - 1]);
                     line.clear();
                 }
