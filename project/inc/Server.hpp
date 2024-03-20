@@ -11,6 +11,7 @@
 #include <sys/select.h>
 #include <stdlib.h>
 #include <algorithm>
+#include <signal.h>
 #include <vector>
 #include <map>
 #include <fcntl.h>
@@ -20,12 +21,14 @@
 
 /*
 */
+// static int g_signal;
 class Server
 {
 	/* VARIABLES*/
 	private:
 		int server;
 		std::vector <Client*> client;
+		std::vector <std::string> nicknames;
 		std::vector <struct pollfd> fd_poll;
 		int port;
 		std::string ports;
@@ -64,19 +67,17 @@ class Server
 		Server& operator=(const Server &a);
 	/*orth Server*/
 	/*exception*/
-		int serverInit();
-		int runServer();
-		int	serverLoop();
-		int	connectionEvent();
-		int register_user(Client * user);
-		int Recv_end(int fd, std::string & line);
-		void commandPath(ircMessage msg, Client * user);
-		std::string msg(std::string source, std::string command, std::string param, std::string text);
+		static void		sighandle(int sig);
+		int			serverInit();
+		int			runServer();
+		int			serverLoop();
+		int			connectionEvent();
+		int			register_user(Client * user);
+		int			Recv_end(int fd, std::string & line);
+		void		commandPath(ircMessage msg, Client * user);
+		std::string	msg(std::string source, std::string command, std::string param, std::string text);
 		std::string cap_ls();
 		std::string cap_ack(ircMessage cap_list);
-
-
-	
 	/*exception*/
 	/*getters and setters*/
 	/*getters and setters*/

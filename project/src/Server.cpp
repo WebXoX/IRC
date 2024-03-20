@@ -1,5 +1,6 @@
 #include "../inc/Server.hpp"
 #include <poll.h>
+#include <stack>
 
 /* orth Server / constructor*/
 Server::Server ()
@@ -19,6 +20,7 @@ Server::Server (std::string port , std::string pass)
 	{
 		std::cerr << e.what() << '\n';
 	}
+		// g_signal = 0;
 	this->multi_prefix = true;
 	this->extended_join = true;
 	this->away_notify = true;
@@ -50,6 +52,19 @@ Server& Server::operator=(const Server& rhs)
 }
 /* orth Server */
 /*extra*/
+ void	Server::sighandle(int sig)
+{
+	if (sig == SIGINT)
+	{
+		// g_signal = 1;
+		
+	}
+	else if (sig == SIGTSTP)
+	{
+		// g_signal = 1;
+		
+	}
+}
 int Server::serverInit()
 {
     // initization of server socket port poll 
@@ -102,6 +117,8 @@ int Server::runServer()
 int Server::connectionEvent()
 {
     // checking for new connections events
+    // signal(SIGTSTP,  this->sighandle);
+    // signal(SIGINT, this->sighandle);
     if (this->fd_poll[0].revents & POLLIN)
     {
         Client *new_client = new Client();
@@ -123,8 +140,6 @@ int Server::connectionEvent()
 		pollfd poll;
 		poll.fd = new_client->client_fd;
 		poll.events = POLLIN | POLLOUT;
-        // this->fd_poll[number_of_clients].fd = new_client->client_fd;
-        // this->fd_poll[number_of_clients].events = POLLIN | POLLOUT;
 		this->fd_poll.push_back(poll);
         this->number_of_clients++;
     }
@@ -169,7 +184,11 @@ std::string Server::cap_ack( ircMessage msg)
 		if(msg.trailing.find_first_of(" ") == std::string::npos)
 			break;
 		msg.trailing.erase(0, msg.trailing.find_first_of(" ") + 1);
-		ack = msg.trailing.substr(0, msg.trailing.find_first_of(" "));
+        int subint = msg.trailing.find_first_of(" ");
+        if(  msg.trailing.find_first_of(" ") == std::string::npos)
+            ack = msg.trailing;
+        else
+            ack = msg.trailing.substr(0, subint);
 	}
     return (str);
 }
@@ -211,29 +230,99 @@ void Server::commandPath(ircMessage msg, Client * user)
                     }
                     else
                     {
-                        std::cerr << "Invalid password" << std::endl;
+                        str = this->msg("irssi", "464", msg.params[0], "Password incorrect").c_str();
+                        len = str.length();
+                        send(user->client_fd,str.c_str(),len,0);
                         close(user->client_fd);
                         user->client_fd = -1;
                     }
                     
                 }
                 else
-                        std::cerr << "No re-registeration" << std::endl;
+                {
+                    str = this->msg("irssi", "462", msg.params[0], "You may not reregister").c_str();
+                    len = str.length();
+                    send(user->client_fd,str.c_str(),len,0);
+                }
+                        // throw  "No re-registeration";
             }	
 			else if(msg.command.compare("NICK") == 0)
             {
+                if(std::find(this->nicknames.begin(), this->nicknames.end(), msg.params[0]) != this->nicknames.end())
+                {
+                    str = this->msg("irssi", "433", msg.params[0], "Nickname is already in use").c_str();
+                    len = str.length();
+                    send(user->client_fd,str.c_str(),len,0);
+                }
+                else if(msg.params[0].find_first_of("# @:&") == std::string::npos)
+                {
+                    str = this->msg("irssi", "432", msg.params[0], "Erroneous nickname").c_str();
+                    len = str.length();
+                    send(user->client_fd,str.c_str(),len,0);
+                }
+                else if (msg.params[0].empty() == true)
+                {
+                    str = this->msg("irssi", "431", msg.params[0], "No nickname given").c_str();
+                    len = str.length();
+                    send(user->client_fd,str.c_str(),len,0);
+                }
+                else
+                {
+                    this->nicknames.push_back(msg.params[0]);
+                    if(user->nickname.empty() == false)
+                    {
+                        this->nicknames.erase(std::find(this->nicknames.begin(), this->nicknames.end(), user->nickname));
+                        str = this->msg("irssi", NULL,user->nickname,"NICK "+ msg.params[0]).c_str();
+                        len = str.length();
+                        send(user->client_fd,str.c_str(),len,0);
+                        user->nickname.clear();
+                    }
+                    user->nickname = msg.params[0];
+                }
 				user->nickname = msg.params[1];
             }
 			else if(msg.command.compare("USER") == 0)
             {
-				user->username = msg.params[1];
-				user->hostname = msg.params[2];
+				if(user->username.empty() == true)
+                {
+                    user->username = msg.params[0];
+
+                    if(msg.params.size() > 2)
+                    {
+                        if(msg.params[1].compare("0") && msg.params[2].compare("*") && msg.trailing.empty() == false)
+                            user->realname = msg.trailing;
+                        else
+                            user->realname = msg.params[1];
+                    }
+                }
+                else
+                {
+                    str = this->msg("irssi", "462", msg.params[0], "You may not reregister").c_str();
+                    len = str.length();
+                    send(user->client_fd,str.c_str(),len,0);
+                }
+                    // throw "ERR_ALREADYREGISTERED";
+            }
+            else if(msg.command.compare("PING") == 0)
+            {
+                if(user->regi_status == 1)
+                {
+                    str = this->msg("irssi", "PONG", msg.params[0], NULL).c_str();
+                    len = str.length();
+                    send(user->client_fd,str.c_str(),len,0);
+                }
             }
 			else
 			{
 				std::cerr << "Invalid command" << std::endl;
 			}
 		}
+        else
+        {
+            str = this->msg("irssi", "461", msg.command, "Not enough parameters").c_str();
+            len = str.length();
+            send(user->client_fd,str.c_str(),len,0);
+        }
 	}
 	else
 	{
