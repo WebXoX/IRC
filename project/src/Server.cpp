@@ -196,6 +196,7 @@ void Server::commandPath(ircMessage msg, Client * user)
 {
 	std::string		str;
 	size_t			len;
+    std::cout << msg.command << std::endl;
 	if(msg.command.compare("CAP") == 0)
 	{
 		if(msg.params.size() > 0)
