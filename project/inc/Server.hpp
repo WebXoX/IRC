@@ -11,6 +11,7 @@
 #include <sys/select.h>
 #include <stdlib.h>
 #include <algorithm>
+#include <signal.h>
 #include <vector>
 #include <map>
 #include <fcntl.h>
@@ -22,17 +23,17 @@
 #include <netdb.h>
 /*
 */
+// static int g_signal;
 class Server
 {
 	/* VARIABLES*/
 	private:
 		int server;
 		std::vector <Client*> client;
-		// std::vector <struct pollfd> fd_poll;
-		
-		struct pollfd fd_poll[10241];
-		std::string servername;
-		std::string hostname;
+		std::vector <std::string> nicknames;
+		std::vector <struct pollfd> fd_poll;
+		int port;
+		std::string ports;
 		std::string pass;
 		sockaddr_in service;
 		int number_of_clients;
@@ -68,20 +69,17 @@ class Server
 		Server& operator=(const Server &a);
 	/*orth Server*/
 	/*exception*/
-		int serverInit();
-		int runServer();
-		int	serverLoop();
-		int	connectionEvent();
-		int register_user(Client * user);
-		int Recv_end(int fd, std::string& line);
-		std::string msg(std::string source, std::string command, std::string param, std::string text);
-		int         id_check(Client *user);
+		static void		sighandle(int sig);
+		int			serverInit();
+		int			runServer();
+		int			serverLoop();
+		int			connectionEvent();
+		int			register_user(Client * user);
+		int			Recv_end(int fd, std::string & line);
+		void		commandPath(ircMessage msg, Client * user);
+		std::string	msg(std::string source, std::string command, std::string param, std::string text);
 		std::string cap_ls();
-
-
-
-
-	
+		std::string cap_ack(ircMessage cap_list);
 	/*exception*/
 	/*getters and setters*/
 	/*getters and setters*/

@@ -71,8 +71,12 @@
 		"numeric": "cpp",
 		"random": "cpp",
 		"numbers": "cpp",
+<<<<<<< HEAD
 		"__verbose_abort": "cpp",
 		"execution": "cpp",
 		"variant": "cpp"
+=======
+		"stack": "cpp"
+>>>>>>> origin/parsing
 	}
 }

@@ -3,6 +3,9 @@
 /* orth Client / constructor*/
 Client::Client ()
 {
+	this->client_fd = 0;
+	this->regi_status = 0;
+	memset(this->buffer,0,1024);
 	// std::cout << "Client default constructor" << std::endl;
 }
 

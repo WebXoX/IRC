@@ -6,8 +6,7 @@
 #include <stdlib.h>
 #include <algorithm>
 #include <map>
-#include <netinet/in.h>
-
+#include <cstring>
 /*
 */
 class Client
@@ -15,9 +14,11 @@ class Client
 	/* VARIABLES*/
 	public:
 		int client_fd;
+		int regi_status;
 		std::string hostname; // Real name/address of the host
 		std::string ip; // Real name/address of the host
 		std::string username;  // Username of the client on the host
+		std::string realname;  // Realname of the client on the host
 		std::string nickname;   // Nickname chosen by the client
 		std::string server;   // Server to which the client is connected
 		std::string channel;   // channel to which the client is connected
