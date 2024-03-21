@@ -223,20 +223,20 @@ void Server::commandPath(ircMessage msg, Client * user)
                 }
                 else if(msg.params[0].compare("END") == 0)
                 {
-                    if(user->regi_status == 1)
-                    {
+                    // if(user->regi_status == 1)
+                    // {
                         str = this->msg("irssi", "001 user", "Welcome to the IRSSI.Chat Internet Relay Chat Network user","").c_str();
                         len = str.length();
                         send(user->client_fd,str.c_str(),len,0);
-                    }
-                    else
-                    {
-                        str = this->msg("irssi", "464", msg.params[0], "Password incorrect").c_str();
-                        len = str.length();
-                        send(user->client_fd,str.c_str(),len,0);
-                        close(user->client_fd);
-                        user->client_fd = -1;
-                    }
+                    // }
+                    // else
+                    // {
+                    //     str = this->msg("irssi", "464", msg.params[0], "Password incorrect").c_str();
+                    //     len = str.length();
+                    //     send(user->client_fd,str.c_str(),len,0);
+                    //     close(user->client_fd);
+                    //     user->client_fd = -1;
+                    // }
                 }
         }
             else if(msg.command.compare("PASS") == 0)
