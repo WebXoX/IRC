@@ -1,6 +1,6 @@
 #ifndef REPLY_HPP
 #define REPLY_HPP
-
+#include <string>
 void	sendServerRpl(int const client_fd, std::string client_buffer);
 
 # define user_id(nickname, username) (":" + nickname + "!" + username + "@localhost")

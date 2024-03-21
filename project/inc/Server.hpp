@@ -18,6 +18,8 @@
 #include "../inc/Client.hpp"
 #include "../inc/parsing.hpp"
 
+
+#include <netdb.h>
 /*
 */
 class Server
@@ -26,14 +28,16 @@ class Server
 	private:
 		int server;
 		std::vector <Client*> client;
-		std::vector <struct pollfd> fd_poll;
-		int port;
-		std::string ports;
+		// std::vector <struct pollfd> fd_poll;
+		
+		struct pollfd fd_poll[10241];
+		std::string servername;
+		std::string hostname;
 		std::string pass;
-
-		int number_of_clients;
-		int message_code;
 		sockaddr_in service;
+		int number_of_clients;
+		int port;
+		int message_code;
 
 		/*Capability Negotiation Settings for IRSSI SERVER SIDE*/
 		bool multi_prefix;
@@ -69,11 +73,12 @@ class Server
 		int	serverLoop();
 		int	connectionEvent();
 		int register_user(Client * user);
-		int Recv_end(int fd, std::string & line);
-		void commandPath(ircMessage msg, Client * user);
+		int Recv_end(int fd, std::string& line);
 		std::string msg(std::string source, std::string command, std::string param, std::string text);
+		int         id_check(Client *user);
 		std::string cap_ls();
-		std::string cap_ack(ircMessage cap_list);
+
+
 
 
 	
