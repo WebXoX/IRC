@@ -331,20 +331,23 @@ void Server::commandPath(ircMessage msg, Client * user)
                     send(user->client_fd,str.c_str(),len,0);
                 }
             }
-            else if(msg.command.compare(":JOIN") == 0)
+            else if(msg.command.compare("JOIN") == 0)
             {
-                str = this->msg("irssi", "NOTOCE *", "***", "Checking Ident").c_str();
-                len = str.length();
-                send(user->client_fd,str.c_str(),len,0);
-                str = this->msg("irssi", "NOTOCE *", "***", "Looking up your hostname...").c_str();
-                len = str.length();
-                send(user->client_fd,str.c_str(),len,0);
-                str = this->msg("irssi", "NOTOCE *", "***", "No Ident response").c_str();
-                len = str.length();
-                send(user->client_fd,str.c_str(),len,0);
-                str = this->msg("irssi", "NOTOCE *", "***", "Couldn't look up your hostname").c_str();
-                len = str.length();
-                send(user->client_fd,str.c_str(),len,0);
+                if(user->regi_status == 0)
+                {
+                    str = this->msg("irssi", "NOTOCE *", "***", "Checking Ident").c_str();
+                    len = str.length();
+                    send(user->client_fd,str.c_str(),len,0);
+                    str = this->msg("irssi", "NOTOCE *", "***", "Looking up your hostname...").c_str();
+                    len = str.length();
+                    send(user->client_fd,str.c_str(),len,0);
+                    str = this->msg("irssi", "NOTOCE *", "***", "No Ident response").c_str();
+                    len = str.length();
+                    send(user->client_fd,str.c_str(),len,0);
+                    str = this->msg("irssi", "NOTOCE *", "***", "Couldn't look up your hostname").c_str();
+                    len = str.length();
+                    send(user->client_fd,str.c_str(),len,0);
+                }
             }
 			else
 			{
