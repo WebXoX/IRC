@@ -173,8 +173,8 @@ std::string Server::cap_ack( ircMessage msg)
 	std::string str;
 	std::string ack;
 	std::string cap_list[] = {"account-notify","away-notify","chghost","extended-join","multi-prefix","sasl="+this->sasl+" server-time"};
-	std::cout << msg.message << std::endl;
-	std::cout << msg.trailing << std::endl;
+	// std::cout << msg.message << std::endl;
+	// std::cout << msg.trailing << std::endl;
 	ack = msg.trailing.substr(0, msg.trailing.find_first_of(" "));
 	while (msg.trailing.empty() == false)
 	{
@@ -184,7 +184,7 @@ std::string Server::cap_ack( ircMessage msg)
 		}
 		if(msg.trailing.empty() == true)
 			break;
-        std::cout << msg.trailing << std::endl;
+        // std::cout << msg.trailing << std::endl;
 		msg.trailing.erase(0, msg.trailing.find_first_of(" ") + 1);
         int subint = msg.trailing.find_first_of(" ");
         if(  msg.trailing.find_first_of(" ") == std::string::npos)
@@ -201,7 +201,7 @@ void Server::commandPath(ircMessage msg, Client * user)
 {
 	std::string		str;
 	size_t			len;
-    std::cout << msg.command << std::endl;
+    // std::cout << msg.command << std::endl;
     if(msg.params.size() > 0)
     {
         if(msg.command.compare("CAP") == 0)
@@ -216,7 +216,7 @@ void Server::commandPath(ircMessage msg, Client * user)
                 }
                 else if(msg.params[0].compare("REQ") == 0)
                 {
-                    std::cout << msg.params[0] << std::endl;
+                    // std::cout << msg.params[0] << std::endl;
                     str = this->msg("irssi", "CAP * ACK", cap_ack(msg),"").c_str();
                     len = str.length();
                     send(user->client_fd,str.c_str(),len,0);
