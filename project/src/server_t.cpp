@@ -1,7 +1,10 @@
 
 
 #include "../inc/parsing.hpp"
+#include "Channel.hpp"
 
+// class Channel;
+// class User;
 
 #define PORT 4242
 #define SOCKET int
@@ -15,6 +18,8 @@ private:
     SOCKET serverSocket;
     sockaddr_in servAddr;
     std::vector<pollfd> pollFds;
+    std::map<int, User> usersList;
+    std::map<std::string, Channel> channelsList;
     pollfd serverPollFd;
 public:
     Server_t();
@@ -81,7 +86,6 @@ SOCKET Server_t::runServer() {
     this->serverPollFd.fd = this->serverSocket;
     this->serverPollFd.events = POLLIN;
     this->pollFds.push_back(this->serverPollFd);
-
      while (true)
     {
         int pollReady = poll(&this->pollFds[0], this->pollFds.size(), -1);
@@ -99,11 +103,17 @@ SOCKET Server_t::runServer() {
                         perror("Accept Error: ");
                         return 1;
                     }
-                    std::cout << "Client connected" << std::endl;
+                    std::cout << "Client: " + std::to_string(clientSocket) << " connected" << std::endl;
+                    send(clientSocket, "Welcome to the server", 21, 0);
                     pollfd clientPollFd;
                     clientPollFd.fd = clientSocket;
                     clientPollFd.events = POLLIN;
                     this->pollFds.push_back(clientPollFd);
+
+                    // create a new user and add it to the users list
+                    User newUser(clientSocket, "User", "User" + std::to_string(clientSocket), "IRSSI");
+                    this->usersList.insert(std::make_pair(clientSocket, newUser));
+
                 } else {
                     char buffer[BUFFER_SIZE];
                     int bytesRead = recv(this->pollFds[i].fd, buffer, BUFFER_SIZE, 0);
@@ -116,23 +126,32 @@ SOCKET Server_t::runServer() {
                         close(this->pollFds[i].fd);
                         this->pollFds.erase(this->pollFds.begin() + i);
                     } else {
-                        printCommand(parseMessage(buffer));
+                        ircMessage message = parseMessage(buffer);
+                        if (message.command == "JOIN") {
+                            // check if the channel exists in the channel map at the server
+                            // param 0 is the channel name is the placeholder for the channel object
+                            std::map<std::string, Channel>::iterator itChan = this->channelsList.find(message.params[0]);
+                            std::map<int, User>::iterator itUser = this->usersList.find(this->pollFds[i].fd);
+                            if (itChan != this->channelsList.end()){
+                                itChan->second.addUser(itUser->second);
+                            } else {
+                                Channel newChannel(message.params[0], itUser->second);
+                                this->channelsList.insert(std::pair<std::string, Channel>(message.params[0], newChannel));
+                            }
+                        }
                         memset(buffer, 0, BUFFER_SIZE);
                     }
                 }
             }
-        }
     
+        }
     }
 }
 
 int main()
 {
+    Server_t server;
 
-    Server_t ircServer;
 
-    
-
-   
     return 0;
 }

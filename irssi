@@ -1,0 +1,3 @@
+#!/bin/sh
+
+docker run -it --rm --name my-running-irssi -e TERM -u 501:20 --log-driver=none -v /Users/tehuanmelo/.irssi:/home/user/.irssi:ro irssi

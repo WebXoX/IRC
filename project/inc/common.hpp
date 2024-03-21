@@ -12,5 +12,7 @@
 #include <poll.h>
 #include <cstdio>
 #include <sstream>
+#include <algorithm>
+#include <map>
 
 #endif
