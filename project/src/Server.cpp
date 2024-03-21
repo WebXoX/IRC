@@ -159,7 +159,7 @@ std::string Server::cap_ls()
 	if(this->away_notify)
 		cap_list += "away-notify ";
 	if(this->chghost)
-		cap_list += "chghost";
+		cap_list += "chghost ";
 	if(this->extended_join)
 		cap_list += "extended-join ";
     if(this->multi_prefix)
@@ -182,12 +182,16 @@ std::string Server::cap_ack( ircMessage msg)
 		{
 			str += ack + " ";
 		}
-		if(msg.trailing.find_first_of(" ") == std::string::npos)
+		if(msg.trailing.empty() == true)
 			break;
+        std::cout << msg.trailing << std::endl;
 		msg.trailing.erase(0, msg.trailing.find_first_of(" ") + 1);
         int subint = msg.trailing.find_first_of(" ");
         if(  msg.trailing.find_first_of(" ") == std::string::npos)
+        {
             ack = msg.trailing;
+            msg.trailing.clear();
+        }
         else
             ack = msg.trailing.substr(0, subint);
 	}
@@ -219,9 +223,20 @@ void Server::commandPath(ircMessage msg, Client * user)
                 }
                 else if(msg.params[0].compare("END") == 0)
                 {
-                    str = this->msg("irssi", "001 user", "Welcome to the IRSSI.Chat Internet Relay Chat Network user","").c_str();
-                    len = str.length();
-                    send(user->client_fd,str.c_str(),len,0);
+                    if(user->regi_status == 1)
+                    {
+                        str = this->msg("irssi", "001 user", "Welcome to the IRSSI.Chat Internet Relay Chat Network user","").c_str();
+                        len = str.length();
+                        send(user->client_fd,str.c_str(),len,0);
+                    }
+                    else
+                    {
+                        str = this->msg("irssi", "464", msg.params[0], "Password incorrect").c_str();
+                        len = str.length();
+                        send(user->client_fd,str.c_str(),len,0);
+                        close(user->client_fd);
+                        user->client_fd = -1;
+                    }
                 }
         }
             else if(msg.command.compare("PASS") == 0)
@@ -315,6 +330,21 @@ void Server::commandPath(ircMessage msg, Client * user)
                     len = str.length();
                     send(user->client_fd,str.c_str(),len,0);
                 }
+            }
+            else if(msg.command.compare(":JOIN") == 0)
+            {
+                str = this->msg("irssi", "NOTOCE *", "***", "Checking Ident").c_str();
+                len = str.length();
+                send(user->client_fd,str.c_str(),len,0);
+                str = this->msg("irssi", "NOTOCE *", "***", "Looking up your hostname...").c_str();
+                len = str.length();
+                send(user->client_fd,str.c_str(),len,0);
+                str = this->msg("irssi", "NOTOCE *", "***", "No Ident response").c_str();
+                len = str.length();
+                send(user->client_fd,str.c_str(),len,0);
+                str = this->msg("irssi", "NOTOCE *", "***", "Couldn't look up your hostname").c_str();
+                len = str.length();
+                send(user->client_fd,str.c_str(),len,0);
             }
 			else
 			{
