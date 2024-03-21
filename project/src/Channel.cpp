@@ -65,50 +65,53 @@ Channel::~Channel() {    }
 // Add user function looks for the user in the map and if it finds it, it returns 1, if not, it adds the user to the map and returns 0
 int Channel::addUser(const User& user) {
     if (this->isUser(user)) {
-        std::cout << "User: " << user.username << " already in channel: " << this->chanName << std::endl;
+        std::cout << "AddUser Error: " << user.username << " already in channel: " << this->chanName << std::endl;
+    }
+    else if ((this->isModeSet("+l") && (this->getNumberOfUsers() >= this->maxUsers))) {
+        std::cout << "AddUser Error: " << this->chanName << " is full" << std::endl;
         return 1;
     }
+
     this->chanUsers.insert(std::make_pair(user.client_fd, user));
-    std::cout << "User " << user.username << " added to channel: " << this->chanName << std::endl;
-    // this->broadcast(RPL_JOIN(user.userId, this->chanName));
+    std::cout << "AddUser: " << user.username << " added to channel: " << this->chanName << std::endl;
     return 0;
 }
 
 int Channel::removeUser(const User& user) {
-    if (this->isUser(user)) {
-        this->chanUsers.erase(user.client_fd);
-        std::cout << "User " << user.username << " removed from channel: " << this->chanName << std::endl;
-        return 0;
+    if (!this->isUser(user)) {
+        std::cout << "removeUser Error: " << user.username << " not found in channel: " << this->chanName << std::endl;
+        return 1;
     }
-    std::cout << "User: " << user.username << " not found in channel: " << this->chanName << std::endl;
-    return 1;
+    this->chanUsers.erase(user.client_fd);
+    std::cout << "removeUser: " << user.username << " removed from channel: " << this->chanName << std::endl;
+    return 0;
 }
 
 int Channel::setOperator(const User& user) {
-    if (this->isOperator(user)) {
-        std::cout << "User: " << user.username << " is already operator in channel: " << this->chanName << std::endl;
-        return 0;
-    } else {
-        if (this->isUser(user)) {
-            this->chanOperators.insert(std::make_pair(user.client_fd, user));
-            std::cout << "User: " << user.username << " is now operator in channel: " << this->chanName << std::endl;
-            return 0;
-        } else {
-            std::cout << "User: " << user.username << " not found in channel: " << this->chanName << std::endl;
-            return 1;
-        }
+    if (!this->isUser(user)) {
+        std::cout << "setOperator Error: " << user.username << " not found in channel: " << this->chanName << std::endl;
+        return 1;
+    } else if (this->isOperator(user)) {
+        std::cout << "setOperator Error: " << user.username << " is already operator in channel: " << this->chanName << std::endl;
+        return 1;
     }
+
+    this->chanOperators.insert(std::make_pair(user.client_fd, user));
+    std::cout << "setOperator: " << user.username << " is now operator in channel: " << this->chanName << std::endl;
+    return 0;
 }   
 
 int Channel::removeOperator(const User& user) {
-    if (this->isOperator(user)) {
-        std::map<int, User>::iterator it = this->chanOperators.find(user.client_fd);
-        this->chanOperators.erase(it);
-        std::cout << "User: " << user.username << " removed from operators in channel: " << this->chanName << std::endl;
-        return 0;
+    if (!this->isUser(user)) {
+        std::cout << "removeOperator Error: " << user.username << " not found in channel: " << this->chanName << std::endl;
+        return 1;
+    } else if (!this->isOperator(user)) {
+        std::cout << "removeOperator Error: " << user.username << " is not operator in channel: " << this->chanName << std::endl;
+        return 1;
     }
-    std::cout << "User: " << user.username << " not found in operators in channel: " << this->chanName << std::endl;
-    return 1;
+    this->chanOperators.erase(this->chanOperators.find(user.client_fd));
+    std::cout << "removeOperator: " << user.username << " removed from operators in channel: " << this->chanName << std::endl;
+    return 0;
 }
 
 void Channel::initModes() {
@@ -116,30 +119,32 @@ void Channel::initModes() {
 }
 
 int Channel::setMode(const User& user, std::string mode, bool value, int maxUsers = 30) {
-    if (this->isMode(mode)) {
-        if (!this->isOperator(user) || !this->isUser(user)) {
-            std::cout << "User: " << user.username << " not operator in channel: " << this->chanName << std::endl;
+        if (!this->isUser(user)) {
+            std::cout << "setMode Error: " << this->chanName << std::endl;
+            return 1;
+        } else if (!this->isOperator(user)) {
+            std::cout << "setMode Error: " << user.username << " is not operator in channel: " << this->chanName << std::endl;
+            return 1;
+        } else if (!this->isMode(mode)) {
+            std::cout << "setMode Error: " << mode << " not found in channel: " << this->chanName << std::endl;
+            return 1;
+        } else if (maxUsers < 1) {
+            std::cout << "setMode Error: invalid maxUsers" << std::endl;
             return 1;
         }
-        if (mode == "+l") {
-            if (maxUsers < 1) {
-                std::cout << "Channel: " << this->chanName << " can't set mode invalid number" << std::endl;
-                return 1;
-            } 
-        }
-        std::map<std::string, bool>::iterator it = this->chanModes.find(mode);
-        it->second = value;
+        this->chanModes.find(mode)->second = value;
         std::cout << "Mode: " << mode << " set to: " << value << " in channel: " << this->chanName << std::endl;
+        if (mode == "+l") {
+            this->maxUsers = maxUsers;
+            std::cout << "Max users set to: " << maxUsers << " in channel: " << this->chanName << std::endl;
+        }
         return 0;
-    }
-    std::cout << "Mode: " << mode << " not found in channel: " << this->chanName << std::endl;
-    return 1;
 }
 
 void Channel::printUsers() {
     std::cout << "Users in channel: " << this->chanName << std::endl;
     for (std::map<int, User>::iterator it = this->chanUsers.begin(); it != this->chanUsers.end(); it++) {
-        std::cout << it->first << std::endl;
+        std::cout << it->second.username << std::endl;
     }
 }
 
@@ -184,16 +189,14 @@ int Channel::getNumberOfUsers() {
 // ****** CHECKERS ****** //
 
 bool Channel::isOperator(const User& user) {
-    std::map<int, User>::iterator it = this->chanOperators.find(user.client_fd);
-    if (it != this->chanOperators.end()) {
+    if (this->chanOperators.find(user.client_fd) != this->chanOperators.end()) {
         return true;
     }
     return false;
 }
 
 bool Channel::isUser(const User& user) {
-    std::map<int, User>::iterator it = this->chanUsers.find(user.client_fd);
-    if (it != this->chanUsers.end()) {
+    if (this->chanUsers.find(user.client_fd) != this->chanUsers.end()) {
         return true;
     }
     return false;
@@ -206,11 +209,19 @@ bool Channel::isMode(std::string mode) {
     return false;
 }
 
+bool Channel::isModeSet(std::string mode) {
+    if (this->chanModes.find(mode)->second) {
+        return true;
+    }
+    return false;
+}
+
 
 // int main() {
 //     User Jimmy(4, "Jimmy", "JIM123", "IRSSI");
 //     User Jack(5, "Jack Johnson", "Jack234", "IRSSI");
 //     User Ben(6, "Ben Harper", "BEN300", "IRSSI");
+//     User Bob(7, "Bob Marley", "BOB400", "IRSSI");
 
 
     
@@ -229,9 +240,13 @@ bool Channel::isMode(std::string mode) {
 //     channel1.setOperator(Ben);
 
 //     channel1.addUser(Jack);
-//     channel1.setMode(Jack, "+l", true, 30);
-//     channel1.setMode(Ben, "+l", true, 30);
-//     channel1.setMode(Ben, "+l", true, 1);
+//     channel1.setOperator(Jack);
+//     channel1.setMode(Jack, "+l", true, 1);
+//     channel1.addUser(Ben);
+//     channel1.setMode(Jack, "+l", true, 3);
+//     channel1.addUser(Ben);
+//     channel1.addUser(Bob);
+
 
 
 // }
