@@ -37,7 +37,6 @@ class Server
 		std::string pass;
 		sockaddr_in service;
 		int number_of_clients;
-		int port;
 		int message_code;
 
 		/*Capability Negotiation Settings for IRSSI SERVER SIDE*/

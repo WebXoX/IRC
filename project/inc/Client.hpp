@@ -22,8 +22,6 @@ class Client
 		std::string nickname;   // Nickname chosen by the client
 		std::string server;   // Server to which the client is connected
 		std::string channel;   // channel to which the client is connected
-		struct sockaddr_in my_addr;
-		socklen_t addrlen = sizeof(my_addr);
 
 		char buffer[1024];
 		
