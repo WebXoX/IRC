@@ -267,38 +267,38 @@ void Server::commandPath(ircMessage msg, Client * user)
             }	
 			else if(msg.command.compare("NICK") == 0)
             {
-                // if(std::find(this->nicknames.begin(), this->nicknames.end(), msg.params[0]) != this->nicknames.end())
-                // {
-                //     str = this->msg("irssi", "433", msg.params[0], "Nickname is already in use").c_str();
-                //     len = str.length();
-                //     send(user->client_fd,str.c_str(),len,0);
-                // }
-                // else if(msg.params[0].find_first_of("# @:&") != std::string::npos)
-                // {
-                //     str = this->msg("irssi", "432", msg.params[0], "Erroneous nickname").c_str();
-                //     len = str.length();
-                //     send(user->client_fd,str.c_str(),len,0);
-                // }
-                // else if (msg.params[0].empty() == true)
-                // {
-                //     str = this->msg("irssi", "431", msg.params[0], "No nickname given").c_str();
-                //     len = str.length();
-                //     send(user->client_fd,str.c_str(),len,0);
-                // }
-                // else
-                // {
-                //     this->nicknames.push_back(msg.params[0]);
-                //     if(user->nickname.empty() == false)
-                //     {
-                //         this->nicknames.erase(std::find(this->nicknames.begin(), this->nicknames.end(), user->nickname));
-                //         str = this->msg("irssi", NULL,user->nickname,"NICK "+ msg.params[0]).c_str();
-                //         len = str.length();
-                //         send(user->client_fd,str.c_str(),len,0);
-                //         user->nickname.clear();
-                //     }
-                //     user->nickname = msg.params[0];
-                // }
-				// user->nickname = msg.params[1];
+                if(this->nicknames.empty() == false && std::find(this->nicknames.begin(), this->nicknames.end(), msg.params[0]) != this->nicknames.end())
+                {
+                    str = this->msg("irssi", "433", msg.params[0], "Nickname is already in use").c_str();
+                    len = str.length();
+                    send(user->client_fd,str.c_str(),len,0);
+                }
+                else if(msg.params[0].find_first_of("# @:&") != std::string::npos)
+                {
+                    str = this->msg("irssi", "432", msg.params[0], "Erroneous nickname").c_str();
+                    len = str.length();
+                    send(user->client_fd,str.c_str(),len,0);
+                }
+                else if (msg.params[0].empty() == true)
+                {
+                    str = this->msg("irssi", "431", msg.params[0], "No nickname given").c_str();
+                    len = str.length();
+                    send(user->client_fd,str.c_str(),len,0);
+                }
+                else
+                {
+                    this->nicknames.push_back(msg.params[0]);
+                    if(user->nickname.empty() == false)
+                    {
+                        this->nicknames.erase(std::find(this->nicknames.begin(), this->nicknames.end(), user->nickname));
+                        str = this->msg("irssi", NULL,user->nickname,"NICK "+ msg.params[0]).c_str();
+                        len = str.length();
+                        send(user->client_fd,str.c_str(),len,0);
+                        user->nickname.clear();
+                    }
+                    user->nickname = msg.params[0];
+                }
+				user->nickname = msg.params[1];
             }
 			else if(msg.command.compare("USER") == 0)
             {
