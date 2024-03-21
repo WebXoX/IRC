@@ -1,8 +1,8 @@
 NAME = ircserver
 
 CXX = c++
-CXXFLAGS = -Wall -Werror -Wextra -std=c++98  -fsanitize=address -g3
-# CXXFLAGS = -Wall -Werror -Wextra -std=c++98  
+# CXXFLAGS = -Wall -Werror -Wextra -std=c++98  -fsanitize=address -g3
+CXXFLAGS = -Wall -Werror -Wextra -std=c++98  
 
 OBJDIR = ./obj/
 SRCDIR = ./src/
