@@ -1,6 +1,13 @@
 #include "../inc/common.hpp"
 #include "../inc/Reply.hpp"
 
+#define CHANNELISFULL (471)
+#define NOTONCHANNEL (442)
+#define CHANOPRIVSNEEDED (482)
+#define USERONCHANNEL (443)
+#define UNKNOWNMODE (472)
+#define INVITEONLYCHAN (473)
+
 class User {
     public:
         int client_fd;
@@ -23,6 +30,7 @@ class Channel {
         std::map<int, User> chanUsers;
         std::map<int, User> chanOperators;
         std::map<std::string, bool> chanModes;
+        std::string topic;
         int maxUsers;
         void initModes();
     public:
@@ -33,6 +41,7 @@ class Channel {
         int setOperator(const User& user);
         int removeOperator(const User& user);
         int setMode(const User& user, std::string mode, bool value, int maxUsers);
+        int setTopic(const User& user, std::string topic);
         void printUsers();
 
         //MESSAGES
@@ -44,6 +53,7 @@ class Channel {
         std::map<int, User> getUsers();
         std::map<int, User> getOperators();
         std::map<std::string, bool> getModes();
+        std::string getTopic();
         int getNumberOfUsers();
 
         //CHECKERS
@@ -51,6 +61,7 @@ class Channel {
         bool isUser(const User& user);
         bool isMode(std::string mode);
         bool isModeSet(std::string mode);
+        bool hasTopic();
 };
 
 
@@ -62,17 +73,19 @@ Channel::Channel(const std::string& name, const User& user): chanName(name) {
 
 Channel::~Channel() {    }
 
-// Add user function looks for the user in the map and if it finds it, it returns 1, if not, it adds the user to the map and returns 0
 int Channel::addUser(const User& user) {
     if (this->isUser(user)) {
         std::cout << "AddUser Error: " << user.username << " already in channel: " << this->chanName << std::endl;
+        return USERONCHANNEL;
     }
     else if ((this->isModeSet("+l") && (this->getNumberOfUsers() >= this->maxUsers))) {
         std::cout << "AddUser Error: " << this->chanName << " is full" << std::endl;
-        return 1;
+        return CHANNELISFULL;
     }
 
     this->chanUsers.insert(std::make_pair(user.client_fd, user));
+    if (this->hasTopic())
+        std::cout << "Topic: " << this->topic << std::endl;
     std::cout << "AddUser: " << user.username << " added to channel: " << this->chanName << std::endl;
     return 0;
 }
@@ -80,7 +93,7 @@ int Channel::addUser(const User& user) {
 int Channel::removeUser(const User& user) {
     if (!this->isUser(user)) {
         std::cout << "removeUser Error: " << user.username << " not found in channel: " << this->chanName << std::endl;
-        return 1;
+        return NOTONCHANNEL;
     }
     this->chanUsers.erase(user.client_fd);
     std::cout << "removeUser: " << user.username << " removed from channel: " << this->chanName << std::endl;
@@ -90,7 +103,7 @@ int Channel::removeUser(const User& user) {
 int Channel::setOperator(const User& user) {
     if (!this->isUser(user)) {
         std::cout << "setOperator Error: " << user.username << " not found in channel: " << this->chanName << std::endl;
-        return 1;
+        return NOTONCHANNEL;
     } else if (this->isOperator(user)) {
         std::cout << "setOperator Error: " << user.username << " is already operator in channel: " << this->chanName << std::endl;
         return 1;
@@ -101,10 +114,13 @@ int Channel::setOperator(const User& user) {
     return 0;
 }   
 
+
+// to do: ....
+// condidering get an operator as parameter to remove the user
 int Channel::removeOperator(const User& user) {
     if (!this->isUser(user)) {
         std::cout << "removeOperator Error: " << user.username << " not found in channel: " << this->chanName << std::endl;
-        return 1;
+        return NOTONCHANNEL;
     } else if (!this->isOperator(user)) {
         std::cout << "removeOperator Error: " << user.username << " is not operator in channel: " << this->chanName << std::endl;
         return 1;
@@ -112,22 +128,26 @@ int Channel::removeOperator(const User& user) {
     this->chanOperators.erase(this->chanOperators.find(user.client_fd));
     std::cout << "removeOperator: " << user.username << " removed from operators in channel: " << this->chanName << std::endl;
     return 0;
+
+
 }
 
 void Channel::initModes() {
     this->chanModes.insert(std::make_pair("+l", false));
 }
 
+// to do: ....
+// Considering set inviite mode 
 int Channel::setMode(const User& user, std::string mode, bool value, int maxUsers = 30) {
         if (!this->isUser(user)) {
             std::cout << "setMode Error: " << this->chanName << std::endl;
-            return 1;
+            return NOTONCHANNEL;
         } else if (!this->isOperator(user)) {
             std::cout << "setMode Error: " << user.username << " is not operator in channel: " << this->chanName << std::endl;
-            return 1;
+            return CHANOPRIVSNEEDED;
         } else if (!this->isMode(mode)) {
             std::cout << "setMode Error: " << mode << " not found in channel: " << this->chanName << std::endl;
-            return 1;
+            return UNKNOWNMODE;
         } else if (maxUsers < 1) {
             std::cout << "setMode Error: invalid maxUsers" << std::endl;
             return 1;
@@ -139,6 +159,19 @@ int Channel::setMode(const User& user, std::string mode, bool value, int maxUser
             std::cout << "Max users set to: " << maxUsers << " in channel: " << this->chanName << std::endl;
         }
         return 0;
+}
+
+int Channel::setTopic(const User& user, std::string topic) {
+    if (!this->isUser(user)) {
+        std::cout << "setTopic Error: " << this->chanName << std::endl;
+        return NOTONCHANNEL;
+    } else if (!this->isOperator(user)) {
+        std::cout << "setTopic Error: " << user.username << " is not operator in channel: " << this->chanName << std::endl;
+        return CHANOPRIVSNEEDED;
+    }
+    this->topic = topic;
+    std::cout << "Topic set to: " << topic << " in channel: " << this->chanName << std::endl;
+    return 0;
 }
 
 void Channel::printUsers() {
@@ -182,6 +215,10 @@ std::map<std::string, bool> Channel::getModes() {
     return this->chanModes;
 }
 
+std::string Channel::getTopic() {
+    return this->topic;
+}
+
 int Channel::getNumberOfUsers() {
     return this->chanUsers.size();
 }
@@ -216,39 +253,49 @@ bool Channel::isModeSet(std::string mode) {
     return false;
 }
 
+bool Channel::hasTopic() {
+    if (this->topic.empty()) {
+        return false;
+    }
+    return true;
+}
 
-// int main() {
-//     User Jimmy(4, "Jimmy", "JIM123", "IRSSI");
-//     User Jack(5, "Jack Johnson", "Jack234", "IRSSI");
-//     User Ben(6, "Ben Harper", "BEN300", "IRSSI");
-//     User Bob(7, "Bob Marley", "BOB400", "IRSSI");
+
+int main() {
+    User Jimmy(4, "Jimmy", "JIM123", "IRSSI");
+    User Jack(5, "Jack Johnson", "Jack234", "IRSSI");
+    User Ben(6, "Ben Harper", "BEN300", "IRSSI");
+    User Bob(7, "Bob Marley", "BOB400", "IRSSI");
 
 
     
-//     Channel channel1("Linux", Jimmy);
+    Channel channel1("Linux", Jimmy);
 
-//     channel1.addUser(Jack);
-//     channel1.addUser(Ben);
-//     channel1.addUser(Jack);
-//     channel1.removeUser(Jack);
-//     channel1.removeUser(Jack);
+    channel1.setTopic(Jimmy, "Linux is the best");
 
-
-//     channel1.setOperator(Jack);
-//     channel1.setOperator(Jimmy);
-//     channel1.removeOperator(Jimmy);
-//     channel1.setOperator(Ben);
-
-//     channel1.addUser(Jack);
-//     channel1.setOperator(Jack);
-//     channel1.setMode(Jack, "+l", true, 1);
-//     channel1.addUser(Ben);
-//     channel1.setMode(Jack, "+l", true, 3);
-//     channel1.addUser(Ben);
-//     channel1.addUser(Bob);
+    channel1.addUser(Jack);
+    channel1.setTopic(Jack, "Mac is the best");
+    // channel1.addUser(Ben);
+    // channel1.addUser(Jack);
+    // channel1.removeUser(Jack);
+    // channel1.removeUser(Jack);
 
 
+    // channel1.setOperator(Jack);
+    // channel1.setOperator(Jimmy);
+    // channel1.removeOperator(Jimmy);
+    // channel1.setOperator(Ben);
 
-// }
+    // channel1.addUser(Jack);
+    // channel1.setOperator(Jack);
+    // channel1.setMode(Jack, "+l", true, 1);
+    // channel1.addUser(Ben);
+    // channel1.setMode(Jack, "+l", true, 3);
+    // channel1.addUser(Ben);
+    // channel1.addUser(Bob);
+
+
+
+}
 
 
