@@ -1,3 +1,5 @@
+#ifndef CHANNEL_HPP
+
 #include "../inc/common.hpp"
 #include "../inc/Reply.hpp"
 
@@ -12,14 +14,10 @@ class User {
     public:
         int client_fd;
         std::string username;
-        std::string userId;
-        std::string userClient;
         User() {}
-        User(int client_fd, std::string name, std::string id, std::string client){
-            this->client_fd = client_fd;
+        User(int fd, std::string name){
+            this->client_fd = fd;
             this->username = name;
-            this->userId = id;
-            this->userClient = client;
         }
         ~User() {}
 };
@@ -45,8 +43,8 @@ class Channel {
         void printUsers();
 
         //MESSAGES
-        void privSend(const User& user, const std::string& message);
-        void broadcast(const std::string& message);
+        void sendToUser(const User& user, const std::string& message);
+        void sendToChannel(const std::string& message);
 
         //GETTERS
         std::string getName();
@@ -183,12 +181,12 @@ void Channel::printUsers() {
 
 
 // ****** MESSAGES ****** //
-void Channel::privSend(const User& user, const std::string& message) {
+void Channel::sendToUser(const User& user, const std::string& message) {
     send(user.client_fd, message.c_str(), message.length(), 0);
 }
 
 
-void  Channel::broadcast(const std::string& message) {
+void  Channel::sendToChannel(const std::string& message) {
     for (std::map<int, User>::iterator it = this->chanUsers.begin(); it != this->chanUsers.end(); it++) {
         send(it->second.client_fd, message.c_str(), message.length(), 0);
         std::cout << "USER client_fd IN CHANNEL: " << it->second.client_fd << std::endl;
@@ -260,42 +258,8 @@ bool Channel::hasTopic() {
     return true;
 }
 
-
-int main() {
-    User Jimmy(4, "Jimmy", "JIM123", "IRSSI");
-    User Jack(5, "Jack Johnson", "Jack234", "IRSSI");
-    User Ben(6, "Ben Harper", "BEN300", "IRSSI");
-    User Bob(7, "Bob Marley", "BOB400", "IRSSI");
+#endif
 
 
-    
-    Channel channel1("Linux", Jimmy);
-
-    channel1.setTopic(Jimmy, "Linux is the best");
-
-    channel1.addUser(Jack);
-    channel1.setTopic(Jack, "Mac is the best");
-    // channel1.addUser(Ben);
-    // channel1.addUser(Jack);
-    // channel1.removeUser(Jack);
-    // channel1.removeUser(Jack);
-
-
-    // channel1.setOperator(Jack);
-    // channel1.setOperator(Jimmy);
-    // channel1.removeOperator(Jimmy);
-    // channel1.setOperator(Ben);
-
-    // channel1.addUser(Jack);
-    // channel1.setOperator(Jack);
-    // channel1.setMode(Jack, "+l", true, 1);
-    // channel1.addUser(Ben);
-    // channel1.setMode(Jack, "+l", true, 3);
-    // channel1.addUser(Ben);
-    // channel1.addUser(Bob);
-
-
-
-}
 
 
