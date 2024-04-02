@@ -1,7 +1,9 @@
 #include "../inc/Server.hpp"
 #include <poll.h>
 #include <stack>
-
+#include <fstream>
+#include <iostream>
+#include <sys/stat.h>
 int Server::register_user(ircMessage msg, Client * user)
 {
     std::string str;
@@ -152,9 +154,24 @@ void Server::commandPath(ircMessage msg, Client * user)
             str = this->msg("irssi", "375", ":- irssi Message of the Day -", "Message of the Day").c_str();
             len = str.length();
             send(user->client_fd,str.c_str(),len,0);
-            str = this->msg("irssi", "372", ":- Welcome to the IRSSI.Chat Internet Relay Chat Network", "Message of the Day").c_str();
-            len = str.length();
-            send(user->client_fd,str.c_str(),len,0);
+            srand(time(0));
+            int random = rand() % 7 + 1;
+            struct stat fileStat;
+            std::string line;
+	        std::ifstream infile("./messages/motd"+std::to_string(random));
+            if ( infile.is_open() && S_ISDIR(fileStat.st_mode) == 0)
+            {
+                while (std::getline(infile,line))
+                {
+                    str = this->msg("irssi", "372", ":- ",line ).c_str();
+                    len = str.length();
+                    send(user->client_fd,str.c_str(),len,0);
+                    str.clear();
+                }
+                infile.close();
+            }
+            else
+                std::cout << "ERROR FILE DOES NOT EXSIST" << std::endl;
             str = this->msg("irssi", "376", "End of /MOTD command.", "Message of the Day").c_str();
             len = str.length();
             send(user->client_fd,str.c_str(),len,0);
