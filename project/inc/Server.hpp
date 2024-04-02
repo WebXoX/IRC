@@ -73,7 +73,7 @@ class Server
 		int			runServer();
 		int			serverLoop();
 		int			connectionEvent();
-		int			register_user(Client * user);
+		int		register_user(ircMessage msg, Client * user);
 		int			Recv_end(int fd, std::string & line);
 		void		commandPath(ircMessage msg, Client * user);
 		std::string	msg(std::string source, std::string command, std::string param, std::string text);
