@@ -9,7 +9,7 @@ SRCDIR = ./src/
 
 SRC = Server.cpp Client.cpp parsing.cpp main.cpp commands.cpp Channel.cpp serverChannel.cpp
 # SRC = server_t.cpp parsing.cpp
-# SRC = main_t.cpp
+# SRC = Channel.cpp Client.cpp commands.cpp parsing.cpp serverChannel.cpp Server.cpp
 OBJ = $(addprefix $(OBJDIR), $(SRC:.cpp=.o))
 
 all:	$(OBJDIR) $(NAME) 

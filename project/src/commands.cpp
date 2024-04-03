@@ -4,6 +4,10 @@
 #include <fstream>
 #include <iostream>
 #include <sys/stat.h>
+#include "../inc/Channel.hpp"
+
+class Channel;
+
 int Server::register_user(ircMessage msg, Client * user)
 {
     std::string str;
@@ -130,6 +134,11 @@ int Server::register_user(ircMessage msg, Client * user)
     }
     return 0;
 }
+
+
+
+
+
 void Server::commandPath(ircMessage msg, Client * user)
 {
 	std::string		str;
@@ -175,9 +184,11 @@ void Server::commandPath(ircMessage msg, Client * user)
             str = this->msg("irssi", "376", "End of /MOTD command.", "Message of the Day").c_str();
             len = str.length();
             send(user->client_fd,str.c_str(),len,0);
-        } else if (msg.command.compare("JOIN") == 0){
+        } 
+        else if (msg.command.compare("JOIN") == 0){
             std::cout << "join command requested" << std::endl;
-            std::cout << this->hasChannel("test") << std::endl;
+            std::string request = this->joinCommand(msg, *user);
+            send(user->client_fd,request.c_str(),request.length(),0);
         }
 		else
 		{

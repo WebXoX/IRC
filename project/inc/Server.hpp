@@ -39,8 +39,8 @@ class Server
 		sockaddr_in service;
 		int number_of_clients;
 
-		//channel attributes
-		std::map<std::string, Channel> channels;
+		// ********** CHANNEL ********** //
+		std::map<std::string, Channel*> channels;
 
 
 		// int message_code;
@@ -87,10 +87,13 @@ class Server
 		std::string cap_ack(ircMessage cap_list);
 
 
-		//channel members
-		// void addChannel(const Channel& channel);
+		// ********** CHANNEL ********** //
 		// void removeChannel(const Channel& channel);
+		int addChannel( Channel& channel);
 		bool hasChannel(std::string channelName);
+
+		// ********** COMMANDS ********** //
+		std::string joinCommand(ircMessage msg,  Client& user);
 
 	/*exception*/
 	/*getters and setters*/
