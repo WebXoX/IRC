@@ -4,6 +4,7 @@
 #include <fstream>
 #include <iostream>
 #include <sys/stat.h>
+
 int Server::register_user(ircMessage msg, Client * user)
 {
     std::string str;
@@ -113,7 +114,7 @@ int Server::register_user(ircMessage msg, Client * user)
 			}
 
             user->regi_status = 6;
-            str = this->msg("irssi", "001 user", "Welcome to the IRSSI.Chat Internet Relay Chat Network user","").c_str();
+            str = this->msg("irssi", "001 "+user->nickname, "Welcome to the IRSSI.Chat Internet Relay Chat Network "+user->username,"").c_str();
             len = str.length();
             send(user->client_fd,str.c_str(),len,0);
 			str.clear();
@@ -154,16 +155,19 @@ void Server::commandPath(ircMessage msg, Client * user)
 			std::cerr << "Invalid command" << std::endl;
 		}
 	}
-    else if(msg.command.compare("MOTD") == 0 && user->regi_status == 6)
+    else if(msg.command.compare("MOTD") == 0 && user->regi_status == 0)
         {
             str = this->msg("irssi", "375", ":- irssi Message of the Day -", "Message of the Day").c_str();
             len = str.length();
             send(user->client_fd,str.c_str(),len,0);
-            srand(time(0));
-            int random = rand() % 7 + 1;
+            std::srand(static_cast<unsigned>(std::time(0)));
+            int num = rand() % 7 + 1;
+             num = rand() % 7 + 1;
+        std::ostringstream oss;
+        oss << num;
             struct stat fileStat;
             std::string line;
-	        std::ifstream infile("./messages/motd"+std::to_string(random) + ".txt");
+	        std::ifstream infile("./src/messages/motd"+  oss.str() + ".txt");
             if ( infile.is_open() && S_ISDIR(fileStat.st_mode) == 0)
             {
                 while (std::getline(infile,line))

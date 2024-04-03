@@ -30,13 +30,15 @@ class Server
 	private:
 		int server;
 		std::vector <Client*> client;
-		std::vector <std::string> nicknames;
 		std::vector <struct pollfd> fd_poll;
+		std::vector <std::string> cap_list;
+		sockaddr_in service;
 		int port;
 		std::string ports;
 		std::string pass;
-		sockaddr_in service;
 		int number_of_clients;
+		std::vector <std::string> nicknames;
+		std::string creation_date;
 		// int message_code;
 
 		/*Capability Negotiation Settings for IRSSI SERVER SIDE*/
@@ -69,16 +71,17 @@ class Server
 	/*orth Server*/
 	/*exception*/
 		static void		sighandle(int sig);
-		int			serverInit();
-		int			runServer();
-		int			serverLoop();
-		int			connectionEvent();
-		int		register_user(ircMessage msg, Client * user);
-		int			Recv_end(int fd, std::string & line);
-		void		commandPath(ircMessage msg, Client * user);
-		std::string	msg(std::string source, std::string command, std::string param, std::string text);
-		std::string cap_ls();
-		std::string cap_ack(ircMessage cap_list);
+		int				serverInit();
+		int				runServer();
+		int				serverLoop();
+		int				connectionEvent();
+		int				register_user(ircMessage msg, Client * user);
+		int				Recv_end(int fd, std::string & line);
+		void			commandPath(ircMessage msg, Client * user);
+		std::string		msg(std::string source, std::string command, std::string param, std::string text);
+		std::string 	cap_ls();
+		std::string 	cap_ack(ircMessage cap_list);
+		std::string 	date_now();
 	/*exception*/
 	/*getters and setters*/
 	/*getters and setters*/
