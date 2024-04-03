@@ -96,8 +96,7 @@ int Server::register_user(ircMessage msg, Client * user)
             }
             user->nickname = msg.params[0];
         }
-        user->nickname = msg.params[1];
-            return 1;
+        return 1;
     }
     else if(msg.command.compare("USER") == 0 && user->regi_status == 5)
     {
@@ -149,7 +148,13 @@ void Server::commandPath(ircMessage msg, Client * user)
 				send(user->client_fd,str.c_str(),len,0);
 			}
 		}
-        else if(msg.command.compare("MOTD") == 0 && user->regi_status == 6)
+        // add other commands here!!!!!!!!!!!!
+		else
+		{
+			std::cerr << "Invalid command" << std::endl;
+		}
+	}
+    else if(msg.command.compare("MOTD") == 0 && user->regi_status == 6)
         {
             str = this->msg("irssi", "375", ":- irssi Message of the Day -", "Message of the Day").c_str();
             len = str.length();
@@ -158,7 +163,7 @@ void Server::commandPath(ircMessage msg, Client * user)
             int random = rand() % 7 + 1;
             struct stat fileStat;
             std::string line;
-	        std::ifstream infile("./messages/motd"+std::to_string(random));
+	        std::ifstream infile("./messages/motd"+std::to_string(random) + ".txt");
             if ( infile.is_open() && S_ISDIR(fileStat.st_mode) == 0)
             {
                 while (std::getline(infile,line))
@@ -176,12 +181,6 @@ void Server::commandPath(ircMessage msg, Client * user)
             len = str.length();
             send(user->client_fd,str.c_str(),len,0);
         }
-        // add other commands here!!!!!!!!!!!!
-		else
-		{
-			std::cerr << "Invalid command" << std::endl;
-		}
-	}
 	else
 	{
 		str = this->msg("irssi", "461", msg.command, "Not enough parameters").c_str();
