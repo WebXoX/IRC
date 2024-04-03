@@ -18,6 +18,7 @@
 #include <cstring>
 #include "../inc/Client.hpp"
 #include "../inc/parsing.hpp"
+#include "../inc/Channel.hpp"
 
 
 #include <netdb.h>
@@ -37,6 +38,11 @@ class Server
 		std::string pass;
 		sockaddr_in service;
 		int number_of_clients;
+
+		//channel attributes
+		std::map<std::string, Channel> channels;
+
+
 		// int message_code;
 
 		/*Capability Negotiation Settings for IRSSI SERVER SIDE*/
@@ -79,10 +85,20 @@ class Server
 		std::string	msg(std::string source, std::string command, std::string param, std::string text);
 		std::string cap_ls();
 		std::string cap_ack(ircMessage cap_list);
+
+
+		//channel members
+		// void addChannel(const Channel& channel);
+		// void removeChannel(const Channel& channel);
+		bool hasChannel(std::string channelName);
+
 	/*exception*/
 	/*getters and setters*/
 	/*getters and setters*/
 	/*extra*/
 	/*extra*/
 };
+
+
+
 #endif

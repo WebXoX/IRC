@@ -175,8 +175,10 @@ void Server::commandPath(ircMessage msg, Client * user)
             str = this->msg("irssi", "376", "End of /MOTD command.", "Message of the Day").c_str();
             len = str.length();
             send(user->client_fd,str.c_str(),len,0);
+        } else if (msg.command.compare("JOIN") == 0){
+            std::cout << "join command requested" << std::endl;
+            std::cout << this->hasChannel("test") << std::endl;
         }
-        // add other commands here!!!!!!!!!!!!
 		else
 		{
 			std::cerr << "Invalid command" << std::endl;

@@ -7,7 +7,7 @@ CXXFLAGS = -Wall -Werror -Wextra -std=c++98
 OBJDIR = ./obj/
 SRCDIR = ./src/
 
-SRC = Server.cpp Client.cpp parsing.cpp main.cpp commands.cpp
+SRC = Server.cpp Client.cpp parsing.cpp main.cpp commands.cpp Channel.cpp serverChannel.cpp
 # SRC = server_t.cpp parsing.cpp
 # SRC = main_t.cpp
 OBJ = $(addprefix $(OBJDIR), $(SRC:.cpp=.o))
@@ -34,6 +34,6 @@ fclean:
 re: fclean all
 
 server: 
-	@ ./$(NAME)
+	@ ./$(NAME) 4242 asdf
 
 	

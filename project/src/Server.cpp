@@ -520,10 +520,10 @@ int Server::Recv_end(int fd, std::string & line)
 }
 int Server::serverLoop()
 {
-    int j = 0;
+    // int j = 0;
 	while(1)
     {
-        j++;
+        // j++;
         if (poll((&this->fd_poll[0]), this->number_of_clients, 1000) == -1)
         {
             std::cerr << "Error in poll" << std::endl;
