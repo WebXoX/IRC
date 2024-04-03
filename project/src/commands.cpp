@@ -1,7 +1,9 @@
 #include "../inc/Server.hpp"
 #include <poll.h>
 #include <stack>
-
+#include <fstream>
+#include <iostream>
+#include <sys/stat.h>
 int Server::register_user(ircMessage msg, Client * user)
 {
     std::string str;
@@ -31,6 +33,7 @@ int Server::register_user(ircMessage msg, Client * user)
                 user->regi_status = 3;
             }
         }
+            return 1;
     }
     else if(msg.command.compare("PASS") == 0)
     {
@@ -56,6 +59,7 @@ int Server::register_user(ircMessage msg, Client * user)
             len = str.length();
             send(user->client_fd,str.c_str(),len,0);
         }
+            return 1;
                     // throw  "No re-registeration";
     }	
     else if(msg.command.compare("NICK") == 0 && user->regi_status == 4)
@@ -93,6 +97,7 @@ int Server::register_user(ircMessage msg, Client * user)
             user->nickname = msg.params[0];
         }
         user->nickname = msg.params[1];
+            return 1;
     }
     else if(msg.command.compare("USER") == 0 && user->regi_status == 5)
     {
@@ -120,7 +125,8 @@ int Server::register_user(ircMessage msg, Client * user)
             len = str.length();
             send(user->client_fd,str.c_str(),len,0);
         }
-            // throw "ERR_ALREADYREGISTERED";
+    return 1;
+        // throw "ERR_ALREADYREGISTERED";
     }
     return 0;
 }
@@ -131,7 +137,7 @@ void Server::commandPath(ircMessage msg, Client * user)
     // std::cout << msg.command << std::endl;
     if(msg.params.size() > 0)
     {
-        if(register_user(msg,user) == 0)
+        if(register_user(msg,user) == 1)
         {
 		}
 		else if(msg.command.compare("PING") == 0)
@@ -143,6 +149,34 @@ void Server::commandPath(ircMessage msg, Client * user)
 				send(user->client_fd,str.c_str(),len,0);
 			}
 		}
+        else if(msg.command.compare("MOTD") == 0 && user->regi_status == 6)
+        {
+            str = this->msg("irssi", "375", ":- irssi Message of the Day -", "Message of the Day").c_str();
+            len = str.length();
+            send(user->client_fd,str.c_str(),len,0);
+            srand(time(0));
+            int random = rand() % 7 + 1;
+            struct stat fileStat;
+            std::string line;
+	        std::ifstream infile("./messages/motd"+std::to_string(random));
+            if ( infile.is_open() && S_ISDIR(fileStat.st_mode) == 0)
+            {
+                while (std::getline(infile,line))
+                {
+                    str = this->msg("irssi", "372", ":- ",line ).c_str();
+                    len = str.length();
+                    send(user->client_fd,str.c_str(),len,0);
+                    str.clear();
+                }
+                infile.close();
+            }
+            else
+                std::cout << "ERROR FILE DOES NOT EXSIST" << std::endl;
+            str = this->msg("irssi", "376", "End of /MOTD command.", "Message of the Day").c_str();
+            len = str.length();
+            send(user->client_fd,str.c_str(),len,0);
+        }
+        // add other commands here!!!!!!!!!!!!
 		else
 		{
 			std::cerr << "Invalid command" << std::endl;
