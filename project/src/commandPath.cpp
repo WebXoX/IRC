@@ -186,7 +186,6 @@ void Server::commandPath(ircMessage msg, Client * user)
             send(user->client_fd,str.c_str(),len,0);
         } 
         else if (msg.command.compare("JOIN") == 0){
-            std::cout << "join command requested" << std::endl;
             std::string request = this->joinCommand(msg, *user);
             send(user->client_fd,request.c_str(),request.length(),0);
         }

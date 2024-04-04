@@ -70,3 +70,12 @@ Client& Client::operator=(const Client& rhs)
 /*extra*/
 /*getter and setters*/
 /*getter and setters*/
+
+
+// ****** CHANNEL ****** //
+
+int Client::addChannelInClient(std::string& channel)
+{
+	this->channels.push_back(channel);
+	return 0;
+}

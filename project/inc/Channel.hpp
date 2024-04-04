@@ -1,25 +1,30 @@
 #ifndef CHANNEL_HPP
 #define CHANNEL_HPP
 
-#include "../inc/common.hpp"
-#include "../inc/Reply.hpp"
-#include "../inc/Client.hpp"
+#include "common.hpp"
+#include "Reply.hpp"
+#include "Client.hpp"
+#include "parsing.hpp"
 
 
 class Channel {
-    private:
-        std::string name;
-        std::map<int, Client*> users;
     public:
-        Channel(const std::string& name, Client& user);
+        std::string name;
+        std::map<int, Client> users;
+        std::map<int, Client> operators;
+
+        Channel();
+        Channel(std::string& name, Client& user);
+        Channel(const Channel& copy);
+        Channel& operator=(const Channel& copy);
         ~Channel();
 
-        int addUserInChannel(Client& user);
-        bool isUserInChannel(Client& user);
+        std::string addUserInChannel(Client& user);
+        std::string setChannelOperator(Client& user);
 
-        // ****** GETTERS ****** //
-        std::string getName() ;
-        
+        // ****** CHECKERS ****** //
+        bool isUserInChannel(Client& user);
+        bool isUserOperator(Client& user);
 };
 
 #endif

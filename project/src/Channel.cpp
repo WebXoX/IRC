@@ -1,62 +1,55 @@
 #include "../inc/Channel.hpp"
-#include "../inc/Client.hpp"
-#include "../inc/Server.hpp"
-#include "../inc/parsing.hpp"
+#include "../inc/Reply.hpp"
 
 
-Channel::Channel(const std::string& name,  Client& user): name(name) {
+
+Channel::Channel() {}
+
+Channel::Channel(std::string& name, Client& user): name(name) {
     this->addUserInChannel(user);
+    this->setChannelOperator(user);
+}
+
+Channel::Channel(const Channel& copy) { *this = copy; }
+
+Channel& Channel::operator=(const Channel& copy) {
+    this->name = copy.name;
+    std::map<int, Client>::const_iterator it;
+    for (it = copy.users.begin(); it != copy.users.end(); it++)
+        this->users[it->first] = it->second;
+    for (it = copy.operators.begin(); it != copy.operators.end(); it++)
+        this->operators[it->first] = it->second;
+    return *this;
 }
 
 Channel::~Channel() {}
 
-int Channel::addUserInChannel( Client& user) {
-    if (this->isUserInChannel(user)) {
-        return 1;
-    }
-    this->users[user.client_fd] = &user;
-    return 0;
+
+std::string Channel::addUserInChannel(Client& user) {
+    if (this->isUserInChannel(user))
+        return ERR_USERONCHANNEL(user.username, user.nickname, this->name);
+    this->users[user.client_fd] = user;
+    user.currentChannel = this->name;
+    return RPL_JOIN(user_id(user.nickname, user.username), this->name);
 }
 
-bool Channel::isUserInChannel( Client& user) {
-    return this->users.find(user.client_fd) != this->users.end();   
+std::string Channel::setChannelOperator(Client& user) {
+    if (!this->isUserInChannel(user))
+        return ERR_NOTONCHANNEL(user.username, this->name);
+    this->operators[user.client_fd] = user;
+    return RPL_YOUREOPER(user.username);
+}
+
+// // ****** CHECKERS ****** //
+bool Channel::isUserInChannel(Client& user) {
+    return this->users.find(user.client_fd) != this->users.end();
+}
+
+bool Channel::isUserOperator(Client& user) {
+    return this->operators.find(user.client_fd) != this->operators.end();
 }
 
 
 
-// ****** GETTERS ****** //
 
-std::string Channel::getName()  {
-    return this->name;
-}
-
-
-
-
-
-
-// ****** SERVER ****** //
-
-std::string Server::joinCommand(ircMessage msg, Client& user) {
-    (void)user;
-    std::string chanName = msg.params[0];
-    if (this->hasChannel(chanName))
-        return "Channel already exists";
-    Channel newChannel(chanName, user);
-    this->addChannel(newChannel);
-    // add channel to the client
-    return "Channel created AND ADDED";
-}
-
-int Server::addChannel( Channel& channel) {
-    if (!this->hasChannel(channel.getName())) {
-        this->channels[channel.getName()] = &channel;
-        return 1;
-    }
-    return 0;
-}
-
-bool Server::hasChannel(std::string channelName) {
-	return this->channels.find(channelName) != this->channels.end();
-}
 

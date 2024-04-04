@@ -19,7 +19,7 @@
 #include "../inc/Client.hpp"
 #include "../inc/parsing.hpp"
 #include "../inc/Channel.hpp"
-
+#include "../inc/common.hpp"
 
 #include <netdb.h>
 /*
@@ -39,8 +39,6 @@ class Server
 		sockaddr_in service;
 		int number_of_clients;
 
-		// ********** CHANNEL ********** //
-		std::map<std::string, Channel*> channels;
 
 
 		// int message_code;
@@ -88,9 +86,11 @@ class Server
 
 
 		// ********** CHANNEL ********** //
-		// void removeChannel(const Channel& channel);
-		int addChannel( Channel& channel);
-		bool hasChannel(std::string channelName);
+		std::map<std::string, Channel> channels;
+
+		int addChannelInServer( Channel& channel);
+		bool hasChannelInServer(std::string channelName);
+		Channel& getChannel(std::string channelName);
 
 		// ********** COMMANDS ********** //
 		std::string joinCommand(ircMessage msg,  Client& user);

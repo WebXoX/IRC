@@ -561,3 +561,35 @@ int Server::serverLoop()
 /*extra*/
 /*getter and setters*/
 /*getter and setters*/
+
+
+// ****** CHANNEL ****** //
+
+std::string Server::joinCommand(ircMessage msg, Client& user) {
+    (void)user;
+    std::string chanName = msg.params[0];
+    if (hasChannelInServer(chanName)) {
+        return this->channels[chanName].addUserInChannel(user);
+    }
+
+    Channel newChannel(chanName, user);
+    this->addChannelInServer(newChannel);
+    return RPL_JOIN(user_id(user.nickname, user.username), newChannel.name);
+
+}
+
+int Server::addChannelInServer(Channel& channel) {
+    if (hasChannelInServer(channel.name)) 
+        return 1;
+    this->channels[channel.name] = channel;
+    return 0;
+}
+
+bool Server::hasChannelInServer(std::string channelName) {
+    return this->channels.find(channelName) != this->channels.end();
+}
+
+
+
+
+

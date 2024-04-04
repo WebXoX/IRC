@@ -7,9 +7,9 @@ CXXFLAGS = -Wall -Werror -Wextra -std=c++98
 OBJDIR = ./obj/
 SRCDIR = ./src/
 
-SRC = Server.cpp Client.cpp parsing.cpp main.cpp commands.cpp Channel.cpp serverChannel.cpp
-# SRC = server_t.cpp parsing.cpp
-# SRC = Channel.cpp Client.cpp commands.cpp parsing.cpp serverChannel.cpp Server.cpp
+SRC = Server.cpp Client.cpp parsing.cpp main.cpp commandPath.cpp Channel.cpp serverChannel.cpp
+# SRC = Server.cpp Client.cpp parsing.cpp commandPath.cpp Channel.cpp serverChannel.cpp
+
 OBJ = $(addprefix $(OBJDIR), $(SRC:.cpp=.o))
 
 all:	$(OBJDIR) $(NAME) 
