@@ -53,7 +53,6 @@ class Client
 	/*extra*/
 
 	// ****** CHANNEL ATRIBUTES ****** //
-	std::vector<std::string> channels;
 	std::string currentChannel;
 
 	// ****** CHANNEL MEMBERS****** //

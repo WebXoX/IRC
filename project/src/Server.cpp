@@ -565,16 +565,14 @@ int Server::serverLoop()
 
 // ****** CHANNEL ****** //
 
-std::string Server::joinCommand(ircMessage msg, Client& user) {
-    (void)user;
-    std::string chanName = msg.params[0];
-    if (hasChannelInServer(chanName)) {
+std::string Server::joinCommand(std::string chanName, Client& user) {
+
+    if (hasChannelInServer(chanName)) 
         return this->channels[chanName].addUserInChannel(user);
-    }
 
     Channel newChannel(chanName, user);
     this->addChannelInServer(newChannel);
-    return RPL_JOIN(user_id(user.nickname, user.username), newChannel.name);
+    return newChannel.welcomeMessage(user);
 
 }
 

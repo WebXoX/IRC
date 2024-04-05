@@ -10,8 +10,8 @@
 class Channel {
     public:
         std::string name;
-        std::map<int, Client> users;
-        std::map<int, Client> operators;
+        std::map<int, Client*> users;
+        std::map<int, Client*> operators;
 
         Channel();
         Channel(std::string& name, Client& user);
@@ -21,6 +21,13 @@ class Channel {
 
         std::string addUserInChannel(Client& user);
         std::string setChannelOperator(Client& user);
+        void broadcastMessage(Client& user, std::string message);
+        void announceNewUser(Client& user);
+        int howManyUsersInChannel();
+
+        // ****** GENERATE MACROS ****** //
+        std::string welcomeMessage(Client& user);
+        std::string listOfUsers();
 
         // ****** CHECKERS ****** //
         bool isUserInChannel(Client& user);

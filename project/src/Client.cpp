@@ -4,6 +4,7 @@
 Client::Client ()
 {
 	this->client_fd = 0;
+	this->nickname = "somebody";
 	this->regi_status = 0;
 	memset(this->buffer,0,1024);
 	// std::cout << "Client default constructor" << std::endl;
@@ -71,11 +72,3 @@ Client& Client::operator=(const Client& rhs)
 /*getter and setters*/
 /*getter and setters*/
 
-
-// ****** CHANNEL ****** //
-
-int Client::addChannelInClient(std::string& channel)
-{
-	this->channels.push_back(channel);
-	return 0;
-}

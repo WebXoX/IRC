@@ -93,7 +93,7 @@ class Server
 		Channel& getChannel(std::string channelName);
 
 		// ********** COMMANDS ********** //
-		std::string joinCommand(ircMessage msg,  Client& user);
+		std::string joinCommand(std::string chanName,  Client& user);
 
 	/*exception*/
 	/*getters and setters*/
