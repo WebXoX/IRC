@@ -21,7 +21,7 @@ class Channel {
 
         std::string addUserInChannel(Client& user);
         std::string setChannelOperator(Client& user);
-        void broadcastMessage(Client& user, std::string message);
+        void broadcastMessage(std::string message);
         void announceNewUser(Client& user);
         int howManyUsersInChannel();
 

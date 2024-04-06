@@ -200,7 +200,8 @@ void Server::commandPath(ircMessage msg, Client * user)
 		else
 		{
 			// std::cerr << "Invalid command" << std::endl;
-            this->channels[user->currentChannel].broadcastMessage(*user, msg.message);
+            std::string message = "<" + user->nickname + "> " + msg.message;
+            this->channels[user->currentChannel].broadcastMessage(message);
 
 		}
 	}

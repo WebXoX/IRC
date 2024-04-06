@@ -39,25 +39,16 @@ std::string Channel::welcomeMessage(Client& user) {
         RPL_ENDOFNAMES(user.username, this->name);
 }
 
-void Channel::announceNewUser(Client& user) {
-    std::string message = RPL_JOIN(user_id(user.nickname, user.username), this->name);
-    std::map<int, Client*>::iterator it;
-    for (it = this->users.begin(); it != this->users.end(); it++) {
-        if (it->second->currentChannel == this->name)
-            send(it->first, message.c_str(), message.length(), 0);
-    }
-}
-
 std::string Channel::addUserInChannel(Client& user) {
     if (this->isUserInChannel(user)) {
         if (user.currentChannel != this->name) {
             user.currentChannel = this->name;
-            this->announceNewUser(user);
+            this->broadcastMessage(RPL_JOIN(user_id(user.nickname, user.username), this->name));
             return "";
         }
         return ERR_USERONCHANNEL(user.username, user.nickname, this->name);
     }
-    this->announceNewUser(user);
+    this->broadcastMessage(RPL_JOIN(user_id(user.nickname, user.username), this->name));
     this->users[user.client_fd] = &user;
     user.currentChannel = this->name;
     return this->welcomeMessage(user);
@@ -70,12 +61,11 @@ std::string Channel::setChannelOperator(Client& user) {
     return RPL_YOUREOPER(user.username);
 }
 
-void Channel::broadcastMessage(Client& user, std::string message) {
-    std::string newMessage = "<@" + user.nickname + "> " + message;
+void Channel::broadcastMessage(std::string message) {
     std::map<int, Client*>::iterator it;
     for (it = this->users.begin(); it != this->users.end(); it++) {
         if (it->second->currentChannel == this->name)
-            send(it->first, newMessage.c_str(), newMessage.length(), 0);
+            send(it->first, message.c_str(), message.length(), 0);
     }
 
 }
