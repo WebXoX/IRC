@@ -119,16 +119,16 @@ int Server::register_user(ircMessage msg, Client * user)
         else
         {
             user->nickname = msg.params[0];
-            // this->nicknames.push_back(msg.params[0]);
-            // user->regi_status = 5;
-            // if(user->nickname.empty() == false)
-            // {
-            //     this->nicknames.erase(std::find(this->nicknames.begin(), this->nicknames.end(), user->nickname));
-            //     str = this->msg("irssi", NULL,user->nickname,"NICK "+ msg.params[0]).c_str();
-            //     len = str.length();
-            //     send(user->client_fd,str.c_str(),len,0);
-            //     user->nickname.clear();
-            // }
+            this->nicknames.push_back(msg.params[0]);
+            user->regi_status = 5;
+            if(user->nickname.empty() == false)
+            {
+                this->nicknames.erase(std::find(this->nicknames.begin(), this->nicknames.end(), user->nickname));
+                str = this->msg("irssi", NULL,user->nickname,"NICK "+ msg.params[0]).c_str();
+                len = str.length();
+                send(user->client_fd,str.c_str(),len,0);
+                user->nickname.clear();
+            }
         }
         return 1;
     }
