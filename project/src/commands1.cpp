@@ -5,65 +5,55 @@
 #include <fstream>
 #include <iostream>
 #include <sys/stat.h>
-#include <fcntl.h>
 
-int Server::register_user(ircMessage msg, Client * user)
+void cap_ls(Client *user)
 {
-    std::string str;
-    int len;
+    std::string str =  this->msg("irssi", "CAP * LS", "","").c_str();
+    int len = str.length();
+    user->regi_status = 1;
+    send(user->client_fd,str.c_str(),len,0);
+}
+
+void cap_ack(Client *user)
+{
+    std::string str = this->msg("irssi", "CAP * ACK","","").c_str();
+    int len = str.length();
+    user->regi_status = 2;
+    send(user->client_fd,str.c_str(),len,0);
+}
+
+void Server::register_user(ircMessage msg, Client * user)
+{
     if(msg.command.compare("CAP") == 0)
     {
         if(msg.params[0].compare("LS") == 0 && user->regi_status == 0)
-        {
-            std::string ls = cap_ls();
-            str = this->msg("irssi", "CAP * LS", ls,"").c_str();
-            len = str.length();
-            user->regi_status = 1;
-            send(user->client_fd,str.c_str(),len,0);
-        }
+            cap_ls();
         else if(msg.params[0].compare("REQ") == 0 && user->regi_status == 1)
-        {
-            // std::cout << msg.params[0] << std::endl;
-            str = this->msg("irssi", "CAP * ACK", cap_ack(msg),"").c_str();
-            len = str.length();
-            user->regi_status = 2;
-            send(user->client_fd,str.c_str(),len,0);
-        }
+            cap_ack();
         else if(msg.params[0].compare("END") == 0 && user->regi_status == 2)
         {
-            if(user->regi_status == 2)
-            {
-                user->regi_status = 3;
-            }
+            user->regi_status = 3;
         }
-            return 1;
+        else
+            throw(ERR_ALREADYREGISTERED);
     }
-    else if(msg.command.compare("PASS") == 0)
+     else if(msg.command.compare("PASS") == 0)
     {
         if(user->regi_status == 3)
         {
             if(msg.params[0].compare(this->pass) == 0)
-            {
                 user->regi_status = 4;
-            }
             else
-            {
-                str = this->msg("irssi", "464", msg.params[0], "Password incorrect").c_str();
-                len = str.length();
-                send(user->client_fd,str.c_str(),len,0);
-                close(user->client_fd);
-                user->client_fd = -1;
-            }
+                throw(ERR_PASSWDMISMATCH);
+                // str = this->msg("irssi", "464", msg.params[0], "Password incorrect").c_str();
+                // len = str.length();
+                // send(user->client_fd,str.c_str(),len,0);
+                // close(user->client_fd);
+                // user->client_fd = -1;
             
         }
         else
-        {
-            str = this->msg("irssi", "462", msg.params[0], "You may not reregister").c_str();
-            len = str.length();
-            send(user->client_fd,str.c_str(),len,0);
-        }
-            return 1;
-                    // throw  "No re-registeration";
+            throw(ERR_ALREADYREGISTERED);
     }	
     else if(msg.command.compare("NICK") == 0 && user->regi_status == 4)
     {
@@ -120,22 +110,6 @@ int Server::register_user(ircMessage msg, Client * user)
             len = str.length();
             send(user->client_fd,str.c_str(),len,0);
 			str.clear();
-             str = this->msg("irssi", "002 "+user->nickname, " :Your host is IRSSI, running version 1.0","").c_str();
-            len = str.length();
-            send(user->client_fd,str.c_str(),len,0);
-			str.clear();
-             str = this->msg("irssi", "003 "+user->nickname, ":This server was created "+this->creation_date,"").c_str();
-            len = str.length();
-            send(user->client_fd,str.c_str(),len,0);
-			str.clear();
-             str = this->msg("irssi", "004 "+user->nickname, "IRSSI.chat 1.0","").c_str();
-            len = str.length();
-            send(user->client_fd,str.c_str(),len,0);
-			str.clear();
-             str = this->msg("irssi", "005 "+user->nickname, "Welcome to the IRSSI.Chat Internet Relay Chat Network "+user->username,"").c_str();
-            len = str.length();
-            send(user->client_fd,str.c_str(),len,0);
-			str.clear();
         }
         else
         {
@@ -146,13 +120,13 @@ int Server::register_user(ircMessage msg, Client * user)
     return 1;
         // throw "ERR_ALREADYREGISTERED";
     }
-    return 0;
 }
+
+
 void Server::commandPath(ircMessage msg, Client * user)
 {
 	std::string		str;
 	size_t			len;
-    // std::cout << msg.command << std::endl;
     if(msg.params.size() > 0)
     {
         if(register_user(msg,user) == 1)
@@ -180,13 +154,12 @@ void Server::commandPath(ircMessage msg, Client * user)
             send(user->client_fd,str.c_str(),len,0);
             std::srand(static_cast<unsigned>(time(0)));
             int num = rand() % 7 + 1;
-            num = rand() % 7 + 1;
+             num = rand() % 7 + 1;
             std::ostringstream oss;
             oss << num;
             struct stat fileStat;
             std::string line;
-	        std::ifstream infile;
-            infile.open(("./src/messages/motd"+  oss.str() + ".txt").c_str(), std::ios::in);
+	        std::ifstream infile("./src/messages/motd"+  oss.str() + ".txt");
             if ( infile.is_open() && S_ISDIR(fileStat.st_mode) == 0)
             {
                 while (std::getline(infile,line))

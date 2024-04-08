@@ -28,37 +28,42 @@ class Server
 {
 	/* VARIABLES*/
 	private:
+	/*   server socket variables  */
 		int server;
-		std::vector <Client*> client;
-		std::vector <struct pollfd> fd_poll;
-		std::vector <std::string> cap_list;
 		sockaddr_in service;
 		int port;
 		std::string ports;
+		std::vector <struct pollfd> fd_poll;
+	/*   server socket variables  */
+	/*   server authentication  */
 		std::string pass;
-		int number_of_clients;
-		std::vector <std::string> nicknames;
-		std::string creation_date;
-		// int message_code;
+	/*   server authentication  */
 
+	/*   server info  */
+		std::string creation_date;
+		int number_of_clients;
+		std::vector <Client*> client;
+		std::vector <std::string> nicknames;
+	/*   server info  */
+
+	/*   future extras  */
 		/*Capability Negotiation Settings for IRSSI SERVER SIDE*/
-		bool multi_prefix;
-		bool extended_join;
-		bool away_notify;
-		bool chghost;
-		bool account_notify;
-		bool server_time;
-		std::string sasl;
+		// bool multi_prefix;
+		// bool extended_join;
+		// bool away_notify;
+		// bool chghost;
+		// bool account_notify;
+		// bool server_time;
+		// std::string sasl;
 		/*complex settings*/
-		
 		// bool tls;
 		// bool account_tag;
 		// bool cap_notify;
 		// bool echo_message;
-
 		/*complex settings*/
-
 		/*Capability Negotiation Settings*/
+	/*   future extras  */
+
     /* VARIABLES*/
 	public:
 	/*orth form*/
@@ -70,7 +75,7 @@ class Server
 		Server& operator=(const Server &a);
 	/*orth Server*/
 	/*exception*/
-		static void		sighandle(int sig);
+		void			sighandle(int sig);
 		int				serverInit();
 		int				runServer();
 		int				serverLoop();
@@ -78,6 +83,7 @@ class Server
 		int				register_user(ircMessage msg, Client * user);
 		int				Recv_end(int fd, std::string & line);
 		void			commandPath(ircMessage msg, Client * user);
+		int 			definedmessage(int fd,std::string str);
 		std::string		msg(std::string source, std::string command, std::string param, std::string text);
 		std::string 	cap_ls();
 		std::string 	cap_ack(ircMessage cap_list);

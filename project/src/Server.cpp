@@ -1,7 +1,7 @@
 #include "../inc/Server.hpp"
 #include <poll.h>
 #include <stack>
-
+#include <cmath>
 /* orth Server / constructor*/
 Server::Server ()
 {
@@ -20,14 +20,6 @@ Server::Server (std::string port , std::string pass)
 	{
 		std::cerr << e.what() << '\n';
 	}
-		// g_signal = 0;
-	this->multi_prefix = true;
-	this->extended_join = true;
-	this->away_notify = true;
-	this->chghost = true;
-	this->account_notify = true;
-	this->server_time = true;
-	this->sasl = "PLAIN";
 	std::cout << "Server default constructor" << std::endl;
 }
 Server::Server (const Server &a)
@@ -153,69 +145,84 @@ std::string Server::msg(std::string source, std::string command, std::string par
 std::string Server::cap_ls()
 {
 	std::string cap_list;
-	if(this->account_notify)
-    {
-		cap_list += "account-notify ";
+	// if(this->account_notify)
+    // {
+	// 	cap_list += "account-notify ";
 
-    }
-	if(this->away_notify)
-    {
-        cap_list += "away-notify ";
+    // }
+	// if(this->away_notify)
+    // {
+    //     cap_list += "away-notify ";
 
-    }	
-	if(this->chghost)
-    {
-		cap_list += "chghost ";
+    // }	
+	// if(this->chghost)
+    // {
+	// 	cap_list += "chghost ";
 
-    }
-	if(this->extended_join)
-    {
-        cap_list += "extended-join ";
+    // }
+	// if(this->extended_join)
+    // {
+    //     cap_list += "extended-join ";
         
-    }
-    if(this->multi_prefix)
-		cap_list += "multi-prefix ";
-    cap_list += "sasl="+this->sasl+" server-time";
+    // }
+    // if(this->multi_prefix)
+	// 	cap_list += "multi-prefix ";
+    // cap_list += "sasl="+this->sasl+" server-time";
     // return ("account-notify away-notify chghost extended-join multi-prefix sasl=PLAIN server-time");
 	return cap_list;
 }
 std::string Server::cap_ack( ircMessage msg)
 {
+    (void)msg;
 	std::string str;
 	std::string ack;
-	std::string cap_list[] = {"account-notify","away-notify","chghost","extended-join","multi-prefix","sasl="+this->sasl+" server-time"};
-	ack = msg.trailing.substr(0, msg.trailing.find_first_of(" "));
-	while (msg.trailing.empty() == false)
-	{
-		if(std::find(&cap_list[0], (&cap_list[6]), ack) != &cap_list[6])
-		{
-			str += ack + " ";
-		}
-		if(msg.trailing.empty() == true)
-			break;
-        // std::cout << msg.trailing << std::endl;
-		msg.trailing.erase(0, msg.trailing.find_first_of(" ") + 1);
-        int subint = msg.trailing.find_first_of(" ");
-        if(  msg.trailing.find_first_of(" ") == std::string::npos)
-        {
-            ack = msg.trailing;
-            msg.trailing.clear();
-        }
-        else
-            ack = msg.trailing.substr(0, subint);
-	}
+	// std::string cap_list[] = {"account-notify","away-notify","chghost","extended-join","multi-prefix","sasl="+this->sasl+" server-time"};
+	// ack = msg.trailing.substr(0, msg.trailing.find_first_of(" "));
+	// while (msg.trailing.empty() == false)
+	// {
+	// 	if(std::find(&cap_list[0], (&cap_list[6]), ack) != &cap_list[6])
+	// 	{
+	// 		str += ack + " ";
+	// 	}
+	// 	if(msg.trailing.empty() == true)
+	// 		break;
+    //     // std::cout << msg.trailing << std::endl;
+	// 	msg.trailing.erase(0, msg.trailing.find_first_of(" ") + 1);
+    //     int subint = msg.trailing.find_first_of(" ");
+    //     if(  msg.trailing.find_first_of(" ") == std::string::npos)
+    //     {
+    //         ack = msg.trailing;
+    //         msg.trailing.clear();
+    //     }
+    //     else
+    //         ack = msg.trailing.substr(0, subint);
+	// }
     return (str);
 }
+
+
+int Server::definedmessage(int fd,std::string str)
+{
+    if(send(fd, str.c_str(), str.length(), 0) == -1)
+    {
+        std::cerr << "Error sending message" << std::endl;
+        return 1;
+    }
+    return 0;
+}
+
 std::string 	Server::date_now()
 {
-    time_t now = time(0);
-    struct tm *local_time = localtime(&now);
-    int year = local_time->tm_year + 1900;
-    int month = local_time->tm_mon + 1;
-    int day = local_time->tm_mday;
-    std::stringstream ss;
-    ss << year << "-" << month << "-" << day;
-    return ss.str();
+    time_t current_time = time(0);
+    tm* utc_time_info = gmtime(&current_time);
+    if (utc_time_info == 0) {
+        std::cerr << "Error: Could not convert time to tm structure (UTC)." << std::endl;
+        return NULL;
+    }
+    char buffer[80];
+    strftime(buffer, sizeof(buffer), "%Y-%m-%dT%H:%M:%SZ", utc_time_info);
+    std::cout << "Current time in UTC: " << buffer << std::endl;
+    return buffer;
 }
 
 int Server::Recv_end(int fd, std::string & line)
