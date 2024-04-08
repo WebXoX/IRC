@@ -4,9 +4,9 @@
 
 Channel::Channel() {}
 
-Channel::Channel(std::string& name, Client& user): name(name) {
-    this->addUserInChannel(user);
-    this->setChannelOperator(user);
+Channel::Channel(std::string& name) {
+    this->name = name;
+    this->topic = "This is the topic";
 }
 
 Channel::Channel(const Channel& copy) { *this = copy; }
@@ -32,60 +32,28 @@ std::string Channel::listOfUsers() {
     return listusers;
 }
 
-
-std::string Channel::welcomeMessage(Client& user) {
-    return RPL_NAMREPLY(user.username, "-", this->name, this->listOfUsers()) +
-        RPL_ENDOFNAMES(user.username, this->name);
-}
-
 std::string Channel::addUserInChannel(Client& user) {
-    if (this->isUserInChannel(user)) {
-        if (user.currentChannel != this->name) {
-            user.currentChannel = this->name;
-            this->broadcastMessage(RPL_JOIN(user_id(user.nickname, user.username), this->name));
-            std::cout << this->getUserMessages(user);
-            return this->getUserMessages(user);
-        }
-        return this->addMessageDatabase(ERR_USERONCHANNEL(user.username, user.nickname, this->name));
-    }
+    if (this->isUserInChannel(user)) 
+        return ERR_USERONCHANNEL(user.hostname, user.nickname, this->name);
+
     this->users[user.client_fd] = &user;
-    this->userMessages[user.client_fd] = 0;
-    user.currentChannel = this->name;
-    this->broadcastMessage(RPL_JOIN(user_id(user.nickname, user.username), this->name));
-    return this->welcomeMessage(user);
+    return RPL_JOIN(user_id(user.nickname, user.username), this->name) +
+            RPL_TOPIC(user.hostname, this->name, this->topic) +
+            RPL_NAMREPLY(user.username, "-", this->name, this->listOfUsers()) +
+            RPL_ENDOFNAMES(user.hostname, this->name);
 }
 
 std::string Channel::setChannelOperator(Client& user) {
     if (!this->isUserInChannel(user))
-        return ERR_NOTONCHANNEL(user.username, this->name);
+        return ERR_NOTONCHANNEL(user.hostname, this->name);
     this->operators[user.client_fd] = &user;
-    return RPL_YOUREOPER(user.username);
-}
-
-std::string Channel::getUserMessages(Client& user) {
-    int messageIndex = (this->dataBase.size() - this->userMessages[user.client_fd]) - 1;
-    std::string message = "";
-    for (size_t i = messageIndex; i < this->dataBase.size(); i++) {
-        message += this->dataBase[i];
-    }
-    return message;
-}
-
-std::string Channel::addMessageDatabase(std::string message) {
-    this->dataBase.push_back(message);
-    std::map<int, int>::iterator itt;
-    for (itt = this->userMessages.begin(); itt != this->userMessages.end(); itt++) 
-        itt->second++;
-    return message;
+    return RPL_YOUREOPER(user.hostname);
 }
 
 void Channel::broadcastMessage(std::string message) {
-    this->addMessageDatabase(message);
     std::map<int, Client*>::iterator it;
-    for (it = this->users.begin(); it != this->users.end(); it++) {
-        if (it->second->currentChannel == this->name)
+    for (it = this->users.begin(); it != this->users.end(); it++) 
             send(it->first, message.c_str(), message.length(), 0);
-    }
 }
 
 // // ****** CHECKERS ****** //
@@ -99,6 +67,19 @@ bool Channel::isUserOperator(Client& user) {
 
 int Channel::howManyUsersInChannel() {
     return this->users.size();
+}
+
+bool Channel::hasChannelTopic() {
+    return this->topic != "";
+}
+
+std::string Channel::setChannelTopic(Client& user, std::string topic) {
+    if (!this->isUserInChannel(user))
+        return ERR_USERNOTINCHANNEL(user.hostname, user.nickname, this->name);
+    if (!this->isUserOperator(user))
+        return ERR_NOPRIVILEGES(user.hostname);
+    this->topic = topic;
+    return RPL_TOPIC(user.hostname, this->name, this->topic);
 }
 
 

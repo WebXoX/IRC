@@ -66,7 +66,8 @@ int Server::register_user(ircMessage msg, Client * user)
             return 1;
                     // throw  "No re-registeration";
     }	
-    else if(msg.command.compare("NICK") == 0 && user->regi_status == 4)
+    // else if(msg.command.compare("NICK") == 0 && user->regi_status == 4)
+    else if(msg.command.compare("NICK") == 0)
     {
         if(this->nicknames.empty() == false && std::find(this->nicknames.begin(), this->nicknames.end(), msg.params[0]) != this->nicknames.end())
         {
@@ -88,19 +89,19 @@ int Server::register_user(ircMessage msg, Client * user)
         }
         else
         {
-            this->nicknames.push_back(msg.params[0]);
-            user->regi_status = 5;
-            if(user->nickname.empty() == false)
-            {
-                this->nicknames.erase(std::find(this->nicknames.begin(), this->nicknames.end(), user->nickname));
-                str = this->msg("irssi", NULL,user->nickname,"NICK "+ msg.params[0]).c_str();
-                len = str.length();
-                send(user->client_fd,str.c_str(),len,0);
-                user->nickname.clear();
-            }
             user->nickname = msg.params[0];
+            // this->nicknames.push_back(msg.params[0]);
+            // user->regi_status = 5;
+            // if(user->nickname.empty() == false)
+            // {
+            //     this->nicknames.erase(std::find(this->nicknames.begin(), this->nicknames.end(), user->nickname));
+            //     str = this->msg("irssi", NULL,user->nickname,"NICK "+ msg.params[0]).c_str();
+            //     len = str.length();
+            //     send(user->client_fd,str.c_str(),len,0);
+            //     user->nickname.clear();
+            // }
         }
-        user->nickname = msg.params[1];
+        // user->nickname = msg.params[1];
             return 1;
     }
     else if(msg.command.compare("USER") == 0 && user->regi_status == 5)

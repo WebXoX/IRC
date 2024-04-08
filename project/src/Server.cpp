@@ -570,9 +570,11 @@ std::string Server::joinCommand(std::string chanName, Client& user) {
     if (hasChannelInServer(chanName)) 
         return this->channels[chanName].addUserInChannel(user);
 
-    Channel newChannel(chanName, user);
+    Channel newChannel(chanName);
     this->addChannelInServer(newChannel);
-    return newChannel.welcomeMessage(user);
+    std::string reply = this->channels[chanName].addUserInChannel(user);
+    this->channels[chanName].setChannelOperator(user);
+    return reply;
 
 }
 

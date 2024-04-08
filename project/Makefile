@@ -1,13 +1,13 @@
 NAME = ircserver
 
 CXX = c++
-# CXXFLAGS = -Wall -Werror -Wextra -std=c++98  -fsanitize=address -g3
-CXXFLAGS = -Wall -Werror -Wextra -std=c++98  
+CXXFLAGS = -Wall -Werror -Wextra -std=c++98  -fsanitize=address -g3
+# CXXFLAGS = -Wall -Werror -Wextra -std=c++98  
 
 OBJDIR = ./obj/
 SRCDIR = ./src/
 
-SRC = Server.cpp Client.cpp parsing.cpp main.cpp commandPath.cpp Channel.cpp serverChannel.cpp
+SRC = Server.cpp Client.cpp parsing.cpp main.cpp commands.cpp Channel.cpp serverChannel.cpp
 # SRC = Server.cpp Client.cpp parsing.cpp commandPath.cpp Channel.cpp serverChannel.cpp
 
 OBJ = $(addprefix $(OBJDIR), $(SRC:.cpp=.o))
