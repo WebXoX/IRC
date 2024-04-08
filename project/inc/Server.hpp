@@ -18,7 +18,8 @@
 #include <cstring>
 #include "../inc/Client.hpp"
 #include "../inc/parsing.hpp"
-
+#include "../inc/Channel.hpp"
+#include "../inc/common.hpp"
 
 #include <netdb.h>
 /*
@@ -89,10 +90,22 @@ class Server
 		std::string 	cap_ls();
 		std::string 	cap_ack(ircMessage cap_list);
 		std::string 	date_now();
+			// ********** CHANNEL ********** //
+		std::map<std::string, Channel> channels;
+
+		int addChannelInServer( Channel& channel);
+		bool hasChannelInServer(std::string channelName);
+		Channel& getChannel(std::string channelName);
+
+		// ********** COMMANDS ********** //
+		std::string joinCommand(std::string chanName,  Client& user);
 	/*exception*/
 	/*getters and setters*/
 	/*getters and setters*/
 	/*extra*/
 	/*extra*/
 };
+
+
+
 #endif

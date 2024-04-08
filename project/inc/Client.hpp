@@ -51,5 +51,11 @@ class Client
 	/*getters and setters*/
 	/*extra*/
 	/*extra*/
+
+	// ****** CHANNEL ATRIBUTES ****** //
+	std::string currentChannel;
+
+	// ****** CHANNEL MEMBERS****** //
+	int addChannelInClient(std::string& channel);
 };
 #endif

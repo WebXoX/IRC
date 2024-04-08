@@ -118,17 +118,17 @@ int Server::register_user(ircMessage msg, Client * user)
         }
         else
         {
-            this->nicknames.push_back(msg.params[0]);
-            user->regi_status = 5;
-            if(user->nickname.empty() == false)
-            {
-                this->nicknames.erase(std::find(this->nicknames.begin(), this->nicknames.end(), user->nickname));
-                str = this->msg("irssi", NULL,user->nickname,"NICK "+ msg.params[0]).c_str();
-                len = str.length();
-                send(user->client_fd,str.c_str(),len,0);
-                user->nickname.clear();
-            }
             user->nickname = msg.params[0];
+            // this->nicknames.push_back(msg.params[0]);
+            // user->regi_status = 5;
+            // if(user->nickname.empty() == false)
+            // {
+            //     this->nicknames.erase(std::find(this->nicknames.begin(), this->nicknames.end(), user->nickname));
+            //     str = this->msg("irssi", NULL,user->nickname,"NICK "+ msg.params[0]).c_str();
+            //     len = str.length();
+            //     send(user->client_fd,str.c_str(),len,0);
+            //     user->nickname.clear();
+            // }
         }
         return 1;
     }
@@ -165,6 +165,11 @@ int Server::register_user(ircMessage msg, Client * user)
     }
     return 0;
 }
+
+
+
+
+
 void Server::commandPath(ircMessage msg, Client * user)
 {
 	std::string		str;
@@ -187,7 +192,10 @@ void Server::commandPath(ircMessage msg, Client * user)
         // add other commands here!!!!!!!!!!!!
 		else
 		{
-			std::cerr << "Invalid command" << std::endl;
+			// std::cerr << "Invalid command" << std::endl;
+            std::string message = "<" + user->nickname + "> " + msg.message;
+            this->channels[user->currentChannel].broadcastMessage(message);
+
 		}
 	}
     else if(msg.command.compare("MOTD") == 0 && user->regi_status == 0)

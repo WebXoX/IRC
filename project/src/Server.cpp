@@ -243,10 +243,10 @@ int Server::Recv_end(int fd, std::string & line)
 }
 int Server::serverLoop()
 {
-    int j = 0;
+    // int j = 0;
 	while(1)
     {
-        j++;
+        // j++;
         if (poll((&this->fd_poll[0]), this->number_of_clients, 1000) == -1)
         {
             std::cerr << "Error in poll" << std::endl;
@@ -284,3 +284,35 @@ int Server::serverLoop()
 /*extra*/
 /*getter and setters*/
 /*getter and setters*/
+
+
+// ****** CHANNEL ****** //
+
+std::string Server::joinCommand(std::string chanName, Client& user) {
+
+    if (hasChannelInServer(chanName)) 
+        return this->channels[chanName].addUserInChannel(user);
+
+    Channel newChannel(chanName);
+    this->addChannelInServer(newChannel);
+    std::string reply = this->channels[chanName].addUserInChannel(user);
+    this->channels[chanName].setChannelOperator(user);
+    return reply;
+
+}
+
+int Server::addChannelInServer(Channel& channel) {
+    if (hasChannelInServer(channel.name)) 
+        return 1;
+    this->channels[channel.name] = channel;
+    return 0;
+}
+
+bool Server::hasChannelInServer(std::string channelName) {
+    return this->channels.find(channelName) != this->channels.end();
+}
+
+
+
+
+

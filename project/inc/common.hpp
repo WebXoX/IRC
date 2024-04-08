@@ -1,3 +1,4 @@
+#pragma once
 #ifndef __COMMON_HPP__
 #define __COMMON_HPP__
 
@@ -14,5 +15,6 @@
 #include <sstream>
 #include <algorithm>
 #include <map>
+#include <cstdlib>
 
 #endif
