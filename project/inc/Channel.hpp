@@ -12,6 +12,8 @@ class Channel {
         std::string name;
         std::map<int, Client*> users;
         std::map<int, Client*> operators;
+        std::vector<std::string> dataBase;
+        std::map<int, int> userMessages;
 
         Channel();
         Channel(std::string& name, Client& user);
@@ -24,6 +26,8 @@ class Channel {
         void broadcastMessage(std::string message);
         void announceNewUser(Client& user);
         int howManyUsersInChannel();
+        std::string getUserMessages(Client& user);
+        std::string addMessageDatabase(std::string message);
 
         // ****** GENERATE MACROS ****** //
         std::string welcomeMessage(Client& user);

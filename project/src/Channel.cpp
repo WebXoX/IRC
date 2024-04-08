@@ -34,8 +34,7 @@ std::string Channel::listOfUsers() {
 
 
 std::string Channel::welcomeMessage(Client& user) {
-    return RPL_JOIN(user_id(user.nickname, user.username), this->name) +
-        RPL_NAMREPLY(user.username, "-", this->name, this->listOfUsers()) +
+    return RPL_NAMREPLY(user.username, "-", this->name, this->listOfUsers()) +
         RPL_ENDOFNAMES(user.username, this->name);
 }
 
@@ -44,13 +43,15 @@ std::string Channel::addUserInChannel(Client& user) {
         if (user.currentChannel != this->name) {
             user.currentChannel = this->name;
             this->broadcastMessage(RPL_JOIN(user_id(user.nickname, user.username), this->name));
-            return "";
+            std::cout << this->getUserMessages(user);
+            return this->getUserMessages(user);
         }
-        return ERR_USERONCHANNEL(user.username, user.nickname, this->name);
+        return this->addMessageDatabase(ERR_USERONCHANNEL(user.username, user.nickname, this->name));
     }
-    this->broadcastMessage(RPL_JOIN(user_id(user.nickname, user.username), this->name));
     this->users[user.client_fd] = &user;
+    this->userMessages[user.client_fd] = 0;
     user.currentChannel = this->name;
+    this->broadcastMessage(RPL_JOIN(user_id(user.nickname, user.username), this->name));
     return this->welcomeMessage(user);
 }
 
@@ -61,13 +62,30 @@ std::string Channel::setChannelOperator(Client& user) {
     return RPL_YOUREOPER(user.username);
 }
 
+std::string Channel::getUserMessages(Client& user) {
+    int messageIndex = (this->dataBase.size() - this->userMessages[user.client_fd]) - 1;
+    std::string message = "";
+    for (size_t i = messageIndex; i < this->dataBase.size(); i++) {
+        message += this->dataBase[i];
+    }
+    return message;
+}
+
+std::string Channel::addMessageDatabase(std::string message) {
+    this->dataBase.push_back(message);
+    std::map<int, int>::iterator itt;
+    for (itt = this->userMessages.begin(); itt != this->userMessages.end(); itt++) 
+        itt->second++;
+    return message;
+}
+
 void Channel::broadcastMessage(std::string message) {
+    this->addMessageDatabase(message);
     std::map<int, Client*>::iterator it;
     for (it = this->users.begin(); it != this->users.end(); it++) {
         if (it->second->currentChannel == this->name)
             send(it->first, message.c_str(), message.length(), 0);
     }
-
 }
 
 // // ****** CHECKERS ****** //
