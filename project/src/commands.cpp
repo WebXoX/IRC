@@ -118,7 +118,6 @@ int Server::register_user(ircMessage msg, Client * user)
         }
         else
         {
-            user->nickname = msg.params[0];
             this->nicknames.push_back(msg.params[0]);
             user->regi_status = 5;
             if(user->nickname.empty() == false)
@@ -129,6 +128,7 @@ int Server::register_user(ircMessage msg, Client * user)
                 send(user->client_fd,str.c_str(),len,0);
                 user->nickname.clear();
             }
+            user->nickname = msg.params[0];
         }
         return 1;
     }
@@ -189,7 +189,19 @@ void Server::commandPath(ircMessage msg, Client * user)
 				send(user->client_fd,str.c_str(),len,0);
 			}
 		}
-        // add other commands here!!!!!!!!!!!!
+        else if (msg.command.compare("JOIN") == 0)
+        {
+            std::string request = "";
+            if (msg.params.size() > 0) {
+                for (size_t i = 0; i < msg.params.size(); i++) {
+                    request = this->joinCommand(msg.params[i], *user);
+                    send(user->client_fd,request.c_str(),request.length(),0);
+                }
+            } else {
+                request = ERR_NEEDMOREPARAMS(user->username, "JOIN");
+                send(user->client_fd, request.c_str(), request.length(), 0); 
+            }
+        }
 		else
 		{
 			// std::cerr << "Invalid command" << std::endl;
@@ -199,9 +211,9 @@ void Server::commandPath(ircMessage msg, Client * user)
 		}
 	}
     else if(msg.command.compare("MOTD") == 0 && user->regi_status == 0)
-        {
-            MOTD(user);
-        }
+    {
+        MOTD(user);
+    }
 	else
 	{
 		str = this->msg("irssi", "461", msg.command, "Not enough parameters").c_str();

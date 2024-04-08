@@ -4,7 +4,7 @@
 Client::Client ()
 {
 	this->client_fd = 0;
-	this->nickname = "somebody";
+	// this->nickname =;
 	this->regi_status = 0;
 	memset(this->buffer,0,1024);
 	// std::cout << "Client default constructor" << std::endl;
