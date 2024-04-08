@@ -213,15 +213,13 @@ int Server::definedmessage(int fd,std::string str)
 
 std::string 	Server::date_now()
 {
-    time_t current_time = time(0);
-    tm* utc_time_info = gmtime(&current_time);
-    if (utc_time_info == 0) {
-        std::cerr << "Error: Could not convert time to tm structure (UTC)." << std::endl;
-        return NULL;
-    }
+    time_t rawtime;
+    struct tm * timeinfo;
+    time(&rawtime);
+    timeinfo = gmtime(&rawtime);
+    
     char buffer[80];
-    strftime(buffer, sizeof(buffer), "%Y-%m-%dT%H:%M:%SZ", utc_time_info);
-    std::cout << "Current time in UTC: " << buffer << std::endl;
+    strftime(buffer, sizeof(buffer), "%a %b %d %Y at %H:%M:%S UTC", timeinfo);
     return buffer;
 }
 

@@ -83,6 +83,7 @@ class Server
 		int				register_user(ircMessage msg, Client * user);
 		int				Recv_end(int fd, std::string & line);
 		void			commandPath(ircMessage msg, Client * user);
+		int 			MOTD(Client * user);
 		int 			definedmessage(int fd,std::string str);
 		std::string		msg(std::string source, std::string command, std::string param, std::string text);
 		std::string 	cap_ls();

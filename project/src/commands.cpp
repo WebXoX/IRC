@@ -7,6 +7,37 @@
 #include <sys/stat.h>
 #include <fcntl.h>
 
+int Server::MOTD(Client * user)
+{
+    std::string str = this->msg("irssi", "375", ":- irssi Message of the Day -", "Message of the Day").c_str();
+    int len = str.length();
+    send(user->client_fd,str.c_str(),len,0);
+    std::srand(static_cast<unsigned>(time(0)));
+    int num = rand() % 7 + 1;
+    std::ostringstream oss;
+    oss << num;
+    struct stat fileStat;
+    std::string line;
+    std::ifstream infile;
+    infile.open(("./src/messages/motd"+  oss.str() + ".txt").c_str(), std::ios::in);
+    if ( infile.is_open() && S_ISDIR(fileStat.st_mode) == 0)
+    {
+        while (std::getline(infile,line))
+        {
+            str = this->msg("irssi", "372", ":- ",line ).c_str();
+            len = str.length();
+            send(user->client_fd,str.c_str(),len,0);
+            str.clear();
+        }
+        infile.close();
+    }
+    else
+        std::cout << "ERROR FILE DOES NOT EXSIST" << std::endl;
+    str = this->msg("irssi", "376", "End of /MOTD command.", "Message of the Day").c_str();
+    len = str.length();
+    send(user->client_fd,str.c_str(),len,0);
+    return 1;
+}
 int Server::register_user(ircMessage msg, Client * user)
 {
     std::string str;
@@ -65,7 +96,7 @@ int Server::register_user(ircMessage msg, Client * user)
             return 1;
                     // throw  "No re-registeration";
     }	
-    else if(msg.command.compare("NICK") == 0 && user->regi_status == 4)
+    else if(msg.command.compare("NICK") == 0 )
     {
         if(this->nicknames.empty() == false && std::find(this->nicknames.begin(), this->nicknames.end(), msg.params[0]) != this->nicknames.end())
         {
@@ -116,26 +147,12 @@ int Server::register_user(ircMessage msg, Client * user)
 			}
 
             user->regi_status = 6;
-            str = this->msg("irssi", "001 "+user->nickname, "Welcome to the IRSSI.Chat Internet Relay Chat Network "+user->username,"").c_str();
-            len = str.length();
-            send(user->client_fd,str.c_str(),len,0);
-			str.clear();
-             str = this->msg("irssi", "002 "+user->nickname, " :Your host is IRSSI, running version 1.0","").c_str();
-            len = str.length();
-            send(user->client_fd,str.c_str(),len,0);
-			str.clear();
-             str = this->msg("irssi", "003 "+user->nickname, ":This server was created "+this->creation_date,"").c_str();
-            len = str.length();
-            send(user->client_fd,str.c_str(),len,0);
-			str.clear();
-             str = this->msg("irssi", "004 "+user->nickname, "IRSSI.chat 1.0","").c_str();
-            len = str.length();
-            send(user->client_fd,str.c_str(),len,0);
-			str.clear();
-             str = this->msg("irssi", "005 "+user->nickname, "Welcome to the IRSSI.Chat Internet Relay Chat Network "+user->username,"").c_str();
-            len = str.length();
-            send(user->client_fd,str.c_str(),len,0);
-			str.clear();
+            this->definedmessage(user->client_fd, RPL_WELCOME(user_id(user->nickname,user->username),user->nickname));
+            this->definedmessage(user->client_fd, RPL_YOURHOST(user->hostname,"irssi", "1"));
+            this->definedmessage(user->client_fd, RPL_CREATED(user->hostname,this->creation_date));
+            this->definedmessage(user->client_fd, RPL_MYINFO(user->hostname,"irssi", "1", "","",""));
+            this->definedmessage(user->client_fd, RPL_ISUPPORT(user->hostname,""));
+            MOTD(user);
         }
         else
         {
@@ -175,34 +192,7 @@ void Server::commandPath(ircMessage msg, Client * user)
 	}
     else if(msg.command.compare("MOTD") == 0 && user->regi_status == 0)
         {
-            str = this->msg("irssi", "375", ":- irssi Message of the Day -", "Message of the Day").c_str();
-            len = str.length();
-            send(user->client_fd,str.c_str(),len,0);
-            std::srand(static_cast<unsigned>(time(0)));
-            int num = rand() % 7 + 1;
-            num = rand() % 7 + 1;
-            std::ostringstream oss;
-            oss << num;
-            struct stat fileStat;
-            std::string line;
-	        std::ifstream infile;
-            infile.open(("./src/messages/motd"+  oss.str() + ".txt").c_str(), std::ios::in);
-            if ( infile.is_open() && S_ISDIR(fileStat.st_mode) == 0)
-            {
-                while (std::getline(infile,line))
-                {
-                    str = this->msg("irssi", "372", ":- ",line ).c_str();
-                    len = str.length();
-                    send(user->client_fd,str.c_str(),len,0);
-                    str.clear();
-                }
-                infile.close();
-            }
-            else
-                std::cout << "ERROR FILE DOES NOT EXSIST" << std::endl;
-            str = this->msg("irssi", "376", "End of /MOTD command.", "Message of the Day").c_str();
-            len = str.length();
-            send(user->client_fd,str.c_str(),len,0);
+            MOTD(user);
         }
 	else
 	{
