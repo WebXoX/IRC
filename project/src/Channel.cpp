@@ -6,7 +6,6 @@ Channel::Channel() {}
 
 Channel::Channel(std::string& name) {
     this->name = name;
-    this->topic = "This is the topic";
 }
 
 Channel::Channel(const Channel& copy) { *this = copy; }
@@ -37,6 +36,7 @@ std::string Channel::addUserInChannel(Client& user) {
         return ERR_USERONCHANNEL(user.hostname, user.nickname, this->name);
 
     this->users[user.client_fd] = &user;
+    this->topic = "Welcome to the channel " + this->name;
     return RPL_JOIN(user_id(user.nickname, user.username), this->name) +
             RPL_TOPIC(user.hostname, this->name, this->topic) +
             RPL_NAMREPLY(user.username, "-", this->name, this->listOfUsers()) +
