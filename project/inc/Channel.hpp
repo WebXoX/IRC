@@ -16,7 +16,7 @@ class Channel {
 		int						userLimit;
         std::map<int, Client*>  users;
         std::map<int, Client*>  operators;
-        std::map<char, bool>    modes;
+        std::map<char, int>    modes;
 
     public:
 
@@ -41,7 +41,7 @@ class Channel {
         int                     getUserLimit();
         std::map<int, Client*>  getUsers();
         std::map<int, Client*>  getOperators();
-        std::map<char, bool>    getModes();
+        std::map<char, int>     getModes();
         std::string             getListOfUsers();
 
         /////   SETTERS    //////
@@ -50,11 +50,11 @@ class Channel {
         void                    setTopic(std::string topic);
         void                    setPassword(std::string password);
         void                    setUserLimit(int userLimit);
-        void                    setMode(char mode, bool value);
+        void                    setMode(char mode, int value);
 
         /////   CHECKERS    //////
         int                     howManyUsers();
-        bool                    isUserChannel(Client& user);
+        bool                    isUser(Client& user);
         bool                    isOperator(Client& user);
         bool                    hasTopic();
         bool                    isMode(char mode);

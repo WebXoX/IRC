@@ -302,15 +302,13 @@ int Server::serverLoop()
 // ****** CHANNEL ****** //
 
 void Server::joinCommand(std::string chanName, Client& user) {
-    
-    std::string reply = RPL_JOIN(user_id(user.nickname, user.username), chanName);
 
-    if (hasChannelInServer(chanName))
+    if (hasChannelInServer(chanName)) 
         this->channels[chanName].addUser(user);
-
-    Channel newChannel(chanName, user);
-    this->addChannelInServer(newChannel);
-    send(user.client_fd, reply.c_str(), reply.length(), 0);
+    else {
+        Channel newChannel(chanName, user);
+        this->addChannelInServer(newChannel);
+    }
 }
 
 int Server::addChannelInServer(Channel& channel) {

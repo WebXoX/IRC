@@ -22,7 +22,7 @@ Channel::Channel(std::string& name, Client& user) {
 	this->password = "";
 	this->userLimit = 1;
 	this->modes['i'] = 0;
-	this->modes['t'] = 0;
+	this->modes['t'] = 1;
 	this->modes['k'] = 0;
 	this->modes['o'] = 0;
 	this->modes['l'] = 0;
@@ -46,8 +46,24 @@ Channel& Channel::operator=(const Channel& copy) {
 Channel::~Channel() {}
 
 void Channel::addUser(Client& user) {
-    this->users[user.client_fd] = &user;
-    this->userLimit++;
+    std::string message;
+    if (this->modes['l'] && this->howManyUsers() >= this->userLimit) {
+        message = ERR_CHANNELISFULL(user.hostname, this->name);
+    } else if (this->isUser(user)) {
+        message = ERR_USERONCHANNEL(user.hostname, user.nickname, this->name);
+    } else {
+        this->users[user.client_fd] = &user;
+        if (this->howManyUsers() == 1)
+            this->addOperator(user);
+        message = RPL_JOIN(user_id(user.nickname, user.username), this->name);
+        // message += RPL_TOPIC(user.hostname, this->name, this->topic);
+        // message += RPL_NAMREPLY(user.hostname, "-", this->name, this->getListOfUsers());
+        // message += RPL_ENDOFNAMES(user.hostname, this->name);
+    }
+    std::cout << message << std::endl;
+    int ret = send(user.client_fd, message.c_str(), message.size(), 0);
+    if (ret == -1)
+        perror("Error send: ");
 }
 
 void Channel::removeUser(Client& user) {
@@ -82,7 +98,7 @@ std::map<int, Client*> Channel::getUsers() { return this->users; }
 
 std::map<int, Client*> Channel::getOperators() { return this->operators; }
 
-std::map<char, bool> Channel::getModes() { return this->modes; }
+std::map<char, int> Channel::getModes() { return this->modes; }
 
 // returns a string with the nicknames of all users in the channel
 std::string Channel::getListOfUsers() {
@@ -104,14 +120,14 @@ void Channel::setPassword(std::string password) { this->password = password; }
 
 void Channel::setUserLimit(int userLimit) { this->userLimit = userLimit; }
 
-void Channel::setMode(char mode, bool value) { this->modes[mode] = value; }
+void Channel::setMode(char mode, int value) { this->modes[mode] = value; }
 
 
 /////   CHECKERS    //////
 
 int Channel::howManyUsers() { return this->users.size(); }
 
-bool Channel::isUserChannel(Client& user) { return this->users.find(user.client_fd) != this->users.end(); }
+bool Channel::isUser(Client& user) { return this->users.find(user.client_fd) != this->users.end(); }
 
 bool Channel::isOperator(Client& user) { return this->operators.find(user.client_fd) != this->operators.end(); }
 
