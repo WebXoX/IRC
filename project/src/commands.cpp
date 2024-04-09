@@ -16,11 +16,11 @@ int Server::MOTD(Client * user)
     int num = rand() % 7 + 1;
     std::ostringstream oss;
     oss << num;
-    struct stat fileStat;
+    // struct stat fileStat;
     std::string line;
     std::ifstream infile;
     infile.open(("./src/messages/motd"+  oss.str() + ".txt").c_str(), std::ios::in);
-    if ( infile.is_open() && S_ISDIR(fileStat.st_mode) == 0)
+    if ( infile.is_open())
     {
         while (std::getline(infile,line))
         {
@@ -194,8 +194,7 @@ void Server::commandPath(ircMessage msg, Client * user)
             std::string request = "";
             if (msg.params.size() > 0) {
                 for (size_t i = 0; i < msg.params.size(); i++) {
-                    request = this->joinCommand(msg.params[i], *user);
-                    send(user->client_fd,request.c_str(),request.length(),0);
+                    this->joinCommand(msg.params[i], *user);
                 }
             } else {
                 request = ERR_NEEDMOREPARAMS(user->username, "JOIN");
@@ -206,7 +205,7 @@ void Server::commandPath(ircMessage msg, Client * user)
 		{
 			// std::cerr << "Invalid command" << std::endl;
             std::string message = "<" + user->nickname + "> " + msg.message;
-            this->channels[user->currentChannel].broadcastMessage(message);
+            this->channels[user->currentChannel].broadcast(message);
 
 		}
 	}

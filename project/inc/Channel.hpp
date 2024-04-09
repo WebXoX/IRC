@@ -8,28 +8,58 @@
 
 
 class Channel {
+    private:
+
+        std::string             name;
+        std::string             topic;
+        std::string             password;
+		int						userLimit;
+        std::map<int, Client*>  users;
+        std::map<int, Client*>  operators;
+        std::map<char, bool>    modes;
+
     public:
-        std::string name;
-        std::string topic;
-        std::map<int, Client*> users;
-        std::map<int, Client*> operators;
 
         Channel();
         Channel(std::string& name);
+        Channel(std::string& name, Client& user);
         Channel(const Channel& copy);
         Channel& operator=(const Channel& copy);
         ~Channel();
 
-        std::string addUserInChannel(Client& user);
-        std::string setChannelOperator(Client& user);
-        void broadcastMessage(std::string message);
-        int howManyUsersInChannel();
-        std::string setChannelTopic(Client& user, std::string topic);
+        void                    addUser(Client& user);
+        void                    removeUser(Client& user);
+        void                    addOperator(Client& user);
+        void                    removeOperator(Client& user);
+        void                    broadcast(std::string message);
 
-        bool isUserInChannel(Client& user);
-        bool isUserOperator(Client& user);
-        std::string listOfUsers();
-        bool hasChannelTopic();
+        /////   GETTERS    //////
+
+        std::string             getName();
+        std::string             getTopic();
+        std::string             getPassword();
+        int                     getUserLimit();
+        std::map<int, Client*>  getUsers();
+        std::map<int, Client*>  getOperators();
+        std::map<char, bool>    getModes();
+        std::string             getListOfUsers();
+
+        /////   SETTERS    //////
+
+        void                    setName(std::string name);
+        void                    setTopic(std::string topic);
+        void                    setPassword(std::string password);
+        void                    setUserLimit(int userLimit);
+        void                    setMode(char mode, bool value);
+
+        /////   CHECKERS    //////
+        int                     howManyUsers();
+        bool                    isUserChannel(Client& user);
+        bool                    isOperator(Client& user);
+        bool                    hasTopic();
+        bool                    isMode(char mode);
 };
+
+
 
 #endif

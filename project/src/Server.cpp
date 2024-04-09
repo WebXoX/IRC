@@ -8,6 +8,7 @@ Server::Server ()
 	std::cout << "Server default constructor" << std::endl;
 }
 
+
 Server::Server (std::string port , std::string pass)
 {
 	try
@@ -22,16 +23,20 @@ Server::Server (std::string port , std::string pass)
 	}
 	std::cout << "Server default constructor" << std::endl;
 }
+
+
 Server::Server (const Server &a)
 {
 	std::cout << "Server copy constructor " << std::endl;
 	*this = a;
 }
 
+
 Server::~Server ()
 {
 	std::cout << "Server distructor called" << std::endl;
 }
+
 
 Server& Server::operator=(const Server& rhs)
 {
@@ -58,6 +63,8 @@ Server& Server::operator=(const Server& rhs)
 		
 	}
 }
+
+
 int Server::serverInit()
 {
     // initization of server socket port poll 
@@ -84,6 +91,8 @@ int Server::serverInit()
     number_of_clients = 1;
 	return 0;
 }
+
+
 int Server::runServer()
 {
 	int optval = 1;
@@ -171,6 +180,8 @@ std::string Server::cap_ls()
     // return ("account-notify away-notify chghost extended-join multi-prefix sasl=PLAIN server-time");
 	return cap_list;
 }
+
+
 std::string Server::cap_ack( ircMessage msg)
 {
     (void)msg;
@@ -241,6 +252,8 @@ int Server::Recv_end(int fd, std::string & line)
         line = line.substr(0,line.find("\r\n"));
     return total;
 }
+
+
 int Server::serverLoop()
 {
     // int j = 0;
@@ -288,23 +301,22 @@ int Server::serverLoop()
 
 // ****** CHANNEL ****** //
 
-std::string Server::joinCommand(std::string chanName, Client& user) {
+void Server::joinCommand(std::string chanName, Client& user) {
+    
+    std::string reply = RPL_JOIN(user_id(user.nickname, user.username), chanName);
 
-    if (hasChannelInServer(chanName)) 
-        return this->channels[chanName].addUserInChannel(user);
+    if (hasChannelInServer(chanName))
+        this->channels[chanName].addUser(user);
 
-    Channel newChannel(chanName);
+    Channel newChannel(chanName, user);
     this->addChannelInServer(newChannel);
-    std::string reply = this->channels[chanName].addUserInChannel(user);
-    this->channels[chanName].setChannelOperator(user);
-    return reply;
-
+    send(user.client_fd, reply.c_str(), reply.length(), 0);
 }
 
 int Server::addChannelInServer(Channel& channel) {
-    if (hasChannelInServer(channel.name)) 
+    if (hasChannelInServer(channel.getName())) 
         return 1;
-    this->channels[channel.name] = channel;
+    this->channels[channel.getName()] = channel;
     return 0;
 }
 

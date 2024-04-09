@@ -6,24 +6,86 @@ Channel::Channel() {}
 
 Channel::Channel(std::string& name) {
     this->name = name;
-    this->topic = "This is the topic";
+	this->topic = "";
+	this->password = "";
+	this->userLimit = 0;
+	this->modes['i'] = 0;
+	this->modes['t'] = 0;
+	this->modes['k'] = 0;
+	this->modes['o'] = 0;
+	this->modes['l'] = 0;
+}
+
+Channel::Channel(std::string& name, Client& user) {
+    this->name = name;
+	this->topic = "";
+	this->password = "";
+	this->userLimit = 1;
+	this->modes['i'] = 0;
+	this->modes['t'] = 0;
+	this->modes['k'] = 0;
+	this->modes['o'] = 0;
+	this->modes['l'] = 0;
+    this->addUser(user);
+    this->addOperator(user);
 }
 
 Channel::Channel(const Channel& copy) { *this = copy; }
 
 Channel& Channel::operator=(const Channel& copy) {
     this->name = copy.name;
-    std::map<int, Client*>::const_iterator it;
-    for (it = copy.users.begin(); it != copy.users.end(); it++)
-        this->users[it->first] = it->second;
-    for (it = copy.operators.begin(); it != copy.operators.end(); it++)
-        this->operators[it->first] = it->second;
+    this->topic = copy.topic;
+    this->password = copy.password;
+    this->userLimit = copy.userLimit;
+    this->users = copy.users;
+    this->operators = copy.operators;
+    this->modes = copy.modes;
     return *this;
 }
 
 Channel::~Channel() {}
 
-std::string Channel::listOfUsers() {
+void Channel::addUser(Client& user) {
+    this->users[user.client_fd] = &user;
+    this->userLimit++;
+}
+
+void Channel::removeUser(Client& user) {
+    this->users.erase(user.client_fd);
+}
+
+void Channel::addOperator(Client& user) {
+    this->operators[user.client_fd] = &user;
+}
+
+void Channel::removeOperator(Client& user) {
+    this->operators.erase(user.client_fd);
+}
+
+void Channel::broadcast(std::string message) {
+    std::map<int, Client*>::iterator it = users.begin();
+    for (; it != users.end(); it++) 
+            send(it->first, message.c_str(), message.size(), 0);
+}
+
+/////   GETTERS     /////
+
+std::string Channel::getName() { return this->name; }
+
+std::string Channel::getTopic() { return this->topic; }
+
+std::string Channel::getPassword() { return this->password; }
+
+int Channel::getUserLimit() { return this->userLimit; }
+
+std::map<int, Client*> Channel::getUsers() { return this->users; }
+
+std::map<int, Client*> Channel::getOperators() { return this->operators; }
+
+std::map<char, bool> Channel::getModes() { return this->modes; }
+
+// returns a string with the nicknames of all users in the channel
+std::string Channel::getListOfUsers() {
     std::string listusers = "";
     std::map<int, Client*>::iterator it = users.begin();
     for (; it != users.end(); it++) {
@@ -32,55 +94,30 @@ std::string Channel::listOfUsers() {
     return listusers;
 }
 
-std::string Channel::addUserInChannel(Client& user) {
-    if (this->isUserInChannel(user)) 
-        return ERR_USERONCHANNEL(user.hostname, user.nickname, this->name);
+/////   SETTERS     /////
 
-    this->users[user.client_fd] = &user;
-    return RPL_JOIN(user_id(user.nickname, user.username), this->name) +
-            RPL_TOPIC(user.hostname, this->name, this->topic) +
-            RPL_NAMREPLY(user.username, "-", this->name, this->listOfUsers()) +
-            RPL_ENDOFNAMES(user.hostname, this->name);
-}
+void Channel::setName(std::string name) { this->name = name; }
 
-std::string Channel::setChannelOperator(Client& user) {
-    if (!this->isUserInChannel(user))
-        return ERR_NOTONCHANNEL(user.hostname, this->name);
-    this->operators[user.client_fd] = &user;
-    return RPL_YOUREOPER(user.hostname);
-}
+void Channel::setTopic(std::string topic) { this->topic = topic; }
 
-void Channel::broadcastMessage(std::string message) {
-    std::map<int, Client*>::iterator it;
-    for (it = this->users.begin(); it != this->users.end(); it++) 
-            send(it->first, message.c_str(), message.length(), 0);
-}
+void Channel::setPassword(std::string password) { this->password = password; }
 
-// // ****** CHECKERS ****** //
-bool Channel::isUserInChannel(Client& user) {
-    return this->users.find(user.client_fd) != this->users.end();
-}
+void Channel::setUserLimit(int userLimit) { this->userLimit = userLimit; }
 
-bool Channel::isUserOperator(Client& user) {
-    return this->operators.find(user.client_fd) != this->operators.end();
-}
+void Channel::setMode(char mode, bool value) { this->modes[mode] = value; }
 
-int Channel::howManyUsersInChannel() {
-    return this->users.size();
-}
 
-bool Channel::hasChannelTopic() {
-    return this->topic != "";
-}
+/////   CHECKERS    //////
 
-std::string Channel::setChannelTopic(Client& user, std::string topic) {
-    if (!this->isUserInChannel(user))
-        return ERR_USERNOTINCHANNEL(user.hostname, user.nickname, this->name);
-    if (!this->isUserOperator(user))
-        return ERR_NOPRIVILEGES(user.hostname);
-    this->topic = topic;
-    return RPL_TOPIC(user.hostname, this->name, this->topic);
-}
+int Channel::howManyUsers() { return this->users.size(); }
+
+bool Channel::isUserChannel(Client& user) { return this->users.find(user.client_fd) != this->users.end(); }
+
+bool Channel::isOperator(Client& user) { return this->operators.find(user.client_fd) != this->operators.end(); }
+
+bool Channel::hasTopic() { return this->topic != ""; }
+
+bool Channel::isMode(char mode) { return this->modes[mode]; }
 
 
 

@@ -98,7 +98,7 @@ class Server
 		Channel& getChannel(std::string channelName);
 
 		// ********** COMMANDS ********** //
-		std::string joinCommand(std::string chanName,  Client& user);
+		void joinCommand(std::string chanName,  Client& user);
 	/*exception*/
 	/*getters and setters*/
 	/*getters and setters*/
