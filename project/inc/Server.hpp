@@ -98,7 +98,7 @@ class Server
 		Channel& getChannel(std::string channelName);
 
 		// ********** COMMANDS ********** //
-		void joinCommand(std::string chanName,  Client& user);
+		void joinCommand(ircMessage msg,  Client& user);
 	/*exception*/
 	/*getters and setters*/
 	/*getters and setters*/

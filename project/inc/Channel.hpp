@@ -21,7 +21,6 @@ class Channel {
     public:
 
         Channel();
-        Channel(std::string& name);
         Channel(std::string& name, Client& user);
         Channel(const Channel& copy);
         Channel& operator=(const Channel& copy);
@@ -58,6 +57,10 @@ class Channel {
         bool                    isOperator(Client& user);
         bool                    hasTopic();
         bool                    isMode(char mode);
+
+        /////   UTILS   //////
+
+        static void             validate_channels(std::vector<std::string>& params);
 };
 
 

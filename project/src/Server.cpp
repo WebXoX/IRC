@@ -1,4 +1,5 @@
 #include "../inc/Server.hpp"
+#include "../inc/Channel.hpp"
 #include <poll.h>
 #include <stack>
 #include <cmath>
@@ -301,14 +302,26 @@ int Server::serverLoop()
 
 // ****** CHANNEL ****** //
 
-void Server::joinCommand(std::string chanName, Client& user) {
+void Server::joinCommand(ircMessage msg, Client& user) {
+    std::string errMsg;
 
-    if (hasChannelInServer(chanName)) 
-        this->channels[chanName].addUser(user);
-    else {
-        Channel newChannel(chanName, user);
-        this->addChannelInServer(newChannel);
+    if (msg.params.size() < 1) {
+        errMsg = ERR_NEEDMOREPARAMS(user.username, "JOIN");
+        return;
     }
+    
+    Channel::validate_channels(msg.params);
+    printCommand(msg);
+
+    for (size_t i = 0; i < msg.params.size(); i++) {
+        if (hasChannelInServer(msg.params[i])) 
+            this->channels[msg.params[i]].addUser(user);
+        else {
+            Channel newChannel(msg.params[i], user);
+            this->addChannelInServer(newChannel);
+        }
+    }
+
 }
 
 int Server::addChannelInServer(Channel& channel) {

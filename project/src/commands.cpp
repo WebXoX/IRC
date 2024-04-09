@@ -38,6 +38,7 @@ int Server::MOTD(Client * user)
     send(user->client_fd,str.c_str(),len,0);
     return 1;
 }
+
 int Server::register_user(ircMessage msg, Client * user)
 {
     std::string str;
@@ -191,15 +192,7 @@ void Server::commandPath(ircMessage msg, Client * user)
 		}
         else if (msg.command.compare("JOIN") == 0)
         {
-            std::string request = "";
-            if (msg.params.size() > 0) {
-                for (size_t i = 0; i < msg.params.size(); i++) {
-                    this->joinCommand(msg.params[i], *user);
-                }
-            } else {
-                request = ERR_NEEDMOREPARAMS(user->username, "JOIN");
-                send(user->client_fd, request.c_str(), request.length(), 0); 
-            }
+            this->joinCommand(msg, *user);
         }
 		else
 		{

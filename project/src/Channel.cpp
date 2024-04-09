@@ -2,10 +2,9 @@
 #include "../inc/Reply.hpp"
 
 
-Channel::Channel() {}
 
-Channel::Channel(std::string& name) {
-    this->name = name;
+Channel::Channel() {
+    this->name = "Default";
 	this->topic = "";
 	this->password = "";
 	this->userLimit = 0;
@@ -18,7 +17,7 @@ Channel::Channel(std::string& name) {
 
 Channel::Channel(std::string& name, Client& user) {
     this->name = name;
-	this->topic = "";
+	this->topic = "[Set the topic]";
 	this->password = "";
 	this->userLimit = 1;
 	this->modes['i'] = 0;
@@ -57,7 +56,7 @@ void Channel::addUser(Client& user) {
             this->addOperator(user);
         message = RPL_JOIN(user_id(user.nickname, user.username), this->name);
         // message += RPL_TOPIC(user.hostname, this->name, this->topic);
-        // message += RPL_NAMREPLY(user.hostname, "-", this->name, this->getListOfUsers());
+        // message += RPL_NAMREPLY(user.hostname, "=", this->name, "#tehaun #root");
         // message += RPL_ENDOFNAMES(user.hostname, this->name);
     }
     std::cout << message << std::endl;
@@ -134,6 +133,31 @@ bool Channel::isOperator(Client& user) { return this->operators.find(user.client
 bool Channel::hasTopic() { return this->topic != ""; }
 
 bool Channel::isMode(char mode) { return this->modes[mode]; }
+
+
+/////   UTILS   /////
+
+void Channel::validate_channels(std::vector<std::string>& params) {
+    if (params.empty()) return;
+
+    for (size_t i = 0; i < params.size(); i++) {
+
+        if (params[i].find(",") != std::string::npos) {
+            std::stringstream ss(params[i]);
+            params.erase(params.begin() + i);
+            while (ss.good()) {
+                std::string substr;
+                getline(ss, substr, ',');
+                params.push_back(substr);
+            }
+        }
+
+        if (params[i][0] != '#' || params[i].length() < 2) {
+            params.erase(params.begin() + i);
+        }
+    }
+
+}
 
 
 
