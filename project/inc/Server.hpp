@@ -34,6 +34,7 @@ class Server
 		sockaddr_in service;
 		int port;
 		std::string ports;
+		std::string server_name;
 		std::vector <struct pollfd> fd_poll;
 	/*   server socket variables  */
 	/*   server authentication  */
@@ -81,14 +82,19 @@ class Server
 		int				runServer();
 		int				serverLoop();
 		int				connectionEvent();
-		int				register_user(ircMessage msg, Client * user);
+		void				register_user(ircMessage msg, Client * user);
+		void 			adduser(Client * user, ircMessage msg);
+		void			nick(Client * user, std::string str);
+
 		int				Recv_end(int fd, std::string & line);
 		void			commandPath(ircMessage msg, Client * user);
 		int 			MOTD(Client * user);
 		int 			definedmessage(int fd,std::string str);
 		std::string		msg(std::string source, std::string command, std::string param, std::string text);
-		std::string 	cap_ls();
-		std::string 	cap_ack(ircMessage cap_list);
+		// std::string 	cap_ls();
+		// std::string 	cap_ack(ircMessage cap_list);
+		void 	cap_ls(Client *user);
+		void 	cap_ack(Client *user);
 		std::string 	date_now();
 			// ********** CHANNEL ********** //
 		std::map<std::string, Channel> channels;

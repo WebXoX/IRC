@@ -13,7 +13,7 @@ int Server::MOTD(Client * user)
     int len = str.length();
     send(user->client_fd,str.c_str(),len,0);
     std::srand(static_cast<unsigned>(time(0)));
-    int num = rand() % 7 + 1;
+    int num = rand() % 7 ;
     std::ostringstream oss;
     oss << num;
     // struct stat fileStat;
@@ -72,29 +72,19 @@ int Server::register_user(ircMessage msg, Client * user)
     }
     else if(msg.command.compare("PASS") == 0)
     {
-        if(user->regi_status == 3)
+        if(msg.params[0].compare(this->pass) == 0)
         {
-            if(msg.params[0].compare(this->pass) == 0)
-            {
-                user->regi_status = 4;
-            }
-            else
-            {
-                str = this->msg("irssi", "464", msg.params[0], "Password incorrect").c_str();
-                len = str.length();
-                send(user->client_fd,str.c_str(),len,0);
-                close(user->client_fd);
-                user->client_fd = -1;
-            }
-            
+            user->regi_status = 4;
         }
         else
         {
-            str = this->msg("irssi", "462", msg.params[0], "You may not reregister").c_str();
+            str = this->msg("irssi", "464", msg.params[0], "Password incorrect").c_str();
             len = str.length();
             send(user->client_fd,str.c_str(),len,0);
+            close(user->client_fd);
+            user->client_fd = -1;
         }
-            return 1;
+        return 1;
                     // throw  "No re-registeration";
     }	
     else if(msg.command.compare("NICK") == 0 )
@@ -104,21 +94,25 @@ int Server::register_user(ircMessage msg, Client * user)
             str = this->msg("irssi", "433", msg.params[0], "Nickname is already in use").c_str();
             len = str.length();
             send(user->client_fd,str.c_str(),len,0);
+            user->nick_status = 1;
         }
         else if(msg.params[0].find_first_of("# @:&") != std::string::npos)
         {
+            user->nick_status = 1;
             str = this->msg("irssi", "432", msg.params[0], "Erroneous nickname").c_str();
             len = str.length();
             send(user->client_fd,str.c_str(),len,0);
         }
         else if (msg.params[0].empty() == true)
         {
+            user->nick_status = 1;
             str = this->msg("irssi", "431", msg.params[0], "No nickname given").c_str();
             len = str.length();
             send(user->client_fd,str.c_str(),len,0);
         }
         else
         {
+            user->nick_status = 0;
             this->nicknames.push_back(msg.params[0]);
             user->regi_status = 5;
             if(user->nickname.empty() == false)
@@ -155,12 +149,7 @@ int Server::register_user(ircMessage msg, Client * user)
             this->definedmessage(user->client_fd, RPL_ISUPPORT(user->hostname,""));
             MOTD(user);
         }
-        else
-        {
-            str = this->msg("irssi", "462", msg.params[0], "You may not reregister").c_str();
-            len = str.length();
-            send(user->client_fd,str.c_str(),len,0);
-        }
+        
     return 1;
         // throw "ERR_ALREADYREGISTERED";
     }

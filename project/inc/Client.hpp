@@ -15,6 +15,7 @@ class Client
 	public:
 		int client_fd;
 		int regi_status;
+		int nick_status;
 		std::string hostname; // Real name/address of the host
 		std::string ip; // Real name/address of the host
 		std::string username;  // Username of the client on the host

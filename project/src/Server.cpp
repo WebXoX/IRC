@@ -70,6 +70,7 @@ int Server::serverInit()
 {
     // initization of server socket port poll 
     this->creation_date = date_now();
+    this->server_name = "irssi";
     this->server = socket(AF_INET, SOCK_STREAM, IPPROTO_TCP);
     if (fcntl(this->server, F_SETFL, O_NONBLOCK) == -1)
     {
@@ -152,65 +153,65 @@ std::string Server::msg(std::string source, std::string command, std::string par
     return (":"+source+ " " +command+" :"+param+" "+text + "\r\n");
 }
 
-std::string Server::cap_ls()
-{
-	std::string cap_list;
-	// if(this->account_notify)
-    // {
-	// 	cap_list += "account-notify ";
+// std::string Server::cap_ls()
+// {
+// 	std::string cap_list;
+// 	// if(this->account_notify)
+//     // {
+// 	// 	cap_list += "account-notify ";
 
-    // }
-	// if(this->away_notify)
-    // {
-    //     cap_list += "away-notify ";
+//     // }
+// 	// if(this->away_notify)
+//     // {
+//     //     cap_list += "away-notify ";
 
-    // }	
-	// if(this->chghost)
-    // {
-	// 	cap_list += "chghost ";
+//     // }	
+// 	// if(this->chghost)
+//     // {
+// 	// 	cap_list += "chghost ";
 
-    // }
-	// if(this->extended_join)
-    // {
-    //     cap_list += "extended-join ";
+//     // }
+// 	// if(this->extended_join)
+//     // {
+//     //     cap_list += "extended-join ";
         
-    // }
-    // if(this->multi_prefix)
-	// 	cap_list += "multi-prefix ";
-    // cap_list += "sasl="+this->sasl+" server-time";
-    // return ("account-notify away-notify chghost extended-join multi-prefix sasl=PLAIN server-time");
-	return cap_list;
-}
+//     // }
+//     // if(this->multi_prefix)
+// 	// 	cap_list += "multi-prefix ";
+//     // cap_list += "sasl="+this->sasl+" server-time";
+//     // return ("account-notify away-notify chghost extended-join multi-prefix sasl=PLAIN server-time");
+// 	return cap_list;
+// }
 
 
-std::string Server::cap_ack( ircMessage msg)
-{
-    (void)msg;
-	std::string str;
-	std::string ack;
-	// std::string cap_list[] = {"account-notify","away-notify","chghost","extended-join","multi-prefix","sasl="+this->sasl+" server-time"};
-	// ack = msg.trailing.substr(0, msg.trailing.find_first_of(" "));
-	// while (msg.trailing.empty() == false)
-	// {
-	// 	if(std::find(&cap_list[0], (&cap_list[6]), ack) != &cap_list[6])
-	// 	{
-	// 		str += ack + " ";
-	// 	}
-	// 	if(msg.trailing.empty() == true)
-	// 		break;
-    //     // std::cout << msg.trailing << std::endl;
-	// 	msg.trailing.erase(0, msg.trailing.find_first_of(" ") + 1);
-    //     int subint = msg.trailing.find_first_of(" ");
-    //     if(  msg.trailing.find_first_of(" ") == std::string::npos)
-    //     {
-    //         ack = msg.trailing;
-    //         msg.trailing.clear();
-    //     }
-    //     else
-    //         ack = msg.trailing.substr(0, subint);
-	// }
-    return (str);
-}
+// std::string Server::cap_ack( ircMessage msg)
+// {
+//     (void)msg;
+// 	std::string str;
+// 	std::string ack;
+// 	// std::string cap_list[] = {"account-notify","away-notify","chghost","extended-join","multi-prefix","sasl="+this->sasl+" server-time"};
+// 	// ack = msg.trailing.substr(0, msg.trailing.find_first_of(" "));
+// 	// while (msg.trailing.empty() == false)
+// 	// {
+// 	// 	if(std::find(&cap_list[0], (&cap_list[6]), ack) != &cap_list[6])
+// 	// 	{
+// 	// 		str += ack + " ";
+// 	// 	}
+// 	// 	if(msg.trailing.empty() == true)
+// 	// 		break;
+//     //     // std::cout << msg.trailing << std::endl;
+// 	// 	msg.trailing.erase(0, msg.trailing.find_first_of(" ") + 1);
+//     //     int subint = msg.trailing.find_first_of(" ");
+//     //     if(  msg.trailing.find_first_of(" ") == std::string::npos)
+//     //     {
+//     //         ack = msg.trailing;
+//     //         msg.trailing.clear();
+//     //     }
+//     //     else
+//     //         ack = msg.trailing.substr(0, subint);
+// 	// }
+//     return (str);
+// }
 
 
 int Server::definedmessage(int fd,std::string str)
@@ -282,13 +283,12 @@ int Server::serverLoop()
                 else if (readed <= 0 ){
                     std::cerr << "Client disconnected" << std::endl;
                     close(this->client[i - 1]->client_fd);
+                    this->nicknames.erase(std::find(this->nicknames.begin(), this->nicknames.end(), (this->client[i - 1]->nickname)));
                     delete this->client[i - 1];
                     this->client.erase(this->client.begin() + i - 1);
                     this->fd_poll.erase(this->fd_poll.begin() + i);
                     this->number_of_clients--;
                 }
-                // else
-                //     close(this->fd_poll[i].fd);
             }
         }
     }
