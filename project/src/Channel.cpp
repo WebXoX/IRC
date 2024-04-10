@@ -107,7 +107,10 @@ std::string Channel::getListOfUsers() {
     std::string listusers = "";
     std::map<int, Client*>::iterator it = users.begin();
     for (; it != users.end(); it++) {
-        listusers += it->second->nickname + " ";
+        if (this->isOperator(*it->second))
+            listusers += "@" + it->second->nickname + " ";
+        else
+            listusers += it->second->nickname + " ";
     }
     return trimFunction(listusers);
 }

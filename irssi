@@ -1,6 +1,6 @@
 #!/bin/sh
 
 
-docker run -it --rm --name my-running-irssi1 -e TERM -u 501:20 --log-driver=none -v "${PWD}:/home/user" irssi
+docker run -it --rm --name my-running-irssi2 -e TERM -u 501:20 --log-driver=none -v "${PWD}:/home/user" irssi
 
 

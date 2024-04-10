@@ -1,5 +1,0 @@
-
-
-
-Client cnat reconnect with server
-client request NICK server crash
