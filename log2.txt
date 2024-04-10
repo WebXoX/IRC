@@ -1,0 +1,350 @@
+<< CAP LS 302
+<< JOIN :
+>> :iridium.libera.chat NOTICE * :*** Checking Ident
+>> :iridium.libera.chat NOTICE * :*** Looking up your hostname...
+>> :iridium.libera.chat NOTICE * :*** No Ident response
+>> :iridium.libera.chat NOTICE * :*** Couldn't look up your hostname
+>> :iridium.libera.chat CAP * LS :account-notify away-notify chghost extended-join multi-prefix sasl=PLAIN,ECDSA-NIST256P-CHALLENGE,EXTERNAL,SCRAM-SHA-512 tls account-tag cap-notify echo-message server-time solanum.chat/identify-msg solanum.chat/oper solanum.chat/realhost
+<< CAP REQ :multi-prefix extended-join away-notify chghost account-notify server-time
+>> :iridium.libera.chat 451 * :You have not registered
+>> :iridium.libera.chat CAP * ACK :multi-prefix extended-join away-notify chghost account-notify server-time
+<< CAP END
+<< NICK somebody
+<< USER somebody somebody irc.libera.chat :Unknown
+>> @time=2024-04-10T10:45:13.360Z :iridium.libera.chat 001 somebody :Welcome to the Libera.Chat Internet Relay Chat Network somebody
+>> @time=2024-04-10T10:45:13.360Z :iridium.libera.chat 002 somebody :Your host is iridium.libera.chat[188.240.145.100/6697], running version solanum-1.0-dev
+>> @time=2024-04-10T10:45:13.360Z :iridium.libera.chat 003 somebody :This server was created Thu Nov 16 2023 at 06:25:11 UTC
+>> @time=2024-04-10T10:45:13.360Z :iridium.libera.chat 004 somebody iridium.libera.chat solanum-1.0-dev DGIMQRSZaghilopsuwz CFILMPQRSTbcefgijklmnopqrstuvz bkloveqjfI
+>> @time=2024-04-10T10:45:13.360Z :iridium.libera.chat 005 somebody ACCOUNTEXTBAN=a KNOCK SAFELIST ELIST=CMNTU MONITOR=100 CALLERID=g FNC WHOX ETRACE CHANTYPES=# EXCEPTS INVEX :are supported by this server
+>> @time=2024-04-10T10:45:13.360Z :iridium.libera.chat 005 somebody CHANMODES=eIbq,k,flj,CFLMPQRSTcgimnprstuz CHANLIMIT=#:250 PREFIX=(ov)@+ MAXLIST=bqeI:100 MODES=4 NETWORK=Libera.Chat STATUSMSG=@+ CASEMAPPING=rfc1459 NICKLEN=16 MAXNICKLEN=16 CHANNELLEN=50 TOPICLEN=390 :are supported by this server
+>> @time=2024-04-10T10:45:13.360Z :iridium.libera.chat 005 somebody DEAF=D TARGMAX=NAMES:1,LIST:1,KICK:1,WHOIS:1,PRIVMSG:4,NOTICE:4,ACCEPT:,MONITOR: EXTBAN=$,agjrxz :are supported by this server
+>> @time=2024-04-10T10:45:13.360Z :iridium.libera.chat 251 somebody :There are 70 users and 35453 invisible on 28 servers
+>> @time=2024-04-10T10:45:13.360Z :iridium.libera.chat 252 somebody 43 :IRC Operators online
+>> @time=2024-04-10T10:45:13.360Z :iridium.libera.chat 253 somebody 141 :unknown connection(s)
+>> @time=2024-04-10T10:45:13.360Z :iridium.libera.chat 254 somebody 23136 :channels formed
+>> @time=2024-04-10T10:45:13.360Z :iridium.libera.chat 255 somebody :I have 2507 clients and 1 servers
+>> @time=2024-04-10T10:45:13.360Z :iridium.libera.chat 265 somebody 2507 2660 :Current local users 2507, max 2660
+>> @time=2024-04-10T10:45:13.360Z :iridium.libera.chat 266 somebody 35523 37286 :Current global users 35523, max 37286
+>> @time=2024-04-10T10:45:13.360Z :iridium.libera.chat 250 somebody :Highest connection count: 2661 (2660 clients) (350608 connections received)
+>> @time=2024-04-10T10:45:13.360Z :iridium.libera.chat 375 somebody :- iridium.libera.chat Message of the Day - 
+>> @time=2024-04-10T10:45:13.360Z :iridium.libera.chat 372 somebody :- This server provided by NORDUnet/SUNET
+>> @time=2024-04-10T10:45:13.360Z :iridium.libera.chat 372 somebody :- Welcome to Libera Chat, the IRC network for
+>> @time=2024-04-10T10:45:13.360Z :iridium.libera.chat 372 somebody :- free & open-source software and peer directed projects.
+>> @time=2024-04-10T10:45:13.360Z :iridium.libera.chat 372 somebody :-  
+>> @time=2024-04-10T10:45:13.360Z :iridium.libera.chat 372 somebody :- Use of Libera Chat is governed by our network policies.
+>> @time=2024-04-10T10:45:13.360Z :iridium.libera.chat 372 somebody :-  
+>> @time=2024-04-10T10:45:13.360Z :iridium.libera.chat 372 somebody :- To reduce network abuses we perform open proxy checks
+>> @time=2024-04-10T10:45:13.360Z :iridium.libera.chat 372 somebody :- on hosts at connection time.
+>> @time=2024-04-10T10:45:13.360Z :iridium.libera.chat 372 somebody :-  
+>> @time=2024-04-10T10:45:13.360Z :iridium.libera.chat 372 somebody :- Please visit us in #libera for questions and support.
+>> @time=2024-04-10T10:45:13.360Z :iridium.libera.chat 372 somebody :-  
+>> @time=2024-04-10T10:45:13.360Z :iridium.libera.chat 372 somebody :- Website and documentation:  https://libera.chat
+>> @time=2024-04-10T10:45:13.360Z :iridium.libera.chat 372 somebody :- Webchat:                    https://web.libera.chat
+>> @time=2024-04-10T10:45:13.360Z :iridium.libera.chat 372 somebody :- Network policies:           https://libera.chat/policies
+>> @time=2024-04-10T10:45:13.360Z :iridium.libera.chat 372 somebody :- Email:                      support@libera.chat
+>> @time=2024-04-10T10:45:13.360Z :iridium.libera.chat 376 somebody :End of /MOTD command.
+>> @time=2024-04-10T10:45:13.360Z :somebody MODE somebody :+Ziw
+>> @time=2024-04-10T10:45:13.389Z :NickServ!NickServ@services.libera.chat NOTICE somebody :This nickname is registered. Please choose a different nickname, or identify via /msg NickServ IDENTIFY aaa <password>
+<< MODE somebody +i
+<< PING iridium.libera.chat
+>> @time=2024-04-10T10:45:20.602Z :iridium.libera.chat PONG iridium.libera.chat :iridium.libera.chat
+--> lag pong
+<< NICK THEBIGBOSS
+>> @time=2024-04-10T10:45:27.314Z :somebody!~somebody@5.195.225.158 NICK :THEBIGBOSS
+<< JOIN #tehuan_world
+>> @time=2024-04-10T10:45:35.747Z :THEBIGBOSS!~somebody@5.195.225.158 JOIN #tehuan_world * :Unknown
+>> @time=2024-04-10T10:45:35.747Z :iridium.libera.chat 353 THEBIGBOSS @ #tehuan_world :THEBIGBOSS @tehuan
+>> @time=2024-04-10T10:45:35.747Z :iridium.libera.chat 366 THEBIGBOSS #tehuan_world :End of /NAMES list.
+<< MODE #tehuan_world
+>> @time=2024-04-10T10:45:38.262Z :iridium.libera.chat 324 THEBIGBOSS #tehuan_world +Cnst
+--> chanquery mode
+>> @time=2024-04-10T10:45:38.262Z :iridium.libera.chat 329 THEBIGBOSS #tehuan_world 1712744496
+--> event 329
+<< WHO #tehuan_world %tcuhnfdar,743
+>> @time=2024-04-10T10:45:40.773Z :iridium.libera.chat 354 THEBIGBOSS 743 #tehuan_world ~somebody 5.195.225.158 THEBIGBOSS H 0 0 :Unknown
+--> silent event whox
+>> @time=2024-04-10T10:45:40.773Z :iridium.libera.chat 354 THEBIGBOSS 743 #tehuan_world ~somebody 5.195.225.158 tehuan H@ 0 0 :Unknown
+--> silent event whox
+>> @time=2024-04-10T10:45:40.773Z :iridium.libera.chat 315 THEBIGBOSS #tehuan_world :End of /WHO list.
+--> chanquery who end
+<< MODE #tehuan_world b
+>> @time=2024-04-10T10:45:43.285Z :iridium.libera.chat 368 THEBIGBOSS #tehuan_world :End of Channel Ban List
+--> chanquery ban end
+<< CAP LS 302
+<< JOIN :
+>> :iridium.libera.chat NOTICE * :*** Checking Ident
+>> :iridium.libera.chat NOTICE * :*** Looking up your hostname...
+>> :iridium.libera.chat NOTICE * :*** No Ident response
+>> :iridium.libera.chat NOTICE * :*** Couldn't look up your hostname
+>> :iridium.libera.chat CAP * LS :account-notify away-notify chghost extended-join multi-prefix sasl=PLAIN,ECDSA-NIST256P-CHALLENGE,EXTERNAL,SCRAM-SHA-512 tls account-tag cap-notify echo-message server-time solanum.chat/identify-msg solanum.chat/oper solanum.chat/realhost
+<< CAP REQ :multi-prefix extended-join away-notify chghost account-notify server-time
+>> :iridium.libera.chat 451 * :You have not registered
+>> :iridium.libera.chat CAP * ACK :multi-prefix extended-join away-notify chghost account-notify server-time
+<< CAP END
+<< NICK somebody
+<< USER somebody somebody irc.libera.chat :Unknown
+>> @time=2024-04-10T10:45:13.360Z :iridium.libera.chat 001 somebody :Welcome to the Libera.Chat Internet Relay Chat Network somebody
+>> @time=2024-04-10T10:45:13.360Z :iridium.libera.chat 002 somebody :Your host is iridium.libera.chat[188.240.145.100/6697], running version solanum-1.0-dev
+>> @time=2024-04-10T10:45:13.360Z :iridium.libera.chat 003 somebody :This server was created Thu Nov 16 2023 at 06:25:11 UTC
+>> @time=2024-04-10T10:45:13.360Z :iridium.libera.chat 004 somebody iridium.libera.chat solanum-1.0-dev DGIMQRSZaghilopsuwz CFILMPQRSTbcefgijklmnopqrstuvz bkloveqjfI
+>> @time=2024-04-10T10:45:13.360Z :iridium.libera.chat 005 somebody ACCOUNTEXTBAN=a KNOCK SAFELIST ELIST=CMNTU MONITOR=100 CALLERID=g FNC WHOX ETRACE CHANTYPES=# EXCEPTS INVEX :are supported by this server
+>> @time=2024-04-10T10:45:13.360Z :iridium.libera.chat 005 somebody CHANMODES=eIbq,k,flj,CFLMPQRSTcgimnprstuz CHANLIMIT=#:250 PREFIX=(ov)@+ MAXLIST=bqeI:100 MODES=4 NETWORK=Libera.Chat STATUSMSG=@+ CASEMAPPING=rfc1459 NICKLEN=16 MAXNICKLEN=16 CHANNELLEN=50 TOPICLEN=390 :are supported by this server
+>> @time=2024-04-10T10:45:13.360Z :iridium.libera.chat 005 somebody DEAF=D TARGMAX=NAMES:1,LIST:1,KICK:1,WHOIS:1,PRIVMSG:4,NOTICE:4,ACCEPT:,MONITOR: EXTBAN=$,agjrxz :are supported by this server
+>> @time=2024-04-10T10:45:13.360Z :iridium.libera.chat 251 somebody :There are 70 users and 35453 invisible on 28 servers
+>> @time=2024-04-10T10:45:13.360Z :iridium.libera.chat 252 somebody 43 :IRC Operators online
+>> @time=2024-04-10T10:45:13.360Z :iridium.libera.chat 253 somebody 141 :unknown connection(s)
+>> @time=2024-04-10T10:45:13.360Z :iridium.libera.chat 254 somebody 23136 :channels formed
+>> @time=2024-04-10T10:45:13.360Z :iridium.libera.chat 255 somebody :I have 2507 clients and 1 servers
+>> @time=2024-04-10T10:45:13.360Z :iridium.libera.chat 265 somebody 2507 2660 :Current local users 2507, max 2660
+>> @time=2024-04-10T10:45:13.360Z :iridium.libera.chat 266 somebody 35523 37286 :Current global users 35523, max 37286
+>> @time=2024-04-10T10:45:13.360Z :iridium.libera.chat 250 somebody :Highest connection count: 2661 (2660 clients) (350608 connections received)
+>> @time=2024-04-10T10:45:13.360Z :iridium.libera.chat 375 somebody :- iridium.libera.chat Message of the Day - 
+>> @time=2024-04-10T10:45:13.360Z :iridium.libera.chat 372 somebody :- This server provided by NORDUnet/SUNET
+>> @time=2024-04-10T10:45:13.360Z :iridium.libera.chat 372 somebody :- Welcome to Libera Chat, the IRC network for
+>> @time=2024-04-10T10:45:13.360Z :iridium.libera.chat 372 somebody :- free & open-source software and peer directed projects.
+>> @time=2024-04-10T10:45:13.360Z :iridium.libera.chat 372 somebody :-  
+>> @time=2024-04-10T10:45:13.360Z :iridium.libera.chat 372 somebody :- Use of Libera Chat is governed by our network policies.
+>> @time=2024-04-10T10:45:13.360Z :iridium.libera.chat 372 somebody :-  
+>> @time=2024-04-10T10:45:13.360Z :iridium.libera.chat 372 somebody :- To reduce network abuses we perform open proxy checks
+>> @time=2024-04-10T10:45:13.360Z :iridium.libera.chat 372 somebody :- on hosts at connection time.
+>> @time=2024-04-10T10:45:13.360Z :iridium.libera.chat 372 somebody :-  
+>> @time=2024-04-10T10:45:13.360Z :iridium.libera.chat 372 somebody :- Please visit us in #libera for questions and support.
+>> @time=2024-04-10T10:45:13.360Z :iridium.libera.chat 372 somebody :-  
+>> @time=2024-04-10T10:45:13.360Z :iridium.libera.chat 372 somebody :- Website and documentation:  https://libera.chat
+>> @time=2024-04-10T10:45:13.360Z :iridium.libera.chat 372 somebody :- Webchat:                    https://web.libera.chat
+>> @time=2024-04-10T10:45:13.360Z :iridium.libera.chat 372 somebody :- Network policies:           https://libera.chat/policies
+>> @time=2024-04-10T10:45:13.360Z :iridium.libera.chat 372 somebody :- Email:                      support@libera.chat
+>> @time=2024-04-10T10:45:13.360Z :iridium.libera.chat 376 somebody :End of /MOTD command.
+>> @time=2024-04-10T10:45:13.360Z :somebody MODE somebody :+Ziw
+>> @time=2024-04-10T10:45:13.389Z :NickServ!NickServ@services.libera.chat NOTICE somebody :This nickname is registered. Please choose a different nickname, or identify via /msg NickServ IDENTIFY aaa <password>
+<< MODE somebody +i
+<< PING iridium.libera.chat
+>> @time=2024-04-10T10:45:20.602Z :iridium.libera.chat PONG iridium.libera.chat :iridium.libera.chat
+--> lag pong
+<< NICK THEBIGBOSS
+>> @time=2024-04-10T10:45:27.314Z :somebody!~somebody@5.195.225.158 NICK :THEBIGBOSS
+<< JOIN #tehuan_world
+>> @time=2024-04-10T10:45:35.747Z :THEBIGBOSS!~somebody@5.195.225.158 JOIN #tehuan_world * :Unknown
+>> @time=2024-04-10T10:45:35.747Z :iridium.libera.chat 353 THEBIGBOSS @ #tehuan_world :THEBIGBOSS @tehuan
+>> @time=2024-04-10T10:45:35.747Z :iridium.libera.chat 366 THEBIGBOSS #tehuan_world :End of /NAMES list.
+<< MODE #tehuan_world
+>> @time=2024-04-10T10:45:38.262Z :iridium.libera.chat 324 THEBIGBOSS #tehuan_world +Cnst
+--> chanquery mode
+>> @time=2024-04-10T10:45:38.262Z :iridium.libera.chat 329 THEBIGBOSS #tehuan_world 1712744496
+--> event 329
+<< WHO #tehuan_world %tcuhnfdar,743
+>> @time=2024-04-10T10:45:40.773Z :iridium.libera.chat 354 THEBIGBOSS 743 #tehuan_world ~somebody 5.195.225.158 THEBIGBOSS H 0 0 :Unknown
+--> silent event whox
+>> @time=2024-04-10T10:45:40.773Z :iridium.libera.chat 354 THEBIGBOSS 743 #tehuan_world ~somebody 5.195.225.158 tehuan H@ 0 0 :Unknown
+--> silent event whox
+>> @time=2024-04-10T10:45:40.773Z :iridium.libera.chat 315 THEBIGBOSS #tehuan_world :End of /WHO list.
+--> chanquery who end
+<< MODE #tehuan_world b
+>> @time=2024-04-10T10:45:43.285Z :iridium.libera.chat 368 THEBIGBOSS #tehuan_world :End of Channel Ban List
+--> chanquery ban end
+<< PING iridium.libera.chat
+>> @time=2024-04-10T10:46:21.686Z :iridium.libera.chat PONG iridium.libera.chat :iridium.libera.chat
+--> lag pong
+<< PING iridium.libera.chat
+>> @time=2024-04-10T10:47:22.852Z :iridium.libera.chat PONG iridium.libera.chat :iridium.libera.chat
+--> lag pong
+<< PING iridium.libera.chat
+>> @time=2024-04-10T10:48:24.057Z :iridium.libera.chat PONG iridium.libera.chat :iridium.libera.chat
+--> lag pong
+<< PING iridium.libera.chat
+>> @time=2024-04-10T10:49:24.224Z :iridium.libera.chat PONG iridium.libera.chat :iridium.libera.chat
+--> lag pong
+<< PING iridium.libera.chat
+>> @time=2024-04-10T10:50:25.367Z :iridium.libera.chat PONG iridium.libera.chat :iridium.libera.chat
+--> lag pong
+<< PING iridium.libera.chat
+>> @time=2024-04-10T10:51:26.513Z :iridium.libera.chat PONG iridium.libera.chat :iridium.libera.chat
+--> lag pong
+<< PING iridium.libera.chat
+>> @time=2024-04-10T10:52:27.707Z :iridium.libera.chat PONG iridium.libera.chat :iridium.libera.chat
+--> lag pong
+<< PING iridium.libera.chat
+>> @time=2024-04-10T10:53:28.902Z :iridium.libera.chat PONG iridium.libera.chat :iridium.libera.chat
+--> lag pong
+<< PING iridium.libera.chat
+>> @time=2024-04-10T10:54:30.034Z :iridium.libera.chat PONG iridium.libera.chat :iridium.libera.chat
+--> lag pong
+<< PING iridium.libera.chat
+>> @time=2024-04-10T10:55:30.223Z :iridium.libera.chat PONG iridium.libera.chat :iridium.libera.chat
+--> lag pong
+<< PING iridium.libera.chat
+>> @time=2024-04-10T10:56:31.397Z :iridium.libera.chat PONG iridium.libera.chat :iridium.libera.chat
+--> lag pong
+<< PING iridium.libera.chat
+>> @time=2024-04-10T10:57:32.501Z :iridium.libera.chat PONG iridium.libera.chat :iridium.libera.chat
+--> lag pong
+<< PING iridium.libera.chat
+>> @time=2024-04-10T10:58:33.678Z :iridium.libera.chat PONG iridium.libera.chat :iridium.libera.chat
+--> lag pong
+<< PING iridium.libera.chat
+>> @time=2024-04-10T10:59:34.849Z :iridium.libera.chat PONG iridium.libera.chat :iridium.libera.chat
+--> lag pong
+<< PING iridium.libera.chat
+>> @time=2024-04-10T11:00:36.012Z :iridium.libera.chat PONG iridium.libera.chat :iridium.libera.chat
+--> lag pong
+<< PING iridium.libera.chat
+>> @time=2024-04-10T11:01:36.138Z :iridium.libera.chat PONG iridium.libera.chat :iridium.libera.chat
+--> lag pong
+<< PING iridium.libera.chat
+>> @time=2024-04-10T11:02:37.284Z :iridium.libera.chat PONG iridium.libera.chat :iridium.libera.chat
+--> lag pong
+<< PING iridium.libera.chat
+>> @time=2024-04-10T11:03:38.442Z :iridium.libera.chat PONG iridium.libera.chat :iridium.libera.chat
+--> lag pong
+<< PING iridium.libera.chat
+>> @time=2024-04-10T11:04:39.585Z :iridium.libera.chat PONG iridium.libera.chat :iridium.libera.chat
+--> lag pong
+<< PING iridium.libera.chat
+>> @time=2024-04-10T11:05:40.722Z :iridium.libera.chat PONG iridium.libera.chat :iridium.libera.chat
+--> lag pong
+<< PING iridium.libera.chat
+>> @time=2024-04-10T11:06:41.810Z :iridium.libera.chat PONG iridium.libera.chat :iridium.libera.chat
+--> lag pong
+<< PING iridium.libera.chat
+>> @time=2024-04-10T11:07:42.948Z :iridium.libera.chat PONG iridium.libera.chat :iridium.libera.chat
+--> lag pong
+<< CAP LS 302
+<< JOIN :
+>> :iridium.libera.chat NOTICE * :*** Checking Ident
+>> :iridium.libera.chat NOTICE * :*** Looking up your hostname...
+>> :iridium.libera.chat NOTICE * :*** No Ident response
+>> :iridium.libera.chat NOTICE * :*** Couldn't look up your hostname
+>> :iridium.libera.chat CAP * LS :account-notify away-notify chghost extended-join multi-prefix sasl=PLAIN,ECDSA-NIST256P-CHALLENGE,EXTERNAL,SCRAM-SHA-512 tls account-tag cap-notify echo-message server-time solanum.chat/identify-msg solanum.chat/oper solanum.chat/realhost
+<< CAP REQ :multi-prefix extended-join away-notify chghost account-notify server-time
+>> :iridium.libera.chat 451 * :You have not registered
+>> :iridium.libera.chat CAP * ACK :multi-prefix extended-join away-notify chghost account-notify server-time
+<< CAP END
+<< NICK somebody
+<< USER somebody somebody irc.libera.chat :Unknown
+>> @time=2024-04-10T10:45:13.360Z :iridium.libera.chat 001 somebody :Welcome to the Libera.Chat Internet Relay Chat Network somebody
+>> @time=2024-04-10T10:45:13.360Z :iridium.libera.chat 002 somebody :Your host is iridium.libera.chat[188.240.145.100/6697], running version solanum-1.0-dev
+>> @time=2024-04-10T10:45:13.360Z :iridium.libera.chat 003 somebody :This server was created Thu Nov 16 2023 at 06:25:11 UTC
+>> @time=2024-04-10T10:45:13.360Z :iridium.libera.chat 004 somebody iridium.libera.chat solanum-1.0-dev DGIMQRSZaghilopsuwz CFILMPQRSTbcefgijklmnopqrstuvz bkloveqjfI
+>> @time=2024-04-10T10:45:13.360Z :iridium.libera.chat 005 somebody ACCOUNTEXTBAN=a KNOCK SAFELIST ELIST=CMNTU MONITOR=100 CALLERID=g FNC WHOX ETRACE CHANTYPES=# EXCEPTS INVEX :are supported by this server
+>> @time=2024-04-10T10:45:13.360Z :iridium.libera.chat 005 somebody CHANMODES=eIbq,k,flj,CFLMPQRSTcgimnprstuz CHANLIMIT=#:250 PREFIX=(ov)@+ MAXLIST=bqeI:100 MODES=4 NETWORK=Libera.Chat STATUSMSG=@+ CASEMAPPING=rfc1459 NICKLEN=16 MAXNICKLEN=16 CHANNELLEN=50 TOPICLEN=390 :are supported by this server
+>> @time=2024-04-10T10:45:13.360Z :iridium.libera.chat 005 somebody DEAF=D TARGMAX=NAMES:1,LIST:1,KICK:1,WHOIS:1,PRIVMSG:4,NOTICE:4,ACCEPT:,MONITOR: EXTBAN=$,agjrxz :are supported by this server
+>> @time=2024-04-10T10:45:13.360Z :iridium.libera.chat 251 somebody :There are 70 users and 35453 invisible on 28 servers
+>> @time=2024-04-10T10:45:13.360Z :iridium.libera.chat 252 somebody 43 :IRC Operators online
+>> @time=2024-04-10T10:45:13.360Z :iridium.libera.chat 253 somebody 141 :unknown connection(s)
+>> @time=2024-04-10T10:45:13.360Z :iridium.libera.chat 254 somebody 23136 :channels formed
+>> @time=2024-04-10T10:45:13.360Z :iridium.libera.chat 255 somebody :I have 2507 clients and 1 servers
+>> @time=2024-04-10T10:45:13.360Z :iridium.libera.chat 265 somebody 2507 2660 :Current local users 2507, max 2660
+>> @time=2024-04-10T10:45:13.360Z :iridium.libera.chat 266 somebody 35523 37286 :Current global users 35523, max 37286
+>> @time=2024-04-10T10:45:13.360Z :iridium.libera.chat 250 somebody :Highest connection count: 2661 (2660 clients) (350608 connections received)
+>> @time=2024-04-10T10:45:13.360Z :iridium.libera.chat 375 somebody :- iridium.libera.chat Message of the Day - 
+>> @time=2024-04-10T10:45:13.360Z :iridium.libera.chat 372 somebody :- This server provided by NORDUnet/SUNET
+>> @time=2024-04-10T10:45:13.360Z :iridium.libera.chat 372 somebody :- Welcome to Libera Chat, the IRC network for
+>> @time=2024-04-10T10:45:13.360Z :iridium.libera.chat 372 somebody :- free & open-source software and peer directed projects.
+>> @time=2024-04-10T10:45:13.360Z :iridium.libera.chat 372 somebody :-  
+>> @time=2024-04-10T10:45:13.360Z :iridium.libera.chat 372 somebody :- Use of Libera Chat is governed by our network policies.
+>> @time=2024-04-10T10:45:13.360Z :iridium.libera.chat 372 somebody :-  
+>> @time=2024-04-10T10:45:13.360Z :iridium.libera.chat 372 somebody :- To reduce network abuses we perform open proxy checks
+>> @time=2024-04-10T10:45:13.360Z :iridium.libera.chat 372 somebody :- on hosts at connection time.
+>> @time=2024-04-10T10:45:13.360Z :iridium.libera.chat 372 somebody :-  
+>> @time=2024-04-10T10:45:13.360Z :iridium.libera.chat 372 somebody :- Please visit us in #libera for questions and support.
+>> @time=2024-04-10T10:45:13.360Z :iridium.libera.chat 372 somebody :-  
+>> @time=2024-04-10T10:45:13.360Z :iridium.libera.chat 372 somebody :- Website and documentation:  https://libera.chat
+>> @time=2024-04-10T10:45:13.360Z :iridium.libera.chat 372 somebody :- Webchat:                    https://web.libera.chat
+>> @time=2024-04-10T10:45:13.360Z :iridium.libera.chat 372 somebody :- Network policies:           https://libera.chat/policies
+>> @time=2024-04-10T10:45:13.360Z :iridium.libera.chat 372 somebody :- Email:                      support@libera.chat
+>> @time=2024-04-10T10:45:13.360Z :iridium.libera.chat 376 somebody :End of /MOTD command.
+>> @time=2024-04-10T10:45:13.360Z :somebody MODE somebody :+Ziw
+>> @time=2024-04-10T10:45:13.389Z :NickServ!NickServ@services.libera.chat NOTICE somebody :This nickname is registered. Please choose a different nickname, or identify via /msg NickServ IDENTIFY aaa <password>
+<< MODE somebody +i
+<< PING iridium.libera.chat
+>> @time=2024-04-10T10:45:20.602Z :iridium.libera.chat PONG iridium.libera.chat :iridium.libera.chat
+--> lag pong
+<< NICK THEBIGBOSS
+>> @time=2024-04-10T10:45:27.314Z :somebody!~somebody@5.195.225.158 NICK :THEBIGBOSS
+<< JOIN #tehuan_world
+>> @time=2024-04-10T10:45:35.747Z :THEBIGBOSS!~somebody@5.195.225.158 JOIN #tehuan_world * :Unknown
+>> @time=2024-04-10T10:45:35.747Z :iridium.libera.chat 353 THEBIGBOSS @ #tehuan_world :THEBIGBOSS @tehuan
+>> @time=2024-04-10T10:45:35.747Z :iridium.libera.chat 366 THEBIGBOSS #tehuan_world :End of /NAMES list.
+<< MODE #tehuan_world
+>> @time=2024-04-10T10:45:38.262Z :iridium.libera.chat 324 THEBIGBOSS #tehuan_world +Cnst
+--> chanquery mode
+>> @time=2024-04-10T10:45:38.262Z :iridium.libera.chat 329 THEBIGBOSS #tehuan_world 1712744496
+--> event 329
+<< WHO #tehuan_world %tcuhnfdar,743
+>> @time=2024-04-10T10:45:40.773Z :iridium.libera.chat 354 THEBIGBOSS 743 #tehuan_world ~somebody 5.195.225.158 THEBIGBOSS H 0 0 :Unknown
+--> silent event whox
+>> @time=2024-04-10T10:45:40.773Z :iridium.libera.chat 354 THEBIGBOSS 743 #tehuan_world ~somebody 5.195.225.158 tehuan H@ 0 0 :Unknown
+--> silent event whox
+>> @time=2024-04-10T10:45:40.773Z :iridium.libera.chat 315 THEBIGBOSS #tehuan_world :End of /WHO list.
+--> chanquery who end
+<< MODE #tehuan_world b
+>> @time=2024-04-10T10:45:43.285Z :iridium.libera.chat 368 THEBIGBOSS #tehuan_world :End of Channel Ban List
+--> chanquery ban end
+<< PING iridium.libera.chat
+>> @time=2024-04-10T10:46:21.686Z :iridium.libera.chat PONG iridium.libera.chat :iridium.libera.chat
+--> lag pong
+<< PING iridium.libera.chat
+>> @time=2024-04-10T10:47:22.852Z :iridium.libera.chat PONG iridium.libera.chat :iridium.libera.chat
+--> lag pong
+<< PING iridium.libera.chat
+>> @time=2024-04-10T10:48:24.057Z :iridium.libera.chat PONG iridium.libera.chat :iridium.libera.chat
+--> lag pong
+<< PING iridium.libera.chat
+>> @time=2024-04-10T10:49:24.224Z :iridium.libera.chat PONG iridium.libera.chat :iridium.libera.chat
+--> lag pong
+<< PING iridium.libera.chat
+>> @time=2024-04-10T10:50:25.367Z :iridium.libera.chat PONG iridium.libera.chat :iridium.libera.chat
+--> lag pong
+<< PING iridium.libera.chat
+>> @time=2024-04-10T10:51:26.513Z :iridium.libera.chat PONG iridium.libera.chat :iridium.libera.chat
+--> lag pong
+<< PING iridium.libera.chat
+>> @time=2024-04-10T10:52:27.707Z :iridium.libera.chat PONG iridium.libera.chat :iridium.libera.chat
+--> lag pong
+<< PING iridium.libera.chat
+>> @time=2024-04-10T10:53:28.902Z :iridium.libera.chat PONG iridium.libera.chat :iridium.libera.chat
+--> lag pong
+<< PING iridium.libera.chat
+>> @time=2024-04-10T10:54:30.034Z :iridium.libera.chat PONG iridium.libera.chat :iridium.libera.chat
+--> lag pong
+<< PING iridium.libera.chat
+>> @time=2024-04-10T10:55:30.223Z :iridium.libera.chat PONG iridium.libera.chat :iridium.libera.chat
+--> lag pong
+<< PING iridium.libera.chat
+>> @time=2024-04-10T10:56:31.397Z :iridium.libera.chat PONG iridium.libera.chat :iridium.libera.chat
+--> lag pong
+<< PING iridium.libera.chat
+>> @time=2024-04-10T10:57:32.501Z :iridium.libera.chat PONG iridium.libera.chat :iridium.libera.chat
+--> lag pong
+<< PING iridium.libera.chat
+>> @time=2024-04-10T10:58:33.678Z :iridium.libera.chat PONG iridium.libera.chat :iridium.libera.chat
+--> lag pong
+<< PING iridium.libera.chat
+>> @time=2024-04-10T10:59:34.849Z :iridium.libera.chat PONG iridium.libera.chat :iridium.libera.chat
+--> lag pong
+<< PING iridium.libera.chat
+>> @time=2024-04-10T11:00:36.012Z :iridium.libera.chat PONG iridium.libera.chat :iridium.libera.chat
+--> lag pong
+<< PING iridium.libera.chat
+>> @time=2024-04-10T11:01:36.138Z :iridium.libera.chat PONG iridium.libera.chat :iridium.libera.chat
+--> lag pong
+<< PING iridium.libera.chat
+>> @time=2024-04-10T11:02:37.284Z :iridium.libera.chat PONG iridium.libera.chat :iridium.libera.chat
+--> lag pong
+<< PING iridium.libera.chat
+>> @time=2024-04-10T11:03:38.442Z :iridium.libera.chat PONG iridium.libera.chat :iridium.libera.chat
+--> lag pong
+<< PING iridium.libera.chat
+>> @time=2024-04-10T11:04:39.585Z :iridium.libera.chat PONG iridium.libera.chat :iridium.libera.chat
+--> lag pong
+<< PING iridium.libera.chat
+>> @time=2024-04-10T11:05:40.722Z :iridium.libera.chat PONG iridium.libera.chat :iridium.libera.chat
+--> lag pong
+<< PING iridium.libera.chat
+>> @time=2024-04-10T11:06:41.810Z :iridium.libera.chat PONG iridium.libera.chat :iridium.libera.chat
+--> lag pong
+<< PING iridium.libera.chat
+>> @time=2024-04-10T11:07:42.948Z :iridium.libera.chat PONG iridium.libera.chat :iridium.libera.chat
+--> lag pong
+<< TOPIC #tehuan_world :HELLO WORLD NEW TOPIC
+>> @time=2024-04-10T11:08:24.596Z :iridium.libera.chat 482 THEBIGBOSS #tehuan_world :You're not a channel operator
