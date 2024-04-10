@@ -3,6 +3,7 @@
 /* orth Client / constructor*/
 Client::Client ()
 {
+	// this->nickname = "somebody";
 	this->client_fd = 0;
 	// this->nickname =;
 	this->regi_status = 0;

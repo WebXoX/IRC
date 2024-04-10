@@ -194,6 +194,9 @@ void Server::commandPath(ircMessage msg, Client * user)
         {
             this->joinCommand(msg, *user);
         }
+        else if (msg.command.compare("TOPIC") == 0) {
+            this->topicCommand(msg, *user);
+        }
 		else
 		{
 			// std::cerr << "Invalid command" << std::endl;
