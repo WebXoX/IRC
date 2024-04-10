@@ -156,7 +156,7 @@ void Server::register_user(ircMessage msg, Client * user)
     }	
     else if(msg.command.compare("NICK") == 0 && user->regi_status == 4)
         nick(user,msg.params[0]);
-    else if(msg.command.compare("USER") == 0 && user->regi_status == 5)
+    else if(msg.command.compare("USER") == 0 && (user->regi_status == 4 ||user->regi_status == 5))
         adduser(user,msg);
     else if ( user->regi_status == 6)
         definedmessage(user->client_fd ,ERR_ALREADYREGISTERED(this->server_name));
