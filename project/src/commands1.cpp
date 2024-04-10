@@ -39,7 +39,14 @@ int Server::MOTD(Client * user)
     send(user->client_fd,str.c_str(),len,0);
     return 1;
 }
-
+std::string int_tostring(int guest)
+{
+    std::string str;
+    std::ostringstream oss;
+    oss << guest;
+    str = oss.str();
+    return str;
+}
 void Server::adduser(Client * user, ircMessage msg)
 {
     if(user->username.empty() == true)
@@ -65,10 +72,9 @@ void Server::adduser(Client * user, ircMessage msg)
         while(user->nick_status == 1)
         {
             std::string str = "guest";
-            int i = 0;
-            str += i;
+            str += int_tostring(this->guestuser);
             nick(user,str);
-            ++i;
+            this->guestuser++;
         }
     }
 }
@@ -140,7 +146,7 @@ void Server::register_user(ircMessage msg, Client * user)
     }
     else if(msg.command.compare("PASS") == 0)
     {
-        if(user->regi_status == 3)
+        if(user->regi_status == 3 || user->regi_status == 1)
         {
             if(msg.params[0].compare(this->pass) == 0)
                 user->regi_status = 4;
@@ -158,8 +164,8 @@ void Server::register_user(ircMessage msg, Client * user)
         nick(user,msg.params[0]);
     else if(msg.command.compare("USER") == 0 && (user->regi_status == 4 ||user->regi_status == 5))
         adduser(user,msg);
-    else if ( user->regi_status == 6)
-        definedmessage(user->client_fd ,ERR_ALREADYREGISTERED(this->server_name));
+    // else if ( user->regi_status == 6)
+    //     definedmessage(user->client_fd ,ERR_ALREADYREGISTERED(this->server_name));
 }
 
 

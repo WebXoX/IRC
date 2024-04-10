@@ -71,6 +71,7 @@ int Server::serverInit()
     // initization of server socket port poll 
     this->creation_date = date_now();
     this->server_name = "irssi";
+    this->guestuser = 0;
     this->server = socket(AF_INET, SOCK_STREAM, IPPROTO_TCP);
     if (fcntl(this->server, F_SETFL, O_NONBLOCK) == -1)
     {

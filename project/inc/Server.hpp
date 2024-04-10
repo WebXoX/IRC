@@ -36,6 +36,7 @@ class Server
 		std::string ports;
 		std::string server_name;
 		std::vector <struct pollfd> fd_poll;
+		int guestuser;
 	/*   server socket variables  */
 	/*   server authentication  */
 		std::string pass;
@@ -85,6 +86,7 @@ class Server
 		void				register_user(ircMessage msg, Client * user);
 		void 			adduser(Client * user, ircMessage msg);
 		void			nick(Client * user, std::string str);
+		// std::string int_tostring(int guest);
 
 		int				Recv_end(int fd, std::string & line);
 		void			commandPath(ircMessage msg, Client * user);
