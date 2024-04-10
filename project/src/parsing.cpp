@@ -58,7 +58,7 @@ ircMessage parseMessage(std::string message)
         }
 
         if (token[0] == ':') {
-            parsedMessage.trailing = message.substr(message.find(token) + 1);
+            parsedMessage.trailing = trimFunction(message.substr(message.find(token) + 1));
             break;
         } else {
             if (isValidParam(token))
