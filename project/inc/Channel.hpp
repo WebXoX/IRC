@@ -17,6 +17,9 @@ class Channel {
         std::map<int, Client*>  users;
         std::map<int, Client*>  operators;
         std::map<char, int>    modes;
+        std::map<int, Client*>::iterator it_usr;
+        std::map<int, Client*>::iterator it_ops;
+        std::map<int, Client*>::iterator it_mod;
 
     public:
 
@@ -61,6 +64,7 @@ class Channel {
         /////   UTILS   //////
 
         static void             validate_channels(std::vector<std::string>& params);
+        static std::vector<std::string> split(std::string str, char del);
 };
 
 

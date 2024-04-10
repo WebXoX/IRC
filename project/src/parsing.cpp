@@ -30,6 +30,7 @@ ircMessage parseMessage(std::string message)
     parsedMessage.message = message;
     parsedMessage.messageLength = message.length();
     parsedMessage.errorFlag = 0;
+    parsedMessage.trailing = "";
     std::string trimmedMessage = trimFunction(message);
     std::string token;
     std::istringstream iss(trimmedMessage);

@@ -69,7 +69,12 @@ void Channel::addUser(Client& user) {
 }
 
 void Channel::removeUser(Client& user) {
-    this->users.erase(user.client_fd);
+    for (it_usr = users.begin(); it_usr != users.end(); it_usr++) {
+        if (it_usr->second->client_fd == user.client_fd) {
+            this->users.erase(it_usr);
+            break;
+        }
+    }
 }
 
 void Channel::addOperator(Client& user) {
@@ -77,7 +82,10 @@ void Channel::addOperator(Client& user) {
 }
 
 void Channel::removeOperator(Client& user) {
-    this->operators.erase(user.client_fd);
+     for (it_ops = users.begin(); it_ops != users.end(); it_ops++) {
+        if (it_ops->second->client_fd == user.client_fd)
+            this->users.erase(it_ops);
+    }
 }
 
 void Channel::broadcast(std::string message) {
@@ -155,17 +163,25 @@ bool Channel::isMode(char mode) { return this->modes[mode]; }
 
 /////   UTILS   /////
 
+std::vector<std::string> Channel::split(std::string str, char del)
+{
+    std::stringstream ss(str);
+    std::string substr;
+    std::vector<std::string> result;
+    while (ss.good()) {
+        getline(ss, substr, del);
+        result.push_back(substr);
+    }
+    return result;
+}
+
 void Channel::validate_channels(std::vector<std::string>& params) {
     if (params.empty()) return;
     
     if (params[0].find(",") != std::string::npos) {
         std::stringstream ss(params[0]);
         std::vector<std::string> newVector;
-        while (ss.good()) {
-            std::string substr;
-            getline(ss, substr, ',');
-            newVector.push_back(substr);
-        }
+        newVector = Channel::split(params[0], ',');
         params = newVector;
         return;
     } 
@@ -175,24 +191,6 @@ void Channel::validate_channels(std::vector<std::string>& params) {
             params.erase(params.begin() + i);
         }
     }
-
-    // for (size_t i = 0; i < params.size(); i++) {
-
-    //     if (params[i].find(",") != std::string::npos) {
-    //         std::stringstream ss(params[i]);
-    //         params.erase(params.begin() + i);
-    //         while (ss.good()) {
-    //             std::string substr;
-    //             getline(ss, substr, ',');
-    //             params.push_back(substr);
-    //         }
-    //     }
-
-    //     if (params[i][0] != '#' || params[i].length() < 2) {
-    //         params.erase(params.begin() + i);
-    //     }
-    // }
-
 }
 
 
