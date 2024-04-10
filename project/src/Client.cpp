@@ -4,8 +4,9 @@
 Client::Client ()
 {
 	this->client_fd = 0;
-	// this->nickname =;
 	this->regi_status = 0;
+	this->pass_status = 0;
+	this->nick_status = 0;
 	memset(this->buffer,0,1024);
 	// std::cout << "Client default constructor" << std::endl;
 }
@@ -22,7 +23,7 @@ Client::Client (const Client &a)
 		this->nickname = a.nickname;   // Nickname chosen by the client
 		this->server = a.server;   // Server to which the client is connected
 		this->channel = a.channel;   // channel to which the client is connected
-	memset(this->buffer,0,1024);
+		memset(this->buffer,0,1024);
 		this->port = a.port;
 		/*Capability Negotiation Settings for IRSSI CLIENT SIDE*/
 		this->multi_prefix = a.multi_prefix;

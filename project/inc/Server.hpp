@@ -83,7 +83,8 @@ class Server
 		int				runServer();
 		int				serverLoop();
 		int				connectionEvent();
-		void				register_user(ircMessage msg, Client * user);
+		// void				register_user(ircMessage msg, Client * user);
+		int				register_user(ircMessage msg, Client * user);
 		void 			adduser(Client * user, ircMessage msg);
 		void			nick(Client * user, std::string str);
 		// std::string int_tostring(int guest);

@@ -54,14 +54,11 @@ Server& Server::operator=(const Server& rhs)
 {
 	if (sig == SIGINT)
 	{
-		// g_signal = 1;
 		exit(0);
 	}
 	else if (sig == SIGTSTP)
 	{
-		// g_signal = 1;
 		exit(0);
-		
 	}
 }
 
@@ -259,10 +256,8 @@ int Server::Recv_end(int fd, std::string & line)
 
 int Server::serverLoop()
 {
-    // int j = 0;
 	while(1)
     {
-        // j++;
         if (poll((&this->fd_poll[0]), this->number_of_clients, 1000) == -1)
         {
             std::cerr << "Error in poll" << std::endl;
