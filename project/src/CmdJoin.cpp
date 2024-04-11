@@ -9,7 +9,7 @@ void Server::joinCommand(ircMessage msg, Client& user) {
         return;
     }
     
-    Channel::validate_channels(msg.params);
+    Channel::splitChannelsName(msg.params);
     printCommand(msg);
 
     for (size_t i = 0; i < msg.params.size(); i++) {

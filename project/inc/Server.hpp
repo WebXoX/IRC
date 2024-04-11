@@ -100,17 +100,22 @@ class Server
 		void 	cap_ls(Client *user);
 		void 	cap_ack(Client *user);
 		std::string 	date_now();
-			// ********** CHANNEL ********** //
+
+
+		// ********** CHANNEL ********** //
+
 		std::map<std::string, Channel> channels;
 
-		int addChannelInServer( Channel& channel);
-		bool hasChannelInServer(std::string channelName);
-		Channel& getChannel(std::string channelName);
+		int 		addChannelInServer( Channel& channel);
+		bool 		hasChannelInServer(std::string channelName);
+		Channel& 	getChannel(std::string channelName);
 
 		// ********** COMMANDS ********** //
-		void joinCommand(ircMessage msg,  Client& user);
-		void topicCommand(ircMessage msg, Client& user);
-		void kickCommand(ircMessage msg, Client& user);
+
+		void 		joinCommand(ircMessage msg,  Client& user);
+		void 		topicCommand(ircMessage msg, Client& user);
+		void 		kickCommand(ircMessage msg, Client& user);
+		void 		inviteCommand(ircMessage msg, Client& user);
 	/*exception*/
 	/*getters and setters*/
 	/*getters and setters*/

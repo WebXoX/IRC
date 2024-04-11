@@ -184,7 +184,7 @@ std::vector<std::string> Channel::split(std::string str, char del)
     return result;
 }
 
-void Channel::validate_channels(std::vector<std::string>& params) {
+void Channel::splitChannelsName(std::vector<std::string>& params) {
     if (params.empty()) return;
     
     if (params[0].find(",") != std::string::npos) {

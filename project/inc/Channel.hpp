@@ -67,7 +67,7 @@ class Channel {
 
         /////   UTILS   //////
 
-        static void                         validate_channels(std::vector<std::string>& params);
+        static void                         splitChannelsName(std::vector<std::string>& params);
         static std::vector<std::string>     split(std::string str, char del);
 };
 
