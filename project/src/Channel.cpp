@@ -45,27 +45,7 @@ Channel& Channel::operator=(const Channel& copy) {
 Channel::~Channel() {}
 
 void Channel::addUser(Client& user) {
-    std::string message;
-    if (this->isUser(user))
-        message = ERR_USERONCHANNEL(user.hostname, user.nickname, this->name);
-    else if (this->modes['l'] && this->howManyUsers() >= this->userLimit) {
-        message = ERR_CHANNELISFULL(user.hostname, this->name);
-    } else if (this->modes['i']) {
-
-    } else {
-        this->users[user.client_fd] = &user;
-        if (this->howManyUsers() == 1)
-            this->addOperator(user);
-        message = RPL_JOIN(user_id(user.nickname, user.username), this->name);
-        if (this->hasTopic())
-            message += RPL_TOPIC(user.nickname, this->name, this->topic);
-        message += RPL_NAMREPLY(user.nickname, "@", this->name, this->getListOfUsers());
-        message += RPL_ENDOFNAMES(user.nickname, this->name);
-    }
-    std::cout << message << std::endl;
-    int ret = send(user.client_fd, message.c_str(), message.size(), 0);
-    if (ret == -1)
-        perror("Error send: ");
+    this->users[user.client_fd] = &user;
 }
 
 void Channel::addOperator(Client& user) {
@@ -73,7 +53,7 @@ void Channel::addOperator(Client& user) {
 }
 
 void Channel::addInvited(Client& user) {
-    this->operators[user.client_fd] = &user;
+    this->inviteds[user.client_fd] = &user;
 }
 
 void Channel::removeUser(Client& user) {
@@ -87,8 +67,7 @@ void Channel::removeUser(Client& user) {
 
 void Channel::removeOperator(Client& user) {
      for (it = operators.begin(); it != operators.end(); it++) {
-        if (it->second->client_fd == user.client_fd)
-        {
+        if (it->second->client_fd == user.client_fd){
             this->operators.erase(it);
             break;
         }
@@ -97,8 +76,7 @@ void Channel::removeOperator(Client& user) {
 
 void Channel::removeInvited(Client& user) {
      for (it = inviteds.begin(); it != inviteds.end(); it++) {
-        if (it->second->client_fd == user.client_fd)
-        {
+        if (it->second->client_fd == user.client_fd){
             this->inviteds.erase(it);
             break;
         }
@@ -168,6 +146,8 @@ int Channel::howManyUsers() { return this->users.size(); }
 bool Channel::isUser(Client& user) { return this->users.find(user.client_fd) != this->users.end(); }
 
 bool Channel::isOperator(Client& user) { return this->operators.find(user.client_fd) != this->operators.end(); }
+
+bool Channel::isInvited(Client& user) { return this->inviteds.find(user.client_fd) != this->inviteds.end(); }
 
 bool Channel::hasTopic() { return this->topic != ""; }
 

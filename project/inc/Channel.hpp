@@ -61,6 +61,7 @@ class Channel {
         int                                 howManyUsers();
         bool                                isUser(Client& user);
         bool                                isOperator(Client& user);
+        bool                                isInvited(Client& user);
         bool                                hasTopic();
         bool                                isMode(char mode);
         bool                                isModeSet(char mode);
