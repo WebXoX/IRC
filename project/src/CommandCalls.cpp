@@ -99,6 +99,14 @@ void Server::nick(Client * user, std::string str)
             for (size_t i = 0; i < this->nicknames.size(); i++)
                 std::cout << "nicks " << this->nicknames[i] << std::endl;
             std::cout << "------------------" << std::endl;
+            for(std::vector<std::string>::iterator it = this->nicknames.begin(); it != this->nicknames.end(); ++it)
+            {
+                if(*it == user->nickname)
+                {
+                    this->nicknames.erase(it);
+                    break;
+                }
+            }
             this->definedmessage(user->client_fd, RPL_NICK(user->nickname,user->username,str));
             user->nickname.clear();
         }
@@ -194,6 +202,9 @@ void Server::commandPath(ircMessage msg, Client * user)
         }
         else if (msg.command.compare("KICK") == 0) {
             this->kickCommand(msg, *user);
+        }
+        else if (msg.command.compare("PRIVMSG") == 0) {
+            this->privmsgCommand(msg, *user);
         }
         else if (msg.command.compare("INVITE") == 0) {
             this->inviteCommand(msg, *user);

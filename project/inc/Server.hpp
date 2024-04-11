@@ -116,10 +116,11 @@ class Server
 
 		// ********** COMMANDS ********** //
 
-		void 							joinCommand(ircMessage msg,  Client& user);
-		void 							topicCommand(ircMessage msg, Client& user);
-		void 							kickCommand(ircMessage msg, Client& user);
-		void 							inviteCommand(ircMessage msg, Client& user);
+		void 		joinCommand(ircMessage msg,  Client& user);
+		void 		topicCommand(ircMessage msg, Client& user);
+		void 		kickCommand(ircMessage msg, Client& user);
+		void 		inviteCommand(ircMessage msg, Client& user);
+		void 		privmsgCommand(ircMessage msg, Client& user);
 	/*exception*/
 	/*getters and setters*/
 	/*getters and setters*/
