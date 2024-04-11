@@ -104,11 +104,15 @@ class Server
 
 		// ********** CHANNEL ********** //
 
-		std::map<std::string, Channel> channels;
 
-		int 		addChannelInServer( Channel& channel);
-		bool 		hasChannelInServer(std::string channelName);
-		Channel& 	getChannel(std::string channelName);
+		std::map<std::string, Channel>	channels;
+
+		bool 							isUser(Client& user);
+		bool 							isUserNick(std::string nickname);
+
+		int 							addChannelInServer( Channel& channel);
+		bool 							hasChannelInServer(std::string channelName);
+		Channel& 						getChannel(std::string channelName);
 
 		// ********** COMMANDS ********** //
 

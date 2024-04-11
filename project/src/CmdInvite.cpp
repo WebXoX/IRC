@@ -4,7 +4,7 @@
 //   Parameters: <nickname> <channel>
 
 // The INVITE command is used to invite a user to a channel. 
-// The parameter <nickname> is the nickname of the person to be invited to the target channel <channel>.
+// The parameter <nickname> is the nickname of the person to be invitedNick to the target channel <channel>.
 
 // The target channel SHOULD exist (at least one user is on it). 
 // Otherwise, the server SHOULD reject the command with the ERR_NOSUCHCHANNEL numeric.
@@ -26,6 +26,10 @@
 // :calcium.libera.chat 341 tehuan bigboss #tehuan_worlds
 // :tehuan!~somebody@5.195.225.158 INVITE bigboss :#tehuan_worlds
 
+// :TEHUAN!@localhost 341 TEHUAN BOSS #HELLO
+
+// :TEHUAN!@localhost INVITE BOSS #HELLO
+
 // Numeric Replies:
 
 // RPL_INVITING (341)
@@ -36,31 +40,39 @@
 // ERR_USERONCHANNEL (443)
 
 
-// void Server::inviteCommand(ircMessage msg, Client& user) {
-//     std::string reply = "";
-//     std::string invited = msg.params[0];
-//     std::string chanName = msg.params[1];
-//     Channel& channel = this->channels[chanName];
+void Server::inviteCommand(ircMessage msg, Client& user) {
+    std::string reply = "";
+    std::string invitedNick = msg.params[0];
+    std::string chanName = msg.params[1];
+    Channel& channel = this->channels[chanName];
 
-//     if (msg.params.size() != 2) {
-//         reply = ERR_NEEDMOREPARAMS(user.nickname, "INVITE");
-//     } else if (!this->hasChannelInServer(chanName) || channel.howManyUsers() == 0) {
-//         reply = ERR_NOSUCHCHANNEL(user.nickname, chanName); 
-//     } else if (!channel.isUser(user)) {
-//         reply = ERR_NOTONCHANNEL(user.nickname, chanName);
-//     } else if (channel.isModeSet('i') && !channel.isOperator(user)) {
-//         reply = ERR_CHANOPRIVSNEEDED(user.nickname, chanName);
-//     } else {
-//         for (size_t i = 0; i < this->client.size(); i++) {
-//             if (this->client[i]->nickname == invited)
+    Client newClient;
+    Client& invitedClient = newClient;
+    for (size_t i = 0; i < this->client.size(); i++) {
+        if (this->client[i]->nickname == invitedNick)
+            invitedClient = *this->client[i];
+    }
 
-//         }
-//                 break;
-//         reply = RPL_INVITE();
-//         send(user.client_fd, reply.c_str(), reply.size(), 0);
-//     }
-    
-//     reply = RPL_INVITING(user_id(user.nickname, user.username), user.nickname, invited, chanName);
-//     send(user.client_fd, reply.c_str(), reply.size(), 0);
-    
-// }
+    if (msg.params.size() != 2) {
+        reply = ERR_NEEDMOREPARAMS(user.nickname, "INVITE");
+    } else if (!this->hasChannelInServer(chanName) || channel.howManyUsers() == 0) {
+        reply = ERR_NOSUCHCHANNEL(user.nickname, chanName); 
+    } else if (!this->isUserNick(invitedNick)) {
+        reply = ERR_NOSUCHNICK(user.nickname, invitedNick);
+    } else if (!channel.isUser(user)) {
+        reply = ERR_NOTONCHANNEL(user.nickname, chanName);
+    } else if (channel.isModeSet('i') && !channel.isOperator(user)) {
+        reply = ERR_CHANOPRIVSNEEDED(user.nickname, chanName);
+    } else if (channel.isUser(invitedClient)) {
+        reply = ERR_USERONCHANNEL(user.nickname, invitedNick, chanName);
+    } else {
+        reply = RPL_INVITE(user_id(user.nickname, user.username), invitedNick, chanName);
+        send(invitedClient.client_fd, reply.c_str(), reply.size(), 0);
+        reply = RPL_INVITING(user_id(user.nickname, user.username), user.nickname, invitedNick, chanName);
+        send(user.client_fd, reply.c_str(), reply.size(), 0);
+        channel.addInvited(invitedClient);
+        return;
+    }
+    send(user.client_fd, reply.c_str(), reply.size(), 0);
+      
+}

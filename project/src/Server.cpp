@@ -299,6 +299,13 @@ int Server::serverLoop()
 /*getter and setters*/
 /*getter and setters*/
 
+bool Server::isUser(Client& user) {
+    return std::find(this->client.begin(), this->client.end(), &user) != this->client.end();
+}
+
+bool Server::isUserNick(std::string nickname) {
+    return std::find(this->nicknames.begin(), this->nicknames.end(), nickname) != this->nicknames.end();
+}
 
 // ****** CHANNEL ****** //
 

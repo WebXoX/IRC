@@ -1,0 +1,1809 @@
+<< CAP LS 302
+<< JOIN :
+>> :calcium.libera.chat NOTICE * :*** Checking Ident
+>> :calcium.libera.chat NOTICE * :*** Looking up your hostname...
+>> :calcium.libera.chat NOTICE * :*** No Ident response
+>> :calcium.libera.chat NOTICE * :*** Couldn't look up your hostname
+>> :calcium.libera.chat CAP * LS :account-notify away-notify chghost extended-join multi-prefix sasl=PLAIN,ECDSA-NIST256P-CHALLENGE,EXTERNAL,SCRAM-SHA-512 tls account-tag cap-notify echo-message server-time solanum.chat/identify-msg solanum.chat/oper solanum.chat/realhost
+<< CAP REQ :multi-prefix extended-join away-notify chghost account-notify server-time
+>> :calcium.libera.chat 451 * :You have not registered
+>> :calcium.libera.chat CAP * ACK :multi-prefix extended-join away-notify chghost account-notify server-time
+<< CAP END
+<< NICK somebody
+<< USER somebody somebody irc.libera.chat :Unknown
+>> :calcium.libera.chat 433 * somebody :Nickname is already in use.
+<< NICK somebody_
+>> :calcium.libera.chat 433 * somebody_ :Nickname is already in use.
+<< NICK somebody1
+>> @time=2024-04-11T06:22:44.545Z :calcium.libera.chat 001 somebody1 :Welcome to the Libera.Chat Internet Relay Chat Network somebody1
+>> @time=2024-04-11T06:22:44.545Z :calcium.libera.chat 002 somebody1 :Your host is calcium.libera.chat[64.86.243.186/6697], running version solanum-1.0-dev
+>> @time=2024-04-11T06:22:44.545Z :calcium.libera.chat 003 somebody1 :This server was created Mon Nov 13 2023 at 21:34:42 UTC
+>> @time=2024-04-11T06:22:44.545Z :calcium.libera.chat 004 somebody1 calcium.libera.chat solanum-1.0-dev DGIMQRSZaghilopsuwz CFILMPQRSTbcefgijklmnopqrstuvz bkloveqjfI
+>> @time=2024-04-11T06:22:44.545Z :calcium.libera.chat 005 somebody1 ACCOUNTEXTBAN=a ETRACE SAFELIST ELIST=CMNTU MONITOR=100 CALLERID=g FNC WHOX KNOCK CHANTYPES=# EXCEPTS INVEX :are supported by this server
+>> @time=2024-04-11T06:22:44.545Z :calcium.libera.chat 005 somebody1 CHANMODES=eIbq,k,flj,CFLMPQRSTcgimnprstuz CHANLIMIT=#:250 PREFIX=(ov)@+ MAXLIST=bqeI:100 MODES=4 NETWORK=Libera.Chat STATUSMSG=@+ CASEMAPPING=rfc1459 NICKLEN=16 MAXNICKLEN=16 CHANNELLEN=50 TOPICLEN=390 :are supported by this server
+>> @time=2024-04-11T06:22:44.545Z :calcium.libera.chat 005 somebody1 DEAF=D TARGMAX=NAMES:1,LIST:1,KICK:1,WHOIS:1,PRIVMSG:4,NOTICE:4,ACCEPT:,MONITOR: EXTBAN=$,agjrxz :are supported by this server
+>> @time=2024-04-11T06:22:44.545Z :calcium.libera.chat 251 somebody1 :There are 70 users and 34289 invisible on 28 servers
+>> @time=2024-04-11T06:22:44.545Z :calcium.libera.chat 252 somebody1 43 :IRC Operators online
+>> @time=2024-04-11T06:22:44.545Z :calcium.libera.chat 253 somebody1 145 :unknown connection(s)
+>> @time=2024-04-11T06:22:44.545Z :calcium.libera.chat 254 somebody1 22921 :channels formed
+>> @time=2024-04-11T06:22:44.545Z :calcium.libera.chat 255 somebody1 :I have 2435 clients and 1 servers
+>> @time=2024-04-11T06:22:44.545Z :calcium.libera.chat 265 somebody1 2435 2971 :Current local users 2435, max 2971
+>> @time=2024-04-11T06:22:44.545Z :calcium.libera.chat 266 somebody1 34359 37286 :Current global users 34359, max 37286
+>> @time=2024-04-11T06:22:44.545Z :calcium.libera.chat 250 somebody1 :Highest connection count: 2972 (2971 clients) (310607 connections received)
+>> @time=2024-04-11T06:22:44.545Z :calcium.libera.chat 375 somebody1 :- calcium.libera.chat Message of the Day - 
+>> @time=2024-04-11T06:22:44.545Z :calcium.libera.chat 372 somebody1 :- Welcome to Libera Chat, the IRC network for
+>> @time=2024-04-11T06:22:44.545Z :calcium.libera.chat 372 somebody1 :- free & open-source software and peer directed projects.
+>> @time=2024-04-11T06:22:44.545Z :calcium.libera.chat 372 somebody1 :-  
+>> @time=2024-04-11T06:22:44.545Z :calcium.libera.chat 372 somebody1 :- Use of Libera Chat is governed by our network policies.
+>> @time=2024-04-11T06:22:44.545Z :calcium.libera.chat 372 somebody1 :-  
+>> @time=2024-04-11T06:22:44.545Z :calcium.libera.chat 372 somebody1 :- To reduce network abuses we perform open proxy checks
+>> @time=2024-04-11T06:22:44.545Z :calcium.libera.chat 372 somebody1 :- on hosts at connection time.
+>> @time=2024-04-11T06:22:44.545Z :calcium.libera.chat 372 somebody1 :-  
+>> @time=2024-04-11T06:22:44.545Z :calcium.libera.chat 372 somebody1 :- Please visit us in #libera for questions and support.
+>> @time=2024-04-11T06:22:44.545Z :calcium.libera.chat 372 somebody1 :-  
+>> @time=2024-04-11T06:22:44.545Z :calcium.libera.chat 372 somebody1 :- Website and documentation:  https://libera.chat
+>> @time=2024-04-11T06:22:44.545Z :calcium.libera.chat 372 somebody1 :- Webchat:                    https://web.libera.chat
+>> @time=2024-04-11T06:22:44.545Z :calcium.libera.chat 372 somebody1 :- Network policies:           https://libera.chat/policies
+>> @time=2024-04-11T06:22:44.545Z :calcium.libera.chat 372 somebody1 :- Email:                      support@libera.chat
+>> @time=2024-04-11T06:22:44.545Z :calcium.libera.chat 376 somebody1 :End of /MOTD command.
+>> @time=2024-04-11T06:22:44.545Z :somebody1 MODE somebody1 :+Ziw
+<< MODE somebody1 +i
+<< WHOIS somebody
+>> @time=2024-04-11T06:22:50.544Z :calcium.libera.chat 311 somebody1 somebody ~somebody 5.195.225.158 * :Unknown
+--> nickfind event whois
+>> @time=2024-04-11T06:22:50.545Z :calcium.libera.chat 312 somebody1 somebody zirconium.libera.chat :Milano, IT
+--> event empty
+>> @time=2024-04-11T06:22:50.545Z :calcium.libera.chat 671 somebody1 somebody :is using a secure connection
+--> event empty
+>> @time=2024-04-11T06:22:50.545Z :calcium.libera.chat 338 somebody1 somebody 5.195.225.158 :actually using host
+--> event empty
+>> @time=2024-04-11T06:22:50.545Z :calcium.libera.chat 318 somebody1 somebody :End of /WHOIS list.
+--> event empty
+<< PING calcium.libera.chat
+>> @time=2024-04-11T06:22:54.984Z :calcium.libera.chat PONG calcium.libera.chat :calcium.libera.chat
+--> lag pong
+<< NICK tehuan
+>> @time=2024-04-11T06:23:45.523Z :somebody1!~somebody@5.195.225.158 NICK :tehuan
+<< PING calcium.libera.chat
+>> @time=2024-04-11T06:23:56.074Z :calcium.libera.chat PONG calcium.libera.chat :calcium.libera.chat
+--> lag pong
+<< PING calcium.libera.chat
+>> @time=2024-04-11T06:24:56.189Z :calcium.libera.chat PONG calcium.libera.chat :calcium.libera.chat
+--> lag pong
+<< JOIN #tehuan_worlds
+>> @time=2024-04-11T06:25:20.660Z :tehuan!~somebody@5.195.225.158 JOIN #tehuan_worlds * :Unknown
+>> @time=2024-04-11T06:25:20.660Z :calcium.libera.chat MODE #tehuan_worlds +Cnst
+>> @time=2024-04-11T06:25:20.660Z :calcium.libera.chat 353 tehuan @ #tehuan_worlds :@tehuan
+>> @time=2024-04-11T06:25:20.660Z :calcium.libera.chat 366 tehuan #tehuan_worlds :End of /NAMES list.
+<< MODE #tehuan_worlds
+>> @time=2024-04-11T06:25:23.176Z :calcium.libera.chat 324 tehuan #tehuan_worlds +Cnst
+--> chanquery mode
+>> @time=2024-04-11T06:25:23.176Z :calcium.libera.chat 329 tehuan #tehuan_worlds 1712816720
+--> event 329
+<< WHO #tehuan_worlds %tcuhnfdar,743
+>> @time=2024-04-11T06:25:25.681Z :calcium.libera.chat 354 tehuan 743 #tehuan_worlds ~somebody 5.195.225.158 tehuan H@ 0 0 :Unknown
+--> silent event whox
+>> @time=2024-04-11T06:25:25.681Z :calcium.libera.chat 315 tehuan #tehuan_worlds :End of /WHO list.
+--> chanquery who end
+<< MODE #tehuan_worlds b
+>> @time=2024-04-11T06:25:28.229Z :calcium.libera.chat 368 tehuan #tehuan_worlds :End of Channel Ban List
+--> chanquery ban end
+<< PING calcium.libera.chat
+>> @time=2024-04-11T06:25:57.323Z :calcium.libera.chat PONG calcium.libera.chat :calcium.libera.chat
+--> lag pong
+<< INVITE bigboss #tehuan_worlds
+>> @time=2024-04-11T06:26:10.759Z :calcium.libera.chat 341 tehuan bigboss #tehuan_worlds
+<< CAP LS 302
+<< JOIN :
+>> :platinum.libera.chat NOTICE * :*** Checking Ident
+>> :platinum.libera.chat NOTICE * :*** Looking up your hostname...
+>> :platinum.libera.chat NOTICE * :*** No Ident response
+>> :platinum.libera.chat NOTICE * :*** Couldn't look up your hostname
+>> :platinum.libera.chat CAP * LS :account-notify away-notify chghost extended-join multi-prefix sasl=PLAIN,ECDSA-NIST256P-CHALLENGE,EXTERNAL,SCRAM-SHA-512 tls account-tag cap-notify echo-message server-time solanum.chat/identify-msg solanum.chat/oper solanum.chat/realhost
+<< CAP REQ :multi-prefix extended-join away-notify chghost account-notify server-time
+>> :platinum.libera.chat 451 * :You have not registered
+>> :platinum.libera.chat CAP * ACK :multi-prefix extended-join away-notify chghost account-notify server-time
+<< CAP END
+<< NICK somebody
+<< USER somebody somebody irc.libera.chat :Unknown
+>> :platinum.libera.chat 433 * somebody :Nickname is already in use.
+<< NICK somebody_
+>> :platinum.libera.chat 433 * somebody_ :Nickname is already in use.
+<< NICK somebody1
+>> :platinum.libera.chat 433 * somebody1 :Nickname is already in use.
+<< NICK somebody2
+>> @time=2024-04-11T06:22:52.047Z :platinum.libera.chat 001 somebody2 :Welcome to the Libera.Chat Internet Relay Chat Network somebody2
+>> @time=2024-04-11T06:22:52.047Z :platinum.libera.chat 002 somebody2 :Your host is platinum.libera.chat[188.240.145.102/6697], running version solanum-1.0-dev
+>> @time=2024-04-11T06:22:52.047Z :platinum.libera.chat 003 somebody2 :This server was created Mon Nov 13 2023 at 20:06:46 UTC
+>> @time=2024-04-11T06:22:52.047Z :platinum.libera.chat 004 somebody2 platinum.libera.chat solanum-1.0-dev DGIMQRSZaghilopsuwz CFILMPQRSTbcefgijklmnopqrstuvz bkloveqjfI
+>> @time=2024-04-11T06:22:52.047Z :platinum.libera.chat 005 somebody2 ACCOUNTEXTBAN=a SAFELIST ELIST=CMNTU FNC WHOX CALLERID=g KNOCK MONITOR=100 ETRACE CHANTYPES=# EXCEPTS INVEX :are supported by this server
+>> @time=2024-04-11T06:22:52.047Z :platinum.libera.chat 005 somebody2 CHANMODES=eIbq,k,flj,CFLMPQRSTcgimnprstuz CHANLIMIT=#:250 PREFIX=(ov)@+ MAXLIST=bqeI:100 MODES=4 NETWORK=Libera.Chat STATUSMSG=@+ CASEMAPPING=rfc1459 NICKLEN=16 MAXNICKLEN=16 CHANNELLEN=50 TOPICLEN=390 :are supported by this server
+>> @time=2024-04-11T06:22:52.047Z :platinum.libera.chat 005 somebody2 DEAF=D TARGMAX=NAMES:1,LIST:1,KICK:1,WHOIS:1,PRIVMSG:4,NOTICE:4,ACCEPT:,MONITOR: EXTBAN=$,agjrxz :are supported by this server
+>> @time=2024-04-11T06:22:52.047Z :platinum.libera.chat 251 somebody2 :There are 70 users and 34292 invisible on 28 servers
+>> @time=2024-04-11T06:22:52.047Z :platinum.libera.chat 252 somebody2 43 :IRC Operators online
+>> @time=2024-04-11T06:22:52.047Z :platinum.libera.chat 253 somebody2 154 :unknown connection(s)
+>> @time=2024-04-11T06:22:52.047Z :platinum.libera.chat 254 somebody2 22921 :channels formed
+>> @time=2024-04-11T06:22:52.047Z :platinum.libera.chat 255 somebody2 :I have 2435 clients and 1 servers
+>> @time=2024-04-11T06:22:52.047Z :platinum.libera.chat 265 somebody2 2435 2958 :Current local users 2435, max 2958
+>> @time=2024-04-11T06:22:52.047Z :platinum.libera.chat 266 somebody2 34362 37286 :Current global users 34362, max 37286
+>> @time=2024-04-11T06:22:52.047Z :platinum.libera.chat 250 somebody2 :Highest connection count: 2959 (2958 clients) (303371 connections received)
+>> @time=2024-04-11T06:22:52.047Z :platinum.libera.chat 375 somebody2 :- platinum.libera.chat Message of the Day - 
+>> @time=2024-04-11T06:22:52.047Z :platinum.libera.chat 372 somebody2 :- This server provided by NORDUnet/SUNET
+>> @time=2024-04-11T06:22:52.047Z :platinum.libera.chat 372 somebody2 :- Welcome to Libera Chat, the IRC network for
+>> @time=2024-04-11T06:22:52.047Z :platinum.libera.chat 372 somebody2 :- free & open-source software and peer directed projects.
+>> @time=2024-04-11T06:22:52.047Z :platinum.libera.chat 372 somebody2 :-  
+>> @time=2024-04-11T06:22:52.047Z :platinum.libera.chat 372 somebody2 :- Use of Libera Chat is governed by our network policies.
+>> @time=2024-04-11T06:22:52.047Z :platinum.libera.chat 372 somebody2 :-  
+>> @time=2024-04-11T06:22:52.047Z :platinum.libera.chat 372 somebody2 :- To reduce network abuses we perform open proxy checks
+>> @time=2024-04-11T06:22:52.047Z :platinum.libera.chat 372 somebody2 :- on hosts at connection time.
+>> @time=2024-04-11T06:22:52.047Z :platinum.libera.chat 372 somebody2 :-  
+>> @time=2024-04-11T06:22:52.047Z :platinum.libera.chat 372 somebody2 :- Please visit us in #libera for questions and support.
+>> @time=2024-04-11T06:22:52.047Z :platinum.libera.chat 372 somebody2 :-  
+>> @time=2024-04-11T06:22:52.047Z :platinum.libera.chat 372 somebody2 :- Website and documentation:  https://libera.chat
+>> @time=2024-04-11T06:22:52.047Z :platinum.libera.chat 372 somebody2 :- Webchat:                    https://web.libera.chat
+>> @time=2024-04-11T06:22:52.047Z :platinum.libera.chat 372 somebody2 :- Network policies:           https://libera.chat/policies
+>> @time=2024-04-11T06:22:52.047Z :platinum.libera.chat 372 somebody2 :- Email:                      support@libera.chat
+>> @time=2024-04-11T06:22:52.047Z :platinum.libera.chat 376 somebody2 :End of /MOTD command.
+>> @time=2024-04-11T06:22:52.047Z :somebody2 MODE somebody2 :+Ziw
+<< MODE somebody2 +i
+<< WHOIS somebody
+>> @time=2024-04-11T06:22:58.043Z :platinum.libera.chat 311 somebody2 somebody ~somebody 5.195.225.158 * :Unknown
+--> nickfind event whois
+>> @time=2024-04-11T06:22:58.044Z :platinum.libera.chat 312 somebody2 somebody zirconium.libera.chat :Milano, IT
+--> event empty
+>> @time=2024-04-11T06:22:58.044Z :platinum.libera.chat 671 somebody2 somebody :is using a secure connection
+--> event empty
+>> @time=2024-04-11T06:22:58.044Z :platinum.libera.chat 338 somebody2 somebody 5.195.225.158 :actually using host
+--> event empty
+>> @time=2024-04-11T06:22:58.044Z :platinum.libera.chat 318 somebody2 somebody :End of /WHOIS list.
+--> event empty
+<< PING platinum.libera.chat
+>> @time=2024-04-11T06:23:03.677Z :platinum.libera.chat PONG platinum.libera.chat :platinum.libera.chat
+--> lag pong
+<< NICK bigboss
+>> @time=2024-04-11T06:23:54.485Z :somebody2!~somebody@5.195.225.158 NICK :bigboss
+<< PING platinum.libera.chat
+>> @time=2024-04-11T06:24:04.798Z :platinum.libera.chat PONG platinum.libera.chat :platinum.libera.chat
+--> lag pong
+<< PING platinum.libera.chat
+>> @time=2024-04-11T06:25:05.904Z :platinum.libera.chat PONG platinum.libera.chat :platinum.libera.chat
+--> lag pong
+<< JOIN #tehuan_world
+>> @time=2024-04-11T06:25:29.023Z :bigboss!~somebody@5.195.225.158 JOIN #tehuan_world * :Unknown
+>> @time=2024-04-11T06:25:29.023Z :platinum.libera.chat MODE #tehuan_world +Cnst
+>> @time=2024-04-11T06:25:29.023Z :platinum.libera.chat 353 bigboss @ #tehuan_world :@bigboss
+>> @time=2024-04-11T06:25:29.023Z :platinum.libera.chat 366 bigboss #tehuan_world :End of /NAMES list.
+<< MODE #tehuan_world
+>> @time=2024-04-11T06:25:31.536Z :platinum.libera.chat 324 bigboss #tehuan_world +Cnst
+--> chanquery mode
+>> @time=2024-04-11T06:25:31.536Z :platinum.libera.chat 329 bigboss #tehuan_world 1712816729
+--> event 329
+<< WHO #tehuan_world %tcuhnfdar,743
+>> @time=2024-04-11T06:25:34.045Z :platinum.libera.chat 354 bigboss 743 #tehuan_world ~somebody 5.195.225.158 bigboss H@ 0 0 :Unknown
+--> silent event whox
+>> @time=2024-04-11T06:25:34.045Z :platinum.libera.chat 315 bigboss #tehuan_world :End of /WHO list.
+--> chanquery who end
+<< MODE #tehuan_world b
+>> @time=2024-04-11T06:25:36.550Z :platinum.libera.chat 368 bigboss #tehuan_world :End of Channel Ban List
+--> chanquery ban end
+<< PART #tehuan_world :tehuan_world
+>> @time=2024-04-11T06:25:54.265Z :bigboss!~somebody@5.195.225.158 PART #tehuan_world :tehuan_world
+<< PING platinum.libera.chat
+>> @time=2024-04-11T06:26:06.985Z :platinum.libera.chat PONG platinum.libera.chat :platinum.libera.chat
+--> lag pong
+>> @time=2024-04-11T06:26:10.828Z :tehuan!~somebody@5.195.225.158 INVITE bigboss :#tehuan_worlds
+<< PING platinum.libera.chat
+>> @time=2024-04-11T06:27:08.088Z :platinum.libera.chat PONG platinum.libera.chat :platinum.libera.chat
+--> lag pong
+<< PING platinum.libera.chat
+>> @time=2024-04-11T06:28:08.201Z :platinum.libera.chat PONG platinum.libera.chat :platinum.libera.chat
+--> lag pong
+<< PING platinum.libera.chat
+>> @time=2024-04-11T06:29:09.335Z :platinum.libera.chat PONG platinum.libera.chat :platinum.libera.chat
+--> lag pong
+<< PING platinum.libera.chat
+>> @time=2024-04-11T06:30:10.454Z :platinum.libera.chat PONG platinum.libera.chat :platinum.libera.chat
+--> lag pong
+<< PING platinum.libera.chat
+>> @time=2024-04-11T06:31:11.570Z :platinum.libera.chat PONG platinum.libera.chat :platinum.libera.chat
+--> lag pong
+<< PING calcium.libera.chat
+>> @time=2024-04-11T06:32:04.057Z :calcium.libera.chat PONG calcium.libera.chat :calcium.libera.chat
+--> lag pong
+<< PING calcium.libera.chat
+>> @time=2024-04-11T06:33:04.183Z :calcium.libera.chat PONG calcium.libera.chat :calcium.libera.chat
+--> lag pong
+<< PING calcium.libera.chat
+>> @time=2024-04-11T06:34:05.316Z :calcium.libera.chat PONG calcium.libera.chat :calcium.libera.chat
+--> lag pong
+<< PING calcium.libera.chat
+>> @time=2024-04-11T06:35:06.444Z :calcium.libera.chat PONG calcium.libera.chat :calcium.libera.chat
+--> lag pong
+<< PING calcium.libera.chat
+>> @time=2024-04-11T06:36:07.592Z :calcium.libera.chat PONG calcium.libera.chat :calcium.libera.chat
+--> lag pong
+<< PING calcium.libera.chat
+>> @time=2024-04-11T06:37:08.701Z :calcium.libera.chat PONG calcium.libera.chat :calcium.libera.chat
+--> lag pong
+<< PING calcium.libera.chat
+>> @time=2024-04-11T06:38:09.811Z :calcium.libera.chat PONG calcium.libera.chat :calcium.libera.chat
+--> lag pong
+<< PING calcium.libera.chat
+>> @time=2024-04-11T06:39:10.964Z :calcium.libera.chat PONG calcium.libera.chat :calcium.libera.chat
+--> lag pong
+<< PING calcium.libera.chat
+>> @time=2024-04-11T06:40:12.075Z :calcium.libera.chat PONG calcium.libera.chat :calcium.libera.chat
+--> lag pong
+<< PING calcium.libera.chat
+>> @time=2024-04-11T06:41:12.204Z :calcium.libera.chat PONG calcium.libera.chat :calcium.libera.chat
+--> lag pong
+<< PING calcium.libera.chat
+>> @time=2024-04-11T06:42:13.307Z :calcium.libera.chat PONG calcium.libera.chat :calcium.libera.chat
+--> lag pong
+<< PING calcium.libera.chat
+>> @time=2024-04-11T06:43:14.464Z :calcium.libera.chat PONG calcium.libera.chat :calcium.libera.chat
+--> lag pong
+<< PING calcium.libera.chat
+>> @time=2024-04-11T06:44:15.601Z :calcium.libera.chat PONG calcium.libera.chat :calcium.libera.chat
+--> lag pong
+<< PING calcium.libera.chat
+>> @time=2024-04-11T06:45:16.720Z :calcium.libera.chat PONG calcium.libera.chat :calcium.libera.chat
+--> lag pong
+<< PING calcium.libera.chat
+>> @time=2024-04-11T06:46:17.867Z :calcium.libera.chat PONG calcium.libera.chat :calcium.libera.chat
+--> lag pong
+<< PING calcium.libera.chat
+>> @time=2024-04-11T06:47:19.009Z :calcium.libera.chat PONG calcium.libera.chat :calcium.libera.chat
+--> lag pong
+<< PING calcium.libera.chat
+>> @time=2024-04-11T06:48:20.146Z :calcium.libera.chat PONG calcium.libera.chat :calcium.libera.chat
+--> lag pong
+<< PING calcium.libera.chat
+>> @time=2024-04-11T06:49:20.270Z :calcium.libera.chat PONG calcium.libera.chat :calcium.libera.chat
+--> lag pong
+<< PING calcium.libera.chat
+>> @time=2024-04-11T06:50:21.423Z :calcium.libera.chat PONG calcium.libera.chat :calcium.libera.chat
+--> lag pong
+<< PING calcium.libera.chat
+>> @time=2024-04-11T06:51:22.601Z :calcium.libera.chat PONG calcium.libera.chat :calcium.libera.chat
+--> lag pong
+<< PING calcium.libera.chat
+>> @time=2024-04-11T06:52:23.726Z :calcium.libera.chat PONG calcium.libera.chat :calcium.libera.chat
+--> lag pong
+<< PING calcium.libera.chat
+>> @time=2024-04-11T06:53:24.868Z :calcium.libera.chat PONG calcium.libera.chat :calcium.libera.chat
+--> lag pong
+<< PING calcium.libera.chat
+>> @time=2024-04-11T06:54:25.998Z :calcium.libera.chat PONG calcium.libera.chat :calcium.libera.chat
+--> lag pong
+<< PING calcium.libera.chat
+>> @time=2024-04-11T06:55:27.115Z :calcium.libera.chat PONG calcium.libera.chat :calcium.libera.chat
+--> lag pong
+<< PING calcium.libera.chat
+>> @time=2024-04-11T06:56:27.218Z :calcium.libera.chat PONG calcium.libera.chat :calcium.libera.chat
+--> lag pong
+<< PING calcium.libera.chat
+>> @time=2024-04-11T06:57:28.337Z :calcium.libera.chat PONG calcium.libera.chat :calcium.libera.chat
+--> lag pong
+<< PING calcium.libera.chat
+>> @time=2024-04-11T06:58:29.473Z :calcium.libera.chat PONG calcium.libera.chat :calcium.libera.chat
+--> lag pong
+<< PING calcium.libera.chat
+>> @time=2024-04-11T06:59:30.593Z :calcium.libera.chat PONG calcium.libera.chat :calcium.libera.chat
+--> lag pong
+<< PING calcium.libera.chat
+>> @time=2024-04-11T07:00:31.712Z :calcium.libera.chat PONG calcium.libera.chat :calcium.libera.chat
+--> lag pong
+<< PING calcium.libera.chat
+>> @time=2024-04-11T07:01:32.864Z :calcium.libera.chat PONG calcium.libera.chat :calcium.libera.chat
+--> lag pong
+<< PING calcium.libera.chat
+>> @time=2024-04-11T07:02:33.991Z :calcium.libera.chat PONG calcium.libera.chat :calcium.libera.chat
+--> lag pong
+<< PING calcium.libera.chat
+>> @time=2024-04-11T07:03:35.089Z :calcium.libera.chat PONG calcium.libera.chat :calcium.libera.chat
+--> lag pong
+<< PING calcium.libera.chat
+>> @time=2024-04-11T07:04:35.188Z :calcium.libera.chat PONG calcium.libera.chat :calcium.libera.chat
+--> lag pong
+<< PING calcium.libera.chat
+>> @time=2024-04-11T07:05:36.428Z :calcium.libera.chat PONG calcium.libera.chat :calcium.libera.chat
+--> lag pong
+<< PING calcium.libera.chat
+>> @time=2024-04-11T07:06:37.537Z :calcium.libera.chat PONG calcium.libera.chat :calcium.libera.chat
+--> lag pong
+<< PING calcium.libera.chat
+>> @time=2024-04-11T07:07:38.687Z :calcium.libera.chat PONG calcium.libera.chat :calcium.libera.chat
+--> lag pong
+<< PING calcium.libera.chat
+>> @time=2024-04-11T07:08:39.807Z :calcium.libera.chat PONG calcium.libera.chat :calcium.libera.chat
+--> lag pong
+<< PING calcium.libera.chat
+>> @time=2024-04-11T07:09:40.897Z :calcium.libera.chat PONG calcium.libera.chat :calcium.libera.chat
+--> lag pong
+<< PING calcium.libera.chat
+>> @time=2024-04-11T07:10:42.010Z :calcium.libera.chat PONG calcium.libera.chat :calcium.libera.chat
+--> lag pong
+<< PING calcium.libera.chat
+>> @time=2024-04-11T07:11:43.146Z :calcium.libera.chat PONG calcium.libera.chat :calcium.libera.chat
+--> lag pong
+<< PING calcium.libera.chat
+>> @time=2024-04-11T07:12:43.280Z :calcium.libera.chat PONG calcium.libera.chat :calcium.libera.chat
+--> lag pong
+<< PING calcium.libera.chat
+>> @time=2024-04-11T07:13:44.431Z :calcium.libera.chat PONG calcium.libera.chat :calcium.libera.chat
+--> lag pong
+<< PING calcium.libera.chat
+>> @time=2024-04-11T07:14:45.560Z :calcium.libera.chat PONG calcium.libera.chat :calcium.libera.chat
+--> lag pong
+<< PING calcium.libera.chat
+>> @time=2024-04-11T07:15:46.721Z :calcium.libera.chat PONG calcium.libera.chat :calcium.libera.chat
+--> lag pong
+<< PING calcium.libera.chat
+>> @time=2024-04-11T07:16:47.822Z :calcium.libera.chat PONG calcium.libera.chat :calcium.libera.chat
+--> lag pong
+<< PING calcium.libera.chat
+>> @time=2024-04-11T07:17:48.941Z :calcium.libera.chat PONG calcium.libera.chat :calcium.libera.chat
+--> lag pong
+<< PING calcium.libera.chat
+>> @time=2024-04-11T07:18:50.065Z :calcium.libera.chat PONG calcium.libera.chat :calcium.libera.chat
+--> lag pong
+<< PING calcium.libera.chat
+>> @time=2024-04-11T07:19:50.199Z :calcium.libera.chat PONG calcium.libera.chat :calcium.libera.chat
+--> lag pong
+<< PING calcium.libera.chat
+>> @time=2024-04-11T07:20:51.339Z :calcium.libera.chat PONG calcium.libera.chat :calcium.libera.chat
+--> lag pong
+<< PING calcium.libera.chat
+>> @time=2024-04-11T07:21:52.470Z :calcium.libera.chat PONG calcium.libera.chat :calcium.libera.chat
+--> lag pong
+<< PING calcium.libera.chat
+>> @time=2024-04-11T07:22:53.573Z :calcium.libera.chat PONG calcium.libera.chat :calcium.libera.chat
+--> lag pong
+<< PING calcium.libera.chat
+>> @time=2024-04-11T07:23:54.681Z :calcium.libera.chat PONG calcium.libera.chat :calcium.libera.chat
+--> lag pong
+<< PING calcium.libera.chat
+>> @time=2024-04-11T07:24:55.797Z :calcium.libera.chat PONG calcium.libera.chat :calcium.libera.chat
+--> lag pong
+<< PING calcium.libera.chat
+>> @time=2024-04-11T07:25:56.923Z :calcium.libera.chat PONG calcium.libera.chat :calcium.libera.chat
+--> lag pong
+<< PING calcium.libera.chat
+>> @time=2024-04-11T07:26:58.055Z :calcium.libera.chat PONG calcium.libera.chat :calcium.libera.chat
+--> lag pong
+<< PING calcium.libera.chat
+>> @time=2024-04-11T07:27:59.146Z :calcium.libera.chat PONG calcium.libera.chat :calcium.libera.chat
+--> lag pong
+<< PING calcium.libera.chat
+>> @time=2024-04-11T07:28:59.278Z :calcium.libera.chat PONG calcium.libera.chat :calcium.libera.chat
+--> lag pong
+<< PING calcium.libera.chat
+>> @time=2024-04-11T07:30:00.410Z :calcium.libera.chat PONG calcium.libera.chat :calcium.libera.chat
+--> lag pong
+<< PING calcium.libera.chat
+>> @time=2024-04-11T07:31:01.576Z :calcium.libera.chat PONG calcium.libera.chat :calcium.libera.chat
+--> lag pong
+<< PING calcium.libera.chat
+>> @time=2024-04-11T07:32:02.752Z :calcium.libera.chat PONG calcium.libera.chat :calcium.libera.chat
+--> lag pong
+<< PING calcium.libera.chat
+>> @time=2024-04-11T07:33:03.904Z :calcium.libera.chat PONG calcium.libera.chat :calcium.libera.chat
+--> lag pong
+<< PING calcium.libera.chat
+>> @time=2024-04-11T07:34:05.040Z :calcium.libera.chat PONG calcium.libera.chat :calcium.libera.chat
+--> lag pong
+<< PING calcium.libera.chat
+>> @time=2024-04-11T07:35:05.215Z :calcium.libera.chat PONG calcium.libera.chat :calcium.libera.chat
+--> lag pong
+<< PING calcium.libera.chat
+>> @time=2024-04-11T07:36:06.387Z :calcium.libera.chat PONG calcium.libera.chat :calcium.libera.chat
+--> lag pong
+<< PING calcium.libera.chat
+>> @time=2024-04-11T07:37:07.543Z :calcium.libera.chat PONG calcium.libera.chat :calcium.libera.chat
+--> lag pong
+<< PING calcium.libera.chat
+>> @time=2024-04-11T07:38:08.708Z :calcium.libera.chat PONG calcium.libera.chat :calcium.libera.chat
+--> lag pong
+<< INVITE ASDFASDFKJHLKJH #tehuan_worlds
+>> @time=2024-04-11T07:38:29.168Z :calcium.libera.chat 401 tehuan ASDFASDFKJHLKJH :No such nick/channel
+<< PING calcium.libera.chat
+>> @time=2024-04-11T07:08:39.807Z :calcium.libera.chat PONG calcium.libera.chat :calcium.libera.chat
+--> lag pong
+<< PING calcium.libera.chat
+>> @time=2024-04-11T07:09:40.897Z :calcium.libera.chat PONG calcium.libera.chat :calcium.libera.chat
+--> lag pong
+<< PING calcium.libera.chat
+>> @time=2024-04-11T07:10:42.010Z :calcium.libera.chat PONG calcium.libera.chat :calcium.libera.chat
+--> lag pong
+<< PING calcium.libera.chat
+>> @time=2024-04-11T07:11:43.146Z :calcium.libera.chat PONG calcium.libera.chat :calcium.libera.chat
+--> lag pong
+<< PING calcium.libera.chat
+>> @time=2024-04-11T07:12:43.280Z :calcium.libera.chat PONG calcium.libera.chat :calcium.libera.chat
+--> lag pong
+<< PING calcium.libera.chat
+>> @time=2024-04-11T07:13:44.431Z :calcium.libera.chat PONG calcium.libera.chat :calcium.libera.chat
+--> lag pong
+<< PING calcium.libera.chat
+>> @time=2024-04-11T07:14:45.560Z :calcium.libera.chat PONG calcium.libera.chat :calcium.libera.chat
+--> lag pong
+<< PING calcium.libera.chat
+>> @time=2024-04-11T07:15:46.721Z :calcium.libera.chat PONG calcium.libera.chat :calcium.libera.chat
+--> lag pong
+<< PING calcium.libera.chat
+>> @time=2024-04-11T07:16:47.822Z :calcium.libera.chat PONG calcium.libera.chat :calcium.libera.chat
+--> lag pong
+<< PING calcium.libera.chat
+>> @time=2024-04-11T07:17:48.941Z :calcium.libera.chat PONG calcium.libera.chat :calcium.libera.chat
+--> lag pong
+<< PING calcium.libera.chat
+>> @time=2024-04-11T07:18:50.065Z :calcium.libera.chat PONG calcium.libera.chat :calcium.libera.chat
+--> lag pong
+<< PING calcium.libera.chat
+>> @time=2024-04-11T07:19:50.199Z :calcium.libera.chat PONG calcium.libera.chat :calcium.libera.chat
+--> lag pong
+<< PING calcium.libera.chat
+>> @time=2024-04-11T07:20:51.339Z :calcium.libera.chat PONG calcium.libera.chat :calcium.libera.chat
+--> lag pong
+<< PING calcium.libera.chat
+>> @time=2024-04-11T07:21:52.470Z :calcium.libera.chat PONG calcium.libera.chat :calcium.libera.chat
+--> lag pong
+<< PING calcium.libera.chat
+>> @time=2024-04-11T07:22:53.573Z :calcium.libera.chat PONG calcium.libera.chat :calcium.libera.chat
+--> lag pong
+<< PING calcium.libera.chat
+>> @time=2024-04-11T07:23:54.681Z :calcium.libera.chat PONG calcium.libera.chat :calcium.libera.chat
+--> lag pong
+<< PING calcium.libera.chat
+>> @time=2024-04-11T07:24:55.797Z :calcium.libera.chat PONG calcium.libera.chat :calcium.libera.chat
+--> lag pong
+<< PING calcium.libera.chat
+>> @time=2024-04-11T07:25:56.923Z :calcium.libera.chat PONG calcium.libera.chat :calcium.libera.chat
+--> lag pong
+<< PING calcium.libera.chat
+>> @time=2024-04-11T07:26:58.055Z :calcium.libera.chat PONG calcium.libera.chat :calcium.libera.chat
+--> lag pong
+<< PING calcium.libera.chat
+>> @time=2024-04-11T07:27:59.146Z :calcium.libera.chat PONG calcium.libera.chat :calcium.libera.chat
+--> lag pong
+<< PING calcium.libera.chat
+>> @time=2024-04-11T07:28:59.278Z :calcium.libera.chat PONG calcium.libera.chat :calcium.libera.chat
+--> lag pong
+<< PING calcium.libera.chat
+>> @time=2024-04-11T07:30:00.410Z :calcium.libera.chat PONG calcium.libera.chat :calcium.libera.chat
+--> lag pong
+<< PING calcium.libera.chat
+>> @time=2024-04-11T07:31:01.576Z :calcium.libera.chat PONG calcium.libera.chat :calcium.libera.chat
+--> lag pong
+<< PING calcium.libera.chat
+>> @time=2024-04-11T07:32:02.752Z :calcium.libera.chat PONG calcium.libera.chat :calcium.libera.chat
+--> lag pong
+<< PING calcium.libera.chat
+>> @time=2024-04-11T07:33:03.904Z :calcium.libera.chat PONG calcium.libera.chat :calcium.libera.chat
+--> lag pong
+<< PING calcium.libera.chat
+>> @time=2024-04-11T07:34:05.040Z :calcium.libera.chat PONG calcium.libera.chat :calcium.libera.chat
+--> lag pong
+<< PING calcium.libera.chat
+>> @time=2024-04-11T07:35:05.215Z :calcium.libera.chat PONG calcium.libera.chat :calcium.libera.chat
+--> lag pong
+<< PING calcium.libera.chat
+>> @time=2024-04-11T07:36:06.387Z :calcium.libera.chat PONG calcium.libera.chat :calcium.libera.chat
+--> lag pong
+<< PING calcium.libera.chat
+>> @time=2024-04-11T07:37:07.543Z :calcium.libera.chat PONG calcium.libera.chat :calcium.libera.chat
+--> lag pong
+<< PING calcium.libera.chat
+>> @time=2024-04-11T07:38:08.708Z :calcium.libera.chat PONG calcium.libera.chat :calcium.libera.chat
+--> lag pong
+<< INVITE ASDFASDFKJHLKJH #tehuan_worlds
+>> @time=2024-04-11T07:38:29.168Z :calcium.libera.chat 401 tehuan ASDFASDFKJHLKJH :No such nick/channel
+<< PING calcium.libera.chat
+>> @time=2024-04-11T07:39:09.827Z :calcium.libera.chat PONG calcium.libera.chat :calcium.libera.chat
+--> lag pong
+<< PING calcium.libera.chat
+>> @time=2024-04-11T07:40:10.956Z :calcium.libera.chat PONG calcium.libera.chat :calcium.libera.chat
+--> lag pong
+<< PING calcium.libera.chat
+>> @time=2024-04-11T07:41:12.123Z :calcium.libera.chat PONG calcium.libera.chat :calcium.libera.chat
+--> lag pong
+<< PING calcium.libera.chat
+>> @time=2024-04-11T07:42:12.301Z :calcium.libera.chat PONG calcium.libera.chat :calcium.libera.chat
+--> lag pong
+<< PING calcium.libera.chat
+>> @time=2024-04-11T07:43:13.420Z :calcium.libera.chat PONG calcium.libera.chat :calcium.libera.chat
+--> lag pong
+<< PING calcium.libera.chat
+>> @time=2024-04-11T07:44:14.540Z :calcium.libera.chat PONG calcium.libera.chat :calcium.libera.chat
+--> lag pong
+<< PING calcium.libera.chat
+>> @time=2024-04-11T07:45:15.726Z :calcium.libera.chat PONG calcium.libera.chat :calcium.libera.chat
+--> lag pong
+<< PING calcium.libera.chat
+>> @time=2024-04-11T07:46:16.926Z :calcium.libera.chat PONG calcium.libera.chat :calcium.libera.chat
+--> lag pong
+<< PING calcium.libera.chat
+>> @time=2024-04-11T07:47:18.081Z :calcium.libera.chat PONG calcium.libera.chat :calcium.libera.chat
+--> lag pong
+<< PING calcium.libera.chat
+>> @time=2024-04-11T07:48:18.276Z :calcium.libera.chat PONG calcium.libera.chat :calcium.libera.chat
+--> lag pong
+<< PING calcium.libera.chat
+>> @time=2024-04-11T07:49:19.447Z :calcium.libera.chat PONG calcium.libera.chat :calcium.libera.chat
+--> lag pong
+<< PING calcium.libera.chat
+>> @time=2024-04-11T07:50:20.605Z :calcium.libera.chat PONG calcium.libera.chat :calcium.libera.chat
+--> lag pong
+<< PING calcium.libera.chat
+>> @time=2024-04-11T07:51:21.756Z :calcium.libera.chat PONG calcium.libera.chat :calcium.libera.chat
+--> lag pong
+<< PING calcium.libera.chat
+>> @time=2024-04-11T07:52:22.896Z :calcium.libera.chat PONG calcium.libera.chat :calcium.libera.chat
+--> lag pong
+<< PING calcium.libera.chat
+>> @time=2024-04-11T07:53:24.033Z :calcium.libera.chat PONG calcium.libera.chat :calcium.libera.chat
+--> lag pong
+<< PING calcium.libera.chat
+>> @time=2024-04-11T07:54:24.207Z :calcium.libera.chat PONG calcium.libera.chat :calcium.libera.chat
+--> lag pong
+<< PING calcium.libera.chat
+>> @time=2024-04-11T07:55:25.420Z :calcium.libera.chat PONG calcium.libera.chat :calcium.libera.chat
+--> lag pong
+<< PING calcium.libera.chat
+>> @time=2024-04-11T07:56:26.599Z :calcium.libera.chat PONG calcium.libera.chat :calcium.libera.chat
+--> lag pong
+<< PING calcium.libera.chat
+>> @time=2024-04-11T07:57:27.725Z :calcium.libera.chat PONG calcium.libera.chat :calcium.libera.chat
+--> lag pong
+<< PING calcium.libera.chat
+>> @time=2024-04-11T07:58:28.844Z :calcium.libera.chat PONG calcium.libera.chat :calcium.libera.chat
+--> lag pong
+<< PING calcium.libera.chat
+>> @time=2024-04-11T07:59:30.026Z :calcium.libera.chat PONG calcium.libera.chat :calcium.libera.chat
+--> lag pong
+<< PING calcium.libera.chat
+>> @time=2024-04-11T08:00:30.192Z :calcium.libera.chat PONG calcium.libera.chat :calcium.libera.chat
+--> lag pong
+<< PING calcium.libera.chat
+>> @time=2024-04-11T08:01:31.307Z :calcium.libera.chat PONG calcium.libera.chat :calcium.libera.chat
+--> lag pong
+<< PING calcium.libera.chat
+>> @time=2024-04-11T08:02:32.375Z :calcium.libera.chat PONG calcium.libera.chat :calcium.libera.chat
+--> lag pong
+<< PING calcium.libera.chat
+>> @time=2024-04-11T08:03:33.451Z :calcium.libera.chat PONG calcium.libera.chat :calcium.libera.chat
+--> lag pong
+<< PING calcium.libera.chat
+>> @time=2024-04-11T08:04:34.540Z :calcium.libera.chat PONG calcium.libera.chat :calcium.libera.chat
+--> lag pong
+<< PING calcium.libera.chat
+>> @time=2024-04-11T08:05:35.655Z :calcium.libera.chat PONG calcium.libera.chat :calcium.libera.chat
+--> lag pong
+<< PING calcium.libera.chat
+>> @time=2024-04-11T08:06:36.743Z :calcium.libera.chat PONG calcium.libera.chat :calcium.libera.chat
+--> lag pong
+<< PING calcium.libera.chat
+>> @time=2024-04-11T08:07:37.829Z :calcium.libera.chat PONG calcium.libera.chat :calcium.libera.chat
+--> lag pong
+<< PING calcium.libera.chat
+>> @time=2024-04-11T08:08:38.942Z :calcium.libera.chat PONG calcium.libera.chat :calcium.libera.chat
+--> lag pong
+<< PING calcium.libera.chat
+>> @time=2024-04-11T08:09:40.008Z :calcium.libera.chat PONG calcium.libera.chat :calcium.libera.chat
+--> lag pong
+<< PING calcium.libera.chat
+>> @time=2024-04-11T08:10:41.096Z :calcium.libera.chat PONG calcium.libera.chat :calcium.libera.chat
+--> lag pong
+<< PING calcium.libera.chat
+>> @time=2024-04-11T08:11:41.203Z :calcium.libera.chat PONG calcium.libera.chat :calcium.libera.chat
+--> lag pong
+<< PING calcium.libera.chat
+>> @time=2024-04-11T08:12:42.336Z :calcium.libera.chat PONG calcium.libera.chat :calcium.libera.chat
+--> lag pong
+<< NICK ASDF
+>> @time=2024-04-11T08:13:40.185Z :tehuan!~somebody@5.195.225.158 NICK :ASDF
+>> @time=2024-04-11T08:13:40.442Z :NickServ!NickServ@services.libera.chat NOTICE ASDF :This nickname is registered. Please choose a different nickname, or identify via /msg NickServ IDENTIFY asdf <password>
+<< PING calcium.libera.chat
+>> @time=2024-04-11T08:13:43.471Z :calcium.libera.chat PONG calcium.libera.chat :calcium.libera.chat
+--> lag pong
+--> lag pong
+<< PING calcium.libera.chat
+>> @time=2024-04-11T07:23:54.681Z :calcium.libera.chat PONG calcium.libera.chat :calcium.libera.chat
+--> lag pong
+<< PING calcium.libera.chat
+>> @time=2024-04-11T07:24:55.797Z :calcium.libera.chat PONG calcium.libera.chat :calcium.libera.chat
+--> lag pong
+<< PING calcium.libera.chat
+>> @time=2024-04-11T07:25:56.923Z :calcium.libera.chat PONG calcium.libera.chat :calcium.libera.chat
+--> lag pong
+<< PING calcium.libera.chat
+>> @time=2024-04-11T07:26:58.055Z :calcium.libera.chat PONG calcium.libera.chat :calcium.libera.chat
+--> lag pong
+<< PING calcium.libera.chat
+>> @time=2024-04-11T07:27:59.146Z :calcium.libera.chat PONG calcium.libera.chat :calcium.libera.chat
+--> lag pong
+<< PING calcium.libera.chat
+>> @time=2024-04-11T07:28:59.278Z :calcium.libera.chat PONG calcium.libera.chat :calcium.libera.chat
+--> lag pong
+<< PING calcium.libera.chat
+>> @time=2024-04-11T07:30:00.410Z :calcium.libera.chat PONG calcium.libera.chat :calcium.libera.chat
+--> lag pong
+<< PING calcium.libera.chat
+>> @time=2024-04-11T07:31:01.576Z :calcium.libera.chat PONG calcium.libera.chat :calcium.libera.chat
+--> lag pong
+<< PING calcium.libera.chat
+>> @time=2024-04-11T07:32:02.752Z :calcium.libera.chat PONG calcium.libera.chat :calcium.libera.chat
+--> lag pong
+<< PING calcium.libera.chat
+>> @time=2024-04-11T07:33:03.904Z :calcium.libera.chat PONG calcium.libera.chat :calcium.libera.chat
+--> lag pong
+<< PING calcium.libera.chat
+>> @time=2024-04-11T07:34:05.040Z :calcium.libera.chat PONG calcium.libera.chat :calcium.libera.chat
+--> lag pong
+<< PING calcium.libera.chat
+>> @time=2024-04-11T07:35:05.215Z :calcium.libera.chat PONG calcium.libera.chat :calcium.libera.chat
+--> lag pong
+<< PING calcium.libera.chat
+>> @time=2024-04-11T07:36:06.387Z :calcium.libera.chat PONG calcium.libera.chat :calcium.libera.chat
+--> lag pong
+<< PING calcium.libera.chat
+>> @time=2024-04-11T07:37:07.543Z :calcium.libera.chat PONG calcium.libera.chat :calcium.libera.chat
+--> lag pong
+<< PING calcium.libera.chat
+>> @time=2024-04-11T07:38:08.708Z :calcium.libera.chat PONG calcium.libera.chat :calcium.libera.chat
+--> lag pong
+<< INVITE ASDFASDFKJHLKJH #tehuan_worlds
+>> @time=2024-04-11T07:38:29.168Z :calcium.libera.chat 401 tehuan ASDFASDFKJHLKJH :No such nick/channel
+<< PING calcium.libera.chat
+>> @time=2024-04-11T07:39:09.827Z :calcium.libera.chat PONG calcium.libera.chat :calcium.libera.chat
+--> lag pong
+<< PING calcium.libera.chat
+>> @time=2024-04-11T07:40:10.956Z :calcium.libera.chat PONG calcium.libera.chat :calcium.libera.chat
+--> lag pong
+<< PING calcium.libera.chat
+>> @time=2024-04-11T07:41:12.123Z :calcium.libera.chat PONG calcium.libera.chat :calcium.libera.chat
+--> lag pong
+<< PING calcium.libera.chat
+>> @time=2024-04-11T07:42:12.301Z :calcium.libera.chat PONG calcium.libera.chat :calcium.libera.chat
+--> lag pong
+<< PING calcium.libera.chat
+>> @time=2024-04-11T07:43:13.420Z :calcium.libera.chat PONG calcium.libera.chat :calcium.libera.chat
+--> lag pong
+<< PING calcium.libera.chat
+>> @time=2024-04-11T07:44:14.540Z :calcium.libera.chat PONG calcium.libera.chat :calcium.libera.chat
+--> lag pong
+<< PING calcium.libera.chat
+>> @time=2024-04-11T07:45:15.726Z :calcium.libera.chat PONG calcium.libera.chat :calcium.libera.chat
+--> lag pong
+<< PING calcium.libera.chat
+>> @time=2024-04-11T07:46:16.926Z :calcium.libera.chat PONG calcium.libera.chat :calcium.libera.chat
+--> lag pong
+<< PING calcium.libera.chat
+>> @time=2024-04-11T07:47:18.081Z :calcium.libera.chat PONG calcium.libera.chat :calcium.libera.chat
+--> lag pong
+<< PING calcium.libera.chat
+>> @time=2024-04-11T07:48:18.276Z :calcium.libera.chat PONG calcium.libera.chat :calcium.libera.chat
+--> lag pong
+<< PING calcium.libera.chat
+>> @time=2024-04-11T07:49:19.447Z :calcium.libera.chat PONG calcium.libera.chat :calcium.libera.chat
+--> lag pong
+<< PING calcium.libera.chat
+>> @time=2024-04-11T07:50:20.605Z :calcium.libera.chat PONG calcium.libera.chat :calcium.libera.chat
+--> lag pong
+<< PING calcium.libera.chat
+>> @time=2024-04-11T07:51:21.756Z :calcium.libera.chat PONG calcium.libera.chat :calcium.libera.chat
+--> lag pong
+<< PING calcium.libera.chat
+>> @time=2024-04-11T07:52:22.896Z :calcium.libera.chat PONG calcium.libera.chat :calcium.libera.chat
+--> lag pong
+<< PING calcium.libera.chat
+>> @time=2024-04-11T07:53:24.033Z :calcium.libera.chat PONG calcium.libera.chat :calcium.libera.chat
+--> lag pong
+<< PING calcium.libera.chat
+>> @time=2024-04-11T07:54:24.207Z :calcium.libera.chat PONG calcium.libera.chat :calcium.libera.chat
+--> lag pong
+<< PING calcium.libera.chat
+>> @time=2024-04-11T07:55:25.420Z :calcium.libera.chat PONG calcium.libera.chat :calcium.libera.chat
+--> lag pong
+<< PING calcium.libera.chat
+>> @time=2024-04-11T07:56:26.599Z :calcium.libera.chat PONG calcium.libera.chat :calcium.libera.chat
+--> lag pong
+<< PING calcium.libera.chat
+>> @time=2024-04-11T07:57:27.725Z :calcium.libera.chat PONG calcium.libera.chat :calcium.libera.chat
+--> lag pong
+<< PING calcium.libera.chat
+>> @time=2024-04-11T07:58:28.844Z :calcium.libera.chat PONG calcium.libera.chat :calcium.libera.chat
+--> lag pong
+<< PING calcium.libera.chat
+>> @time=2024-04-11T07:59:30.026Z :calcium.libera.chat PONG calcium.libera.chat :calcium.libera.chat
+--> lag pong
+<< PING calcium.libera.chat
+>> @time=2024-04-11T08:00:30.192Z :calcium.libera.chat PONG calcium.libera.chat :calcium.libera.chat
+--> lag pong
+<< PING calcium.libera.chat
+>> @time=2024-04-11T08:01:31.307Z :calcium.libera.chat PONG calcium.libera.chat :calcium.libera.chat
+--> lag pong
+<< PING calcium.libera.chat
+>> @time=2024-04-11T08:02:32.375Z :calcium.libera.chat PONG calcium.libera.chat :calcium.libera.chat
+--> lag pong
+<< PING calcium.libera.chat
+>> @time=2024-04-11T08:03:33.451Z :calcium.libera.chat PONG calcium.libera.chat :calcium.libera.chat
+--> lag pong
+<< PING calcium.libera.chat
+>> @time=2024-04-11T08:04:34.540Z :calcium.libera.chat PONG calcium.libera.chat :calcium.libera.chat
+--> lag pong
+<< PING calcium.libera.chat
+>> @time=2024-04-11T08:05:35.655Z :calcium.libera.chat PONG calcium.libera.chat :calcium.libera.chat
+--> lag pong
+<< PING calcium.libera.chat
+>> @time=2024-04-11T08:06:36.743Z :calcium.libera.chat PONG calcium.libera.chat :calcium.libera.chat
+--> lag pong
+<< PING calcium.libera.chat
+>> @time=2024-04-11T08:07:37.829Z :calcium.libera.chat PONG calcium.libera.chat :calcium.libera.chat
+--> lag pong
+<< PING calcium.libera.chat
+>> @time=2024-04-11T08:08:38.942Z :calcium.libera.chat PONG calcium.libera.chat :calcium.libera.chat
+--> lag pong
+<< PING calcium.libera.chat
+>> @time=2024-04-11T08:09:40.008Z :calcium.libera.chat PONG calcium.libera.chat :calcium.libera.chat
+--> lag pong
+<< PING calcium.libera.chat
+>> @time=2024-04-11T08:10:41.096Z :calcium.libera.chat PONG calcium.libera.chat :calcium.libera.chat
+--> lag pong
+<< PING calcium.libera.chat
+>> @time=2024-04-11T08:11:41.203Z :calcium.libera.chat PONG calcium.libera.chat :calcium.libera.chat
+--> lag pong
+<< PING calcium.libera.chat
+>> @time=2024-04-11T08:12:42.336Z :calcium.libera.chat PONG calcium.libera.chat :calcium.libera.chat
+--> lag pong
+<< NICK ASDF
+>> @time=2024-04-11T08:13:40.185Z :tehuan!~somebody@5.195.225.158 NICK :ASDF
+>> @time=2024-04-11T08:13:40.442Z :NickServ!NickServ@services.libera.chat NOTICE ASDF :This nickname is registered. Please choose a different nickname, or identify via /msg NickServ IDENTIFY asdf <password>
+<< PING calcium.libera.chat
+>> @time=2024-04-11T08:13:43.471Z :calcium.libera.chat PONG calcium.libera.chat :calcium.libera.chat
+--> lag pong
+<< PING calcium.libera.chat
+>> @time=2024-04-11T08:14:44.608Z :calcium.libera.chat PONG calcium.libera.chat :calcium.libera.chat
+--> lag pong
+<< PING calcium.libera.chat
+>> @time=2024-04-11T08:15:45.733Z :calcium.libera.chat PONG calcium.libera.chat :calcium.libera.chat
+--> lag pong
+<< PING calcium.libera.chat
+>> @time=2024-04-11T08:16:46.863Z :calcium.libera.chat PONG calcium.libera.chat :calcium.libera.chat
+--> lag pong
+<< PING calcium.libera.chat
+>> @time=2024-04-11T08:17:48.005Z :calcium.libera.chat PONG calcium.libera.chat :calcium.libera.chat
+--> lag pong
+<< PING calcium.libera.chat
+>> @time=2024-04-11T08:18:49.136Z :calcium.libera.chat PONG calcium.libera.chat :calcium.libera.chat
+--> lag pong
+<< PING calcium.libera.chat
+>> @time=2024-04-11T08:19:49.237Z :calcium.libera.chat PONG calcium.libera.chat :calcium.libera.chat
+--> lag pong
+<< PING calcium.libera.chat
+>> @time=2024-04-11T08:20:50.361Z :calcium.libera.chat PONG calcium.libera.chat :calcium.libera.chat
+--> lag pong
+<< PING calcium.libera.chat
+>> @time=2024-04-11T08:21:51.492Z :calcium.libera.chat PONG calcium.libera.chat :calcium.libera.chat
+--> lag pong
+<< PING calcium.libera.chat
+>> @time=2024-04-11T08:22:52.653Z :calcium.libera.chat PONG calcium.libera.chat :calcium.libera.chat
+--> lag pong
+<< PING calcium.libera.chat
+>> @time=2024-04-11T08:23:53.784Z :calcium.libera.chat PONG calcium.libera.chat :calcium.libera.chat
+--> lag pong
+<< PING calcium.libera.chat
+>> @time=2024-04-11T08:24:54.894Z :calcium.libera.chat PONG calcium.libera.chat :calcium.libera.chat
+--> lag pong
+<< KICK #tehuan_worlds BIGBOSS :
+>> @time=2024-04-11T08:25:39.822Z :calcium.libera.chat 441 ASDF BIGBOSS #tehuan_worlds :They aren't on that channel
+<< PING calcium.libera.chat
+>> @time=2024-04-11T08:25:56.014Z :calcium.libera.chat PONG calcium.libera.chat :calcium.libera.chat
+--> lag pong
+>> @time=2024-04-11T08:26:23.995Z :bigboss!~somebody@5.195.225.158 JOIN #tehuan_worlds * :Unknown
+<< KICK #tehuan_worlds BIGBOSS :
+>> @time=2024-04-11T08:26:44.527Z :ASDF!~somebody@5.195.225.158 KICK #tehuan_worlds bigboss :bigboss
+<< PING calcium.libera.chat
+>> @time=2024-04-11T08:26:57.099Z :calcium.libera.chat PONG calcium.libera.chat :calcium.libera.chat
+--> lag pong
+<< PING platinum.libera.chat
+>> @time=2024-04-11T07:35:14.306Z :platinum.libera.chat PONG platinum.libera.chat :platinum.libera.chat
+--> lag pong
+<< PING platinum.libera.chat
+>> @time=2024-04-11T07:36:15.433Z :platinum.libera.chat PONG platinum.libera.chat :platinum.libera.chat
+--> lag pong
+<< PING platinum.libera.chat
+>> @time=2024-04-11T07:37:16.550Z :platinum.libera.chat PONG platinum.libera.chat :platinum.libera.chat
+--> lag pong
+<< PING platinum.libera.chat
+>> @time=2024-04-11T07:38:17.667Z :platinum.libera.chat PONG platinum.libera.chat :platinum.libera.chat
+--> lag pong
+<< PING platinum.libera.chat
+>> @time=2024-04-11T07:39:18.789Z :platinum.libera.chat PONG platinum.libera.chat :platinum.libera.chat
+--> lag pong
+<< PING platinum.libera.chat
+>> @time=2024-04-11T07:40:19.936Z :platinum.libera.chat PONG platinum.libera.chat :platinum.libera.chat
+--> lag pong
+<< PING platinum.libera.chat
+>> @time=2024-04-11T07:41:21.057Z :platinum.libera.chat PONG platinum.libera.chat :platinum.libera.chat
+--> lag pong
+<< PING platinum.libera.chat
+>> @time=2024-04-11T07:42:21.191Z :platinum.libera.chat PONG platinum.libera.chat :platinum.libera.chat
+--> lag pong
+<< PING platinum.libera.chat
+>> @time=2024-04-11T07:43:22.283Z :platinum.libera.chat PONG platinum.libera.chat :platinum.libera.chat
+--> lag pong
+<< PING platinum.libera.chat
+>> @time=2024-04-11T07:44:23.424Z :platinum.libera.chat PONG platinum.libera.chat :platinum.libera.chat
+--> lag pong
+<< PING platinum.libera.chat
+>> @time=2024-04-11T07:45:24.576Z :platinum.libera.chat PONG platinum.libera.chat :platinum.libera.chat
+--> lag pong
+<< PING platinum.libera.chat
+>> @time=2024-04-11T07:46:25.694Z :platinum.libera.chat PONG platinum.libera.chat :platinum.libera.chat
+--> lag pong
+<< PING platinum.libera.chat
+>> @time=2024-04-11T07:47:26.807Z :platinum.libera.chat PONG platinum.libera.chat :platinum.libera.chat
+--> lag pong
+<< PING platinum.libera.chat
+>> @time=2024-04-11T07:48:27.918Z :platinum.libera.chat PONG platinum.libera.chat :platinum.libera.chat
+--> lag pong
+<< PING platinum.libera.chat
+>> @time=2024-04-11T07:49:29.029Z :platinum.libera.chat PONG platinum.libera.chat :platinum.libera.chat
+--> lag pong
+<< PING platinum.libera.chat
+>> @time=2024-04-11T07:50:29.138Z :platinum.libera.chat PONG platinum.libera.chat :platinum.libera.chat
+--> lag pong
+<< PING platinum.libera.chat
+>> @time=2024-04-11T07:51:30.238Z :platinum.libera.chat PONG platinum.libera.chat :platinum.libera.chat
+--> lag pong
+<< PING platinum.libera.chat
+>> @time=2024-04-11T07:52:31.358Z :platinum.libera.chat PONG platinum.libera.chat :platinum.libera.chat
+--> lag pong
+<< PING platinum.libera.chat
+>> @time=2024-04-11T07:53:32.510Z :platinum.libera.chat PONG platinum.libera.chat :platinum.libera.chat
+--> lag pong
+<< PING platinum.libera.chat
+>> @time=2024-04-11T07:54:33.641Z :platinum.libera.chat PONG platinum.libera.chat :platinum.libera.chat
+--> lag pong
+<< PING platinum.libera.chat
+>> @time=2024-04-11T07:55:34.756Z :platinum.libera.chat PONG platinum.libera.chat :platinum.libera.chat
+--> lag pong
+<< PING platinum.libera.chat
+>> @time=2024-04-11T07:56:35.897Z :platinum.libera.chat PONG platinum.libera.chat :platinum.libera.chat
+--> lag pong
+<< PING platinum.libera.chat
+>> @time=2024-04-11T07:57:37.051Z :platinum.libera.chat PONG platinum.libera.chat :platinum.libera.chat
+--> lag pong
+<< PING platinum.libera.chat
+>> @time=2024-04-11T07:58:37.218Z :platinum.libera.chat PONG platinum.libera.chat :platinum.libera.chat
+--> lag pong
+<< PING platinum.libera.chat
+>> @time=2024-04-11T07:59:38.388Z :platinum.libera.chat PONG platinum.libera.chat :platinum.libera.chat
+--> lag pong
+<< PING platinum.libera.chat
+>> @time=2024-04-11T08:00:39.546Z :platinum.libera.chat PONG platinum.libera.chat :platinum.libera.chat
+--> lag pong
+<< PING platinum.libera.chat
+>> @time=2024-04-11T08:01:40.686Z :platinum.libera.chat PONG platinum.libera.chat :platinum.libera.chat
+--> lag pong
+<< PING platinum.libera.chat
+>> @time=2024-04-11T08:02:41.799Z :platinum.libera.chat PONG platinum.libera.chat :platinum.libera.chat
+--> lag pong
+<< PING platinum.libera.chat
+>> @time=2024-04-11T08:03:42.931Z :platinum.libera.chat PONG platinum.libera.chat :platinum.libera.chat
+--> lag pong
+<< PING platinum.libera.chat
+>> @time=2024-04-11T08:04:44.077Z :platinum.libera.chat PONG platinum.libera.chat :platinum.libera.chat
+--> lag pong
+<< PING platinum.libera.chat
+>> @time=2024-04-11T08:05:44.248Z :platinum.libera.chat PONG platinum.libera.chat :platinum.libera.chat
+--> lag pong
+<< PING platinum.libera.chat
+>> @time=2024-04-11T08:06:45.342Z :platinum.libera.chat PONG platinum.libera.chat :platinum.libera.chat
+--> lag pong
+<< PING platinum.libera.chat
+>> @time=2024-04-11T08:07:46.456Z :platinum.libera.chat PONG platinum.libera.chat :platinum.libera.chat
+--> lag pong
+<< PING platinum.libera.chat
+>> @time=2024-04-11T08:08:47.581Z :platinum.libera.chat PONG platinum.libera.chat :platinum.libera.chat
+--> lag pong
+<< PING platinum.libera.chat
+>> @time=2024-04-11T08:09:48.714Z :platinum.libera.chat PONG platinum.libera.chat :platinum.libera.chat
+--> lag pong
+<< PING platinum.libera.chat
+>> @time=2024-04-11T08:10:49.857Z :platinum.libera.chat PONG platinum.libera.chat :platinum.libera.chat
+--> lag pong
+<< PING platinum.libera.chat
+>> @time=2024-04-11T08:11:51.008Z :platinum.libera.chat PONG platinum.libera.chat :platinum.libera.chat
+--> lag pong
+<< PING platinum.libera.chat
+>> @time=2024-04-11T08:12:51.141Z :platinum.libera.chat PONG platinum.libera.chat :platinum.libera.chat
+--> lag pong
+<< PING platinum.libera.chat
+>> @time=2024-04-11T08:13:52.271Z :platinum.libera.chat PONG platinum.libera.chat :platinum.libera.chat
+--> lag pong
+<< PING platinum.libera.chat
+>> @time=2024-04-11T08:14:53.377Z :platinum.libera.chat PONG platinum.libera.chat :platinum.libera.chat
+--> lag pong
+<< PING platinum.libera.chat
+>> @time=2024-04-11T08:15:54.539Z :platinum.libera.chat PONG platinum.libera.chat :platinum.libera.chat
+--> lag pong
+<< PING platinum.libera.chat
+>> @time=2024-04-11T08:16:55.713Z :platinum.libera.chat PONG platinum.libera.chat :platinum.libera.chat
+--> lag pong
+<< PING platinum.libera.chat
+>> @time=2024-04-11T08:17:56.839Z :platinum.libera.chat PONG platinum.libera.chat :platinum.libera.chat
+--> lag pong
+<< PING platinum.libera.chat
+>> @time=2024-04-11T08:18:57.993Z :platinum.libera.chat PONG platinum.libera.chat :platinum.libera.chat
+--> lag pong
+<< PING platinum.libera.chat
+>> @time=2024-04-11T08:19:58.159Z :platinum.libera.chat PONG platinum.libera.chat :platinum.libera.chat
+--> lag pong
+<< PING platinum.libera.chat
+>> @time=2024-04-11T08:20:59.330Z :platinum.libera.chat PONG platinum.libera.chat :platinum.libera.chat
+--> lag pong
+<< PING platinum.libera.chat
+>> @time=2024-04-11T08:22:00.467Z :platinum.libera.chat PONG platinum.libera.chat :platinum.libera.chat
+--> lag pong
+<< PING platinum.libera.chat
+>> @time=2024-04-11T08:23:01.624Z :platinum.libera.chat PONG platinum.libera.chat :platinum.libera.chat
+--> lag pong
+<< PING platinum.libera.chat
+>> @time=2024-04-11T08:24:02.747Z :platinum.libera.chat PONG platinum.libera.chat :platinum.libera.chat
+--> lag pong
+<< PING platinum.libera.chat
+>> @time=2024-04-11T08:25:03.867Z :platinum.libera.chat PONG platinum.libera.chat :platinum.libera.chat
+--> lag pong
+<< JOIN #TEHUAN_WORLD
+>> @time=2024-04-11T08:25:52.300Z :bigboss!~somebody@5.195.225.158 JOIN #TEHUAN_WORLD * :Unknown
+>> @time=2024-04-11T08:25:52.300Z :platinum.libera.chat MODE #TEHUAN_WORLD +Cnst
+>> @time=2024-04-11T08:25:52.300Z :platinum.libera.chat 353 bigboss @ #TEHUAN_WORLD :@bigboss
+>> @time=2024-04-11T08:25:52.300Z :platinum.libera.chat 366 bigboss #TEHUAN_WORLD :End of /NAMES list.
+<< MODE #TEHUAN_WORLD
+>> @time=2024-04-11T08:25:54.813Z :platinum.libera.chat 324 bigboss #TEHUAN_WORLD +Cnst
+--> chanquery mode
+>> @time=2024-04-11T08:25:54.813Z :platinum.libera.chat 329 bigboss #TEHUAN_WORLD 1712823952
+--> event 329
+<< WHO #TEHUAN_WORLD %tcuhnfdar,743
+>> @time=2024-04-11T08:25:57.328Z :platinum.libera.chat 354 bigboss 743 #TEHUAN_WORLD ~somebody 5.195.225.158 bigboss H@ 0 0 :Unknown
+--> silent event whox
+>> @time=2024-04-11T08:25:57.328Z :platinum.libera.chat 315 bigboss #TEHUAN_WORLD :End of /WHO list.
+--> chanquery who end
+<< MODE #TEHUAN_WORLD b
+>> @time=2024-04-11T08:25:59.847Z :platinum.libera.chat 368 bigboss #TEHUAN_WORLD :End of Channel Ban List
+--> chanquery ban end
+<< PING platinum.libera.chat
+>> @time=2024-04-11T08:26:04.972Z :platinum.libera.chat PONG platinum.libera.chat :platinum.libera.chat
+--> lag pong
+<< JOIN #tehuan_worlds
+>> @time=2024-04-11T08:26:23.829Z :bigboss!~somebody@5.195.225.158 JOIN #tehuan_worlds * :Unknown
+>> @time=2024-04-11T08:26:23.829Z :platinum.libera.chat 353 bigboss @ #tehuan_worlds :bigboss @ASDF
+>> @time=2024-04-11T08:26:23.829Z :platinum.libera.chat 366 bigboss #tehuan_worlds :End of /NAMES list.
+<< MODE #tehuan_worlds
+>> @time=2024-04-11T08:26:26.343Z :platinum.libera.chat 324 bigboss #tehuan_worlds +Cnst
+--> chanquery mode
+>> @time=2024-04-11T08:26:26.343Z :platinum.libera.chat 329 bigboss #tehuan_worlds 1712816720
+--> event 329
+<< WHO #tehuan_worlds %tcuhnfdar,743
+>> @time=2024-04-11T08:26:28.856Z :platinum.libera.chat 354 bigboss 743 #tehuan_worlds ~somebody 5.195.225.158 bigboss H 0 0 :Unknown
+--> silent event whox
+>> @time=2024-04-11T08:26:28.856Z :platinum.libera.chat 354 bigboss 743 #tehuan_worlds ~somebody 5.195.225.158 ASDF H@ 0 0 :Unknown
+--> silent event whox
+>> @time=2024-04-11T08:26:28.856Z :platinum.libera.chat 315 bigboss #tehuan_worlds :End of /WHO list.
+--> chanquery who end
+<< MODE #tehuan_worlds b
+>> @time=2024-04-11T08:26:31.366Z :platinum.libera.chat 368 bigboss #tehuan_worlds :End of Channel Ban List
+--> chanquery ban end
+>> @time=2024-04-11T08:26:44.598Z :ASDF!~somebody@5.195.225.158 KICK #tehuan_worlds bigboss :bigboss
+<< PING platinum.libera.chat
+>> @time=2024-04-11T08:27:06.074Z :platinum.libera.chat PONG platinum.libera.chat :platinum.libera.chat
+--> lag pong
+<< PING platinum.libera.chat
+>> @time=2024-04-11T08:28:06.187Z :platinum.libera.chat PONG platinum.libera.chat :platinum.libera.chat
+--> lag pong
+<< PING platinum.libera.chat
+>> @time=2024-04-11T08:29:07.298Z :platinum.libera.chat PONG platinum.libera.chat :platinum.libera.chat
+--> lag pong
+--> lag pong
+<< PING platinum.libera.chat
+>> @time=2024-04-11T07:43:22.283Z :platinum.libera.chat PONG platinum.libera.chat :platinum.libera.chat
+--> lag pong
+<< PING platinum.libera.chat
+>> @time=2024-04-11T07:44:23.424Z :platinum.libera.chat PONG platinum.libera.chat :platinum.libera.chat
+--> lag pong
+<< PING platinum.libera.chat
+>> @time=2024-04-11T07:45:24.576Z :platinum.libera.chat PONG platinum.libera.chat :platinum.libera.chat
+--> lag pong
+<< PING platinum.libera.chat
+>> @time=2024-04-11T07:46:25.694Z :platinum.libera.chat PONG platinum.libera.chat :platinum.libera.chat
+--> lag pong
+<< PING platinum.libera.chat
+>> @time=2024-04-11T07:47:26.807Z :platinum.libera.chat PONG platinum.libera.chat :platinum.libera.chat
+--> lag pong
+<< PING platinum.libera.chat
+>> @time=2024-04-11T07:48:27.918Z :platinum.libera.chat PONG platinum.libera.chat :platinum.libera.chat
+--> lag pong
+<< PING platinum.libera.chat
+>> @time=2024-04-11T07:49:29.029Z :platinum.libera.chat PONG platinum.libera.chat :platinum.libera.chat
+--> lag pong
+<< PING platinum.libera.chat
+>> @time=2024-04-11T07:50:29.138Z :platinum.libera.chat PONG platinum.libera.chat :platinum.libera.chat
+--> lag pong
+<< PING platinum.libera.chat
+>> @time=2024-04-11T07:51:30.238Z :platinum.libera.chat PONG platinum.libera.chat :platinum.libera.chat
+--> lag pong
+<< PING platinum.libera.chat
+>> @time=2024-04-11T07:52:31.358Z :platinum.libera.chat PONG platinum.libera.chat :platinum.libera.chat
+--> lag pong
+<< PING platinum.libera.chat
+>> @time=2024-04-11T07:53:32.510Z :platinum.libera.chat PONG platinum.libera.chat :platinum.libera.chat
+--> lag pong
+<< PING platinum.libera.chat
+>> @time=2024-04-11T07:54:33.641Z :platinum.libera.chat PONG platinum.libera.chat :platinum.libera.chat
+--> lag pong
+<< PING platinum.libera.chat
+>> @time=2024-04-11T07:55:34.756Z :platinum.libera.chat PONG platinum.libera.chat :platinum.libera.chat
+--> lag pong
+<< PING platinum.libera.chat
+>> @time=2024-04-11T07:56:35.897Z :platinum.libera.chat PONG platinum.libera.chat :platinum.libera.chat
+--> lag pong
+<< PING platinum.libera.chat
+>> @time=2024-04-11T07:57:37.051Z :platinum.libera.chat PONG platinum.libera.chat :platinum.libera.chat
+--> lag pong
+<< PING platinum.libera.chat
+>> @time=2024-04-11T07:58:37.218Z :platinum.libera.chat PONG platinum.libera.chat :platinum.libera.chat
+--> lag pong
+<< PING platinum.libera.chat
+>> @time=2024-04-11T07:59:38.388Z :platinum.libera.chat PONG platinum.libera.chat :platinum.libera.chat
+--> lag pong
+<< PING platinum.libera.chat
+>> @time=2024-04-11T08:00:39.546Z :platinum.libera.chat PONG platinum.libera.chat :platinum.libera.chat
+--> lag pong
+<< PING platinum.libera.chat
+>> @time=2024-04-11T08:01:40.686Z :platinum.libera.chat PONG platinum.libera.chat :platinum.libera.chat
+--> lag pong
+<< PING platinum.libera.chat
+>> @time=2024-04-11T08:02:41.799Z :platinum.libera.chat PONG platinum.libera.chat :platinum.libera.chat
+--> lag pong
+<< PING platinum.libera.chat
+>> @time=2024-04-11T08:03:42.931Z :platinum.libera.chat PONG platinum.libera.chat :platinum.libera.chat
+--> lag pong
+<< PING platinum.libera.chat
+>> @time=2024-04-11T08:04:44.077Z :platinum.libera.chat PONG platinum.libera.chat :platinum.libera.chat
+--> lag pong
+<< PING platinum.libera.chat
+>> @time=2024-04-11T08:05:44.248Z :platinum.libera.chat PONG platinum.libera.chat :platinum.libera.chat
+--> lag pong
+<< PING platinum.libera.chat
+>> @time=2024-04-11T08:06:45.342Z :platinum.libera.chat PONG platinum.libera.chat :platinum.libera.chat
+--> lag pong
+<< PING platinum.libera.chat
+>> @time=2024-04-11T08:07:46.456Z :platinum.libera.chat PONG platinum.libera.chat :platinum.libera.chat
+--> lag pong
+<< PING platinum.libera.chat
+>> @time=2024-04-11T08:08:47.581Z :platinum.libera.chat PONG platinum.libera.chat :platinum.libera.chat
+--> lag pong
+<< PING platinum.libera.chat
+>> @time=2024-04-11T08:09:48.714Z :platinum.libera.chat PONG platinum.libera.chat :platinum.libera.chat
+--> lag pong
+<< PING platinum.libera.chat
+>> @time=2024-04-11T08:10:49.857Z :platinum.libera.chat PONG platinum.libera.chat :platinum.libera.chat
+--> lag pong
+<< PING platinum.libera.chat
+>> @time=2024-04-11T08:11:51.008Z :platinum.libera.chat PONG platinum.libera.chat :platinum.libera.chat
+--> lag pong
+<< PING platinum.libera.chat
+>> @time=2024-04-11T08:12:51.141Z :platinum.libera.chat PONG platinum.libera.chat :platinum.libera.chat
+--> lag pong
+<< PING platinum.libera.chat
+>> @time=2024-04-11T08:13:52.271Z :platinum.libera.chat PONG platinum.libera.chat :platinum.libera.chat
+--> lag pong
+<< PING platinum.libera.chat
+>> @time=2024-04-11T08:14:53.377Z :platinum.libera.chat PONG platinum.libera.chat :platinum.libera.chat
+--> lag pong
+<< PING platinum.libera.chat
+>> @time=2024-04-11T08:15:54.539Z :platinum.libera.chat PONG platinum.libera.chat :platinum.libera.chat
+--> lag pong
+<< PING platinum.libera.chat
+>> @time=2024-04-11T08:16:55.713Z :platinum.libera.chat PONG platinum.libera.chat :platinum.libera.chat
+--> lag pong
+<< PING platinum.libera.chat
+>> @time=2024-04-11T08:17:56.839Z :platinum.libera.chat PONG platinum.libera.chat :platinum.libera.chat
+--> lag pong
+<< PING platinum.libera.chat
+>> @time=2024-04-11T08:18:57.993Z :platinum.libera.chat PONG platinum.libera.chat :platinum.libera.chat
+--> lag pong
+<< PING platinum.libera.chat
+>> @time=2024-04-11T08:19:58.159Z :platinum.libera.chat PONG platinum.libera.chat :platinum.libera.chat
+--> lag pong
+<< PING platinum.libera.chat
+>> @time=2024-04-11T08:20:59.330Z :platinum.libera.chat PONG platinum.libera.chat :platinum.libera.chat
+--> lag pong
+<< PING platinum.libera.chat
+>> @time=2024-04-11T08:22:00.467Z :platinum.libera.chat PONG platinum.libera.chat :platinum.libera.chat
+--> lag pong
+<< PING platinum.libera.chat
+>> @time=2024-04-11T08:23:01.624Z :platinum.libera.chat PONG platinum.libera.chat :platinum.libera.chat
+--> lag pong
+<< PING platinum.libera.chat
+>> @time=2024-04-11T08:24:02.747Z :platinum.libera.chat PONG platinum.libera.chat :platinum.libera.chat
+--> lag pong
+<< PING platinum.libera.chat
+>> @time=2024-04-11T08:25:03.867Z :platinum.libera.chat PONG platinum.libera.chat :platinum.libera.chat
+--> lag pong
+<< JOIN #TEHUAN_WORLD
+>> @time=2024-04-11T08:25:52.300Z :bigboss!~somebody@5.195.225.158 JOIN #TEHUAN_WORLD * :Unknown
+>> @time=2024-04-11T08:25:52.300Z :platinum.libera.chat MODE #TEHUAN_WORLD +Cnst
+>> @time=2024-04-11T08:25:52.300Z :platinum.libera.chat 353 bigboss @ #TEHUAN_WORLD :@bigboss
+>> @time=2024-04-11T08:25:52.300Z :platinum.libera.chat 366 bigboss #TEHUAN_WORLD :End of /NAMES list.
+<< MODE #TEHUAN_WORLD
+>> @time=2024-04-11T08:25:54.813Z :platinum.libera.chat 324 bigboss #TEHUAN_WORLD +Cnst
+--> chanquery mode
+>> @time=2024-04-11T08:25:54.813Z :platinum.libera.chat 329 bigboss #TEHUAN_WORLD 1712823952
+--> event 329
+<< WHO #TEHUAN_WORLD %tcuhnfdar,743
+>> @time=2024-04-11T08:25:57.328Z :platinum.libera.chat 354 bigboss 743 #TEHUAN_WORLD ~somebody 5.195.225.158 bigboss H@ 0 0 :Unknown
+--> silent event whox
+>> @time=2024-04-11T08:25:57.328Z :platinum.libera.chat 315 bigboss #TEHUAN_WORLD :End of /WHO list.
+--> chanquery who end
+<< MODE #TEHUAN_WORLD b
+>> @time=2024-04-11T08:25:59.847Z :platinum.libera.chat 368 bigboss #TEHUAN_WORLD :End of Channel Ban List
+--> chanquery ban end
+<< PING platinum.libera.chat
+>> @time=2024-04-11T08:26:04.972Z :platinum.libera.chat PONG platinum.libera.chat :platinum.libera.chat
+--> lag pong
+<< JOIN #tehuan_worlds
+>> @time=2024-04-11T08:26:23.829Z :bigboss!~somebody@5.195.225.158 JOIN #tehuan_worlds * :Unknown
+>> @time=2024-04-11T08:26:23.829Z :platinum.libera.chat 353 bigboss @ #tehuan_worlds :bigboss @ASDF
+>> @time=2024-04-11T08:26:23.829Z :platinum.libera.chat 366 bigboss #tehuan_worlds :End of /NAMES list.
+<< MODE #tehuan_worlds
+>> @time=2024-04-11T08:26:26.343Z :platinum.libera.chat 324 bigboss #tehuan_worlds +Cnst
+--> chanquery mode
+>> @time=2024-04-11T08:26:26.343Z :platinum.libera.chat 329 bigboss #tehuan_worlds 1712816720
+--> event 329
+<< WHO #tehuan_worlds %tcuhnfdar,743
+>> @time=2024-04-11T08:26:28.856Z :platinum.libera.chat 354 bigboss 743 #tehuan_worlds ~somebody 5.195.225.158 bigboss H 0 0 :Unknown
+--> silent event whox
+>> @time=2024-04-11T08:26:28.856Z :platinum.libera.chat 354 bigboss 743 #tehuan_worlds ~somebody 5.195.225.158 ASDF H@ 0 0 :Unknown
+--> silent event whox
+>> @time=2024-04-11T08:26:28.856Z :platinum.libera.chat 315 bigboss #tehuan_worlds :End of /WHO list.
+--> chanquery who end
+<< MODE #tehuan_worlds b
+>> @time=2024-04-11T08:26:31.366Z :platinum.libera.chat 368 bigboss #tehuan_worlds :End of Channel Ban List
+--> chanquery ban end
+>> @time=2024-04-11T08:26:44.598Z :ASDF!~somebody@5.195.225.158 KICK #tehuan_worlds bigboss :bigboss
+<< PING platinum.libera.chat
+>> @time=2024-04-11T08:27:06.074Z :platinum.libera.chat PONG platinum.libera.chat :platinum.libera.chat
+--> lag pong
+<< PING platinum.libera.chat
+>> @time=2024-04-11T08:28:06.187Z :platinum.libera.chat PONG platinum.libera.chat :platinum.libera.chat
+--> lag pong
+<< PING platinum.libera.chat
+>> @time=2024-04-11T08:29:07.298Z :platinum.libera.chat PONG platinum.libera.chat :platinum.libera.chat
+--> lag pong
+<< JOIN #tehuan_worlds
+>> @time=2024-04-11T08:30:04.300Z :bigboss!~somebody@5.195.225.158 JOIN #tehuan_worlds * :Unknown
+>> @time=2024-04-11T08:30:04.300Z :platinum.libera.chat 353 bigboss @ #tehuan_worlds :bigboss @ASDF
+>> @time=2024-04-11T08:30:04.300Z :platinum.libera.chat 366 bigboss #tehuan_worlds :End of /NAMES list.
+<< MODE #tehuan_worlds
+>> @time=2024-04-11T08:30:06.817Z :platinum.libera.chat 324 bigboss #tehuan_worlds +Cnst
+--> chanquery mode
+>> @time=2024-04-11T08:30:06.817Z :platinum.libera.chat 329 bigboss #tehuan_worlds 1712816720
+--> event 329
+<< WHO #tehuan_worlds %tcuhnfdar,743
+>> @time=2024-04-11T08:30:09.326Z :platinum.libera.chat 354 bigboss 743 #tehuan_worlds ~somebody 5.195.225.158 bigboss H 0 0 :Unknown
+--> silent event whox
+>> @time=2024-04-11T08:30:09.326Z :platinum.libera.chat 354 bigboss 743 #tehuan_worlds ~somebody 5.195.225.158 ASDF H@ 0 0 :Unknown
+--> silent event whox
+>> @time=2024-04-11T08:30:09.326Z :platinum.libera.chat 315 bigboss #tehuan_worlds :End of /WHO list.
+--> chanquery who end
+<< MODE #tehuan_worlds b
+>> @time=2024-04-11T08:30:11.831Z :platinum.libera.chat 368 bigboss #tehuan_worlds :End of Channel Ban List
+--> chanquery ban end
+<< PING platinum.libera.chat
+>> @time=2024-04-11T08:30:14.389Z :platinum.libera.chat PONG platinum.libera.chat :platinum.libera.chat
+--> lag pong
+>> @time=2024-04-11T08:30:17.904Z :ASDF!~somebody@5.195.225.158 KICK #tehuan_worlds bigboss :talk too much
+--> lag pong
+<< PING calcium.libera.chat
+>> @time=2024-04-11T07:28:59.278Z :calcium.libera.chat PONG calcium.libera.chat :calcium.libera.chat
+--> lag pong
+<< PING calcium.libera.chat
+>> @time=2024-04-11T07:30:00.410Z :calcium.libera.chat PONG calcium.libera.chat :calcium.libera.chat
+--> lag pong
+<< PING calcium.libera.chat
+>> @time=2024-04-11T07:31:01.576Z :calcium.libera.chat PONG calcium.libera.chat :calcium.libera.chat
+--> lag pong
+<< PING calcium.libera.chat
+>> @time=2024-04-11T07:32:02.752Z :calcium.libera.chat PONG calcium.libera.chat :calcium.libera.chat
+--> lag pong
+<< PING calcium.libera.chat
+>> @time=2024-04-11T07:33:03.904Z :calcium.libera.chat PONG calcium.libera.chat :calcium.libera.chat
+--> lag pong
+<< PING calcium.libera.chat
+>> @time=2024-04-11T07:34:05.040Z :calcium.libera.chat PONG calcium.libera.chat :calcium.libera.chat
+--> lag pong
+<< PING calcium.libera.chat
+>> @time=2024-04-11T07:35:05.215Z :calcium.libera.chat PONG calcium.libera.chat :calcium.libera.chat
+--> lag pong
+<< PING calcium.libera.chat
+>> @time=2024-04-11T07:36:06.387Z :calcium.libera.chat PONG calcium.libera.chat :calcium.libera.chat
+--> lag pong
+<< PING calcium.libera.chat
+>> @time=2024-04-11T07:37:07.543Z :calcium.libera.chat PONG calcium.libera.chat :calcium.libera.chat
+--> lag pong
+<< PING calcium.libera.chat
+>> @time=2024-04-11T07:38:08.708Z :calcium.libera.chat PONG calcium.libera.chat :calcium.libera.chat
+--> lag pong
+<< INVITE ASDFASDFKJHLKJH #tehuan_worlds
+>> @time=2024-04-11T07:38:29.168Z :calcium.libera.chat 401 tehuan ASDFASDFKJHLKJH :No such nick/channel
+<< PING calcium.libera.chat
+>> @time=2024-04-11T07:39:09.827Z :calcium.libera.chat PONG calcium.libera.chat :calcium.libera.chat
+--> lag pong
+<< PING calcium.libera.chat
+>> @time=2024-04-11T07:40:10.956Z :calcium.libera.chat PONG calcium.libera.chat :calcium.libera.chat
+--> lag pong
+<< PING calcium.libera.chat
+>> @time=2024-04-11T07:41:12.123Z :calcium.libera.chat PONG calcium.libera.chat :calcium.libera.chat
+--> lag pong
+<< PING calcium.libera.chat
+>> @time=2024-04-11T07:42:12.301Z :calcium.libera.chat PONG calcium.libera.chat :calcium.libera.chat
+--> lag pong
+<< PING calcium.libera.chat
+>> @time=2024-04-11T07:43:13.420Z :calcium.libera.chat PONG calcium.libera.chat :calcium.libera.chat
+--> lag pong
+<< PING calcium.libera.chat
+>> @time=2024-04-11T07:44:14.540Z :calcium.libera.chat PONG calcium.libera.chat :calcium.libera.chat
+--> lag pong
+<< PING calcium.libera.chat
+>> @time=2024-04-11T07:45:15.726Z :calcium.libera.chat PONG calcium.libera.chat :calcium.libera.chat
+--> lag pong
+<< PING calcium.libera.chat
+>> @time=2024-04-11T07:46:16.926Z :calcium.libera.chat PONG calcium.libera.chat :calcium.libera.chat
+--> lag pong
+<< PING calcium.libera.chat
+>> @time=2024-04-11T07:47:18.081Z :calcium.libera.chat PONG calcium.libera.chat :calcium.libera.chat
+--> lag pong
+<< PING calcium.libera.chat
+>> @time=2024-04-11T07:48:18.276Z :calcium.libera.chat PONG calcium.libera.chat :calcium.libera.chat
+--> lag pong
+<< PING calcium.libera.chat
+>> @time=2024-04-11T07:49:19.447Z :calcium.libera.chat PONG calcium.libera.chat :calcium.libera.chat
+--> lag pong
+<< PING calcium.libera.chat
+>> @time=2024-04-11T07:50:20.605Z :calcium.libera.chat PONG calcium.libera.chat :calcium.libera.chat
+--> lag pong
+<< PING calcium.libera.chat
+>> @time=2024-04-11T07:51:21.756Z :calcium.libera.chat PONG calcium.libera.chat :calcium.libera.chat
+--> lag pong
+<< PING calcium.libera.chat
+>> @time=2024-04-11T07:52:22.896Z :calcium.libera.chat PONG calcium.libera.chat :calcium.libera.chat
+--> lag pong
+<< PING calcium.libera.chat
+>> @time=2024-04-11T07:53:24.033Z :calcium.libera.chat PONG calcium.libera.chat :calcium.libera.chat
+--> lag pong
+<< PING calcium.libera.chat
+>> @time=2024-04-11T07:54:24.207Z :calcium.libera.chat PONG calcium.libera.chat :calcium.libera.chat
+--> lag pong
+<< PING calcium.libera.chat
+>> @time=2024-04-11T07:55:25.420Z :calcium.libera.chat PONG calcium.libera.chat :calcium.libera.chat
+--> lag pong
+<< PING calcium.libera.chat
+>> @time=2024-04-11T07:56:26.599Z :calcium.libera.chat PONG calcium.libera.chat :calcium.libera.chat
+--> lag pong
+<< PING calcium.libera.chat
+>> @time=2024-04-11T07:57:27.725Z :calcium.libera.chat PONG calcium.libera.chat :calcium.libera.chat
+--> lag pong
+<< PING calcium.libera.chat
+>> @time=2024-04-11T07:58:28.844Z :calcium.libera.chat PONG calcium.libera.chat :calcium.libera.chat
+--> lag pong
+<< PING calcium.libera.chat
+>> @time=2024-04-11T07:59:30.026Z :calcium.libera.chat PONG calcium.libera.chat :calcium.libera.chat
+--> lag pong
+<< PING calcium.libera.chat
+>> @time=2024-04-11T08:00:30.192Z :calcium.libera.chat PONG calcium.libera.chat :calcium.libera.chat
+--> lag pong
+<< PING calcium.libera.chat
+>> @time=2024-04-11T08:01:31.307Z :calcium.libera.chat PONG calcium.libera.chat :calcium.libera.chat
+--> lag pong
+<< PING calcium.libera.chat
+>> @time=2024-04-11T08:02:32.375Z :calcium.libera.chat PONG calcium.libera.chat :calcium.libera.chat
+--> lag pong
+<< PING calcium.libera.chat
+>> @time=2024-04-11T08:03:33.451Z :calcium.libera.chat PONG calcium.libera.chat :calcium.libera.chat
+--> lag pong
+<< PING calcium.libera.chat
+>> @time=2024-04-11T08:04:34.540Z :calcium.libera.chat PONG calcium.libera.chat :calcium.libera.chat
+--> lag pong
+<< PING calcium.libera.chat
+>> @time=2024-04-11T08:05:35.655Z :calcium.libera.chat PONG calcium.libera.chat :calcium.libera.chat
+--> lag pong
+<< PING calcium.libera.chat
+>> @time=2024-04-11T08:06:36.743Z :calcium.libera.chat PONG calcium.libera.chat :calcium.libera.chat
+--> lag pong
+<< PING calcium.libera.chat
+>> @time=2024-04-11T08:07:37.829Z :calcium.libera.chat PONG calcium.libera.chat :calcium.libera.chat
+--> lag pong
+<< PING calcium.libera.chat
+>> @time=2024-04-11T08:08:38.942Z :calcium.libera.chat PONG calcium.libera.chat :calcium.libera.chat
+--> lag pong
+<< PING calcium.libera.chat
+>> @time=2024-04-11T08:09:40.008Z :calcium.libera.chat PONG calcium.libera.chat :calcium.libera.chat
+--> lag pong
+<< PING calcium.libera.chat
+>> @time=2024-04-11T08:10:41.096Z :calcium.libera.chat PONG calcium.libera.chat :calcium.libera.chat
+--> lag pong
+<< PING calcium.libera.chat
+>> @time=2024-04-11T08:11:41.203Z :calcium.libera.chat PONG calcium.libera.chat :calcium.libera.chat
+--> lag pong
+<< PING calcium.libera.chat
+>> @time=2024-04-11T08:12:42.336Z :calcium.libera.chat PONG calcium.libera.chat :calcium.libera.chat
+--> lag pong
+<< NICK ASDF
+>> @time=2024-04-11T08:13:40.185Z :tehuan!~somebody@5.195.225.158 NICK :ASDF
+>> @time=2024-04-11T08:13:40.442Z :NickServ!NickServ@services.libera.chat NOTICE ASDF :This nickname is registered. Please choose a different nickname, or identify via /msg NickServ IDENTIFY asdf <password>
+<< PING calcium.libera.chat
+>> @time=2024-04-11T08:13:43.471Z :calcium.libera.chat PONG calcium.libera.chat :calcium.libera.chat
+--> lag pong
+<< PING calcium.libera.chat
+>> @time=2024-04-11T08:14:44.608Z :calcium.libera.chat PONG calcium.libera.chat :calcium.libera.chat
+--> lag pong
+<< PING calcium.libera.chat
+>> @time=2024-04-11T08:15:45.733Z :calcium.libera.chat PONG calcium.libera.chat :calcium.libera.chat
+--> lag pong
+<< PING calcium.libera.chat
+>> @time=2024-04-11T08:16:46.863Z :calcium.libera.chat PONG calcium.libera.chat :calcium.libera.chat
+--> lag pong
+<< PING calcium.libera.chat
+>> @time=2024-04-11T08:17:48.005Z :calcium.libera.chat PONG calcium.libera.chat :calcium.libera.chat
+--> lag pong
+<< PING calcium.libera.chat
+>> @time=2024-04-11T08:18:49.136Z :calcium.libera.chat PONG calcium.libera.chat :calcium.libera.chat
+--> lag pong
+<< PING calcium.libera.chat
+>> @time=2024-04-11T08:19:49.237Z :calcium.libera.chat PONG calcium.libera.chat :calcium.libera.chat
+--> lag pong
+<< PING calcium.libera.chat
+>> @time=2024-04-11T08:20:50.361Z :calcium.libera.chat PONG calcium.libera.chat :calcium.libera.chat
+--> lag pong
+<< PING calcium.libera.chat
+>> @time=2024-04-11T08:21:51.492Z :calcium.libera.chat PONG calcium.libera.chat :calcium.libera.chat
+--> lag pong
+<< PING calcium.libera.chat
+>> @time=2024-04-11T08:22:52.653Z :calcium.libera.chat PONG calcium.libera.chat :calcium.libera.chat
+--> lag pong
+<< PING calcium.libera.chat
+>> @time=2024-04-11T08:23:53.784Z :calcium.libera.chat PONG calcium.libera.chat :calcium.libera.chat
+--> lag pong
+<< PING calcium.libera.chat
+>> @time=2024-04-11T08:24:54.894Z :calcium.libera.chat PONG calcium.libera.chat :calcium.libera.chat
+--> lag pong
+<< KICK #tehuan_worlds BIGBOSS :
+>> @time=2024-04-11T08:25:39.822Z :calcium.libera.chat 441 ASDF BIGBOSS #tehuan_worlds :They aren't on that channel
+<< PING calcium.libera.chat
+>> @time=2024-04-11T08:25:56.014Z :calcium.libera.chat PONG calcium.libera.chat :calcium.libera.chat
+--> lag pong
+>> @time=2024-04-11T08:26:23.995Z :bigboss!~somebody@5.195.225.158 JOIN #tehuan_worlds * :Unknown
+<< KICK #tehuan_worlds BIGBOSS :
+>> @time=2024-04-11T08:26:44.527Z :ASDF!~somebody@5.195.225.158 KICK #tehuan_worlds bigboss :bigboss
+<< PING calcium.libera.chat
+>> @time=2024-04-11T08:26:57.099Z :calcium.libera.chat PONG calcium.libera.chat :calcium.libera.chat
+--> lag pong
+<< PING calcium.libera.chat
+>> @time=2024-04-11T08:27:57.219Z :calcium.libera.chat PONG calcium.libera.chat :calcium.libera.chat
+--> lag pong
+<< PING calcium.libera.chat
+>> @time=2024-04-11T08:28:58.360Z :calcium.libera.chat PONG calcium.libera.chat :calcium.libera.chat
+--> lag pong
+<< PING calcium.libera.chat
+>> @time=2024-04-11T08:29:59.475Z :calcium.libera.chat PONG calcium.libera.chat :calcium.libera.chat
+--> lag pong
+>> @time=2024-04-11T08:30:04.406Z :bigboss!~somebody@5.195.225.158 JOIN #tehuan_worlds * :Unknown
+<< KICK #tehuan_worlds BIGBOSS :talk too much
+>> @time=2024-04-11T08:30:17.758Z :ASDF!~somebody@5.195.225.158 KICK #tehuan_worlds bigboss :talk too much
+<< PING calcium.libera.chat
+>> @time=2024-04-11T08:31:00.598Z :calcium.libera.chat PONG calcium.libera.chat :calcium.libera.chat
+--> lag pong
+--> lag pong
+<< PING platinum.libera.chat
+>> @time=2024-04-11T07:44:23.424Z :platinum.libera.chat PONG platinum.libera.chat :platinum.libera.chat
+--> lag pong
+<< PING platinum.libera.chat
+>> @time=2024-04-11T07:45:24.576Z :platinum.libera.chat PONG platinum.libera.chat :platinum.libera.chat
+--> lag pong
+<< PING platinum.libera.chat
+>> @time=2024-04-11T07:46:25.694Z :platinum.libera.chat PONG platinum.libera.chat :platinum.libera.chat
+--> lag pong
+<< PING platinum.libera.chat
+>> @time=2024-04-11T07:47:26.807Z :platinum.libera.chat PONG platinum.libera.chat :platinum.libera.chat
+--> lag pong
+<< PING platinum.libera.chat
+>> @time=2024-04-11T07:48:27.918Z :platinum.libera.chat PONG platinum.libera.chat :platinum.libera.chat
+--> lag pong
+<< PING platinum.libera.chat
+>> @time=2024-04-11T07:49:29.029Z :platinum.libera.chat PONG platinum.libera.chat :platinum.libera.chat
+--> lag pong
+<< PING platinum.libera.chat
+>> @time=2024-04-11T07:50:29.138Z :platinum.libera.chat PONG platinum.libera.chat :platinum.libera.chat
+--> lag pong
+<< PING platinum.libera.chat
+>> @time=2024-04-11T07:51:30.238Z :platinum.libera.chat PONG platinum.libera.chat :platinum.libera.chat
+--> lag pong
+<< PING platinum.libera.chat
+>> @time=2024-04-11T07:52:31.358Z :platinum.libera.chat PONG platinum.libera.chat :platinum.libera.chat
+--> lag pong
+<< PING platinum.libera.chat
+>> @time=2024-04-11T07:53:32.510Z :platinum.libera.chat PONG platinum.libera.chat :platinum.libera.chat
+--> lag pong
+<< PING platinum.libera.chat
+>> @time=2024-04-11T07:54:33.641Z :platinum.libera.chat PONG platinum.libera.chat :platinum.libera.chat
+--> lag pong
+<< PING platinum.libera.chat
+>> @time=2024-04-11T07:55:34.756Z :platinum.libera.chat PONG platinum.libera.chat :platinum.libera.chat
+--> lag pong
+<< PING platinum.libera.chat
+>> @time=2024-04-11T07:56:35.897Z :platinum.libera.chat PONG platinum.libera.chat :platinum.libera.chat
+--> lag pong
+<< PING platinum.libera.chat
+>> @time=2024-04-11T07:57:37.051Z :platinum.libera.chat PONG platinum.libera.chat :platinum.libera.chat
+--> lag pong
+<< PING platinum.libera.chat
+>> @time=2024-04-11T07:58:37.218Z :platinum.libera.chat PONG platinum.libera.chat :platinum.libera.chat
+--> lag pong
+<< PING platinum.libera.chat
+>> @time=2024-04-11T07:59:38.388Z :platinum.libera.chat PONG platinum.libera.chat :platinum.libera.chat
+--> lag pong
+<< PING platinum.libera.chat
+>> @time=2024-04-11T08:00:39.546Z :platinum.libera.chat PONG platinum.libera.chat :platinum.libera.chat
+--> lag pong
+<< PING platinum.libera.chat
+>> @time=2024-04-11T08:01:40.686Z :platinum.libera.chat PONG platinum.libera.chat :platinum.libera.chat
+--> lag pong
+<< PING platinum.libera.chat
+>> @time=2024-04-11T08:02:41.799Z :platinum.libera.chat PONG platinum.libera.chat :platinum.libera.chat
+--> lag pong
+<< PING platinum.libera.chat
+>> @time=2024-04-11T08:03:42.931Z :platinum.libera.chat PONG platinum.libera.chat :platinum.libera.chat
+--> lag pong
+<< PING platinum.libera.chat
+>> @time=2024-04-11T08:04:44.077Z :platinum.libera.chat PONG platinum.libera.chat :platinum.libera.chat
+--> lag pong
+<< PING platinum.libera.chat
+>> @time=2024-04-11T08:05:44.248Z :platinum.libera.chat PONG platinum.libera.chat :platinum.libera.chat
+--> lag pong
+<< PING platinum.libera.chat
+>> @time=2024-04-11T08:06:45.342Z :platinum.libera.chat PONG platinum.libera.chat :platinum.libera.chat
+--> lag pong
+<< PING platinum.libera.chat
+>> @time=2024-04-11T08:07:46.456Z :platinum.libera.chat PONG platinum.libera.chat :platinum.libera.chat
+--> lag pong
+<< PING platinum.libera.chat
+>> @time=2024-04-11T08:08:47.581Z :platinum.libera.chat PONG platinum.libera.chat :platinum.libera.chat
+--> lag pong
+<< PING platinum.libera.chat
+>> @time=2024-04-11T08:09:48.714Z :platinum.libera.chat PONG platinum.libera.chat :platinum.libera.chat
+--> lag pong
+<< PING platinum.libera.chat
+>> @time=2024-04-11T08:10:49.857Z :platinum.libera.chat PONG platinum.libera.chat :platinum.libera.chat
+--> lag pong
+<< PING platinum.libera.chat
+>> @time=2024-04-11T08:11:51.008Z :platinum.libera.chat PONG platinum.libera.chat :platinum.libera.chat
+--> lag pong
+<< PING platinum.libera.chat
+>> @time=2024-04-11T08:12:51.141Z :platinum.libera.chat PONG platinum.libera.chat :platinum.libera.chat
+--> lag pong
+<< PING platinum.libera.chat
+>> @time=2024-04-11T08:13:52.271Z :platinum.libera.chat PONG platinum.libera.chat :platinum.libera.chat
+--> lag pong
+<< PING platinum.libera.chat
+>> @time=2024-04-11T08:14:53.377Z :platinum.libera.chat PONG platinum.libera.chat :platinum.libera.chat
+--> lag pong
+<< PING platinum.libera.chat
+>> @time=2024-04-11T08:15:54.539Z :platinum.libera.chat PONG platinum.libera.chat :platinum.libera.chat
+--> lag pong
+<< PING platinum.libera.chat
+>> @time=2024-04-11T08:16:55.713Z :platinum.libera.chat PONG platinum.libera.chat :platinum.libera.chat
+--> lag pong
+<< PING platinum.libera.chat
+>> @time=2024-04-11T08:17:56.839Z :platinum.libera.chat PONG platinum.libera.chat :platinum.libera.chat
+--> lag pong
+<< PING platinum.libera.chat
+>> @time=2024-04-11T08:18:57.993Z :platinum.libera.chat PONG platinum.libera.chat :platinum.libera.chat
+--> lag pong
+<< PING platinum.libera.chat
+>> @time=2024-04-11T08:19:58.159Z :platinum.libera.chat PONG platinum.libera.chat :platinum.libera.chat
+--> lag pong
+<< PING platinum.libera.chat
+>> @time=2024-04-11T08:20:59.330Z :platinum.libera.chat PONG platinum.libera.chat :platinum.libera.chat
+--> lag pong
+<< PING platinum.libera.chat
+>> @time=2024-04-11T08:22:00.467Z :platinum.libera.chat PONG platinum.libera.chat :platinum.libera.chat
+--> lag pong
+<< PING platinum.libera.chat
+>> @time=2024-04-11T08:23:01.624Z :platinum.libera.chat PONG platinum.libera.chat :platinum.libera.chat
+--> lag pong
+<< PING platinum.libera.chat
+>> @time=2024-04-11T08:24:02.747Z :platinum.libera.chat PONG platinum.libera.chat :platinum.libera.chat
+--> lag pong
+<< PING platinum.libera.chat
+>> @time=2024-04-11T08:25:03.867Z :platinum.libera.chat PONG platinum.libera.chat :platinum.libera.chat
+--> lag pong
+<< JOIN #TEHUAN_WORLD
+>> @time=2024-04-11T08:25:52.300Z :bigboss!~somebody@5.195.225.158 JOIN #TEHUAN_WORLD * :Unknown
+>> @time=2024-04-11T08:25:52.300Z :platinum.libera.chat MODE #TEHUAN_WORLD +Cnst
+>> @time=2024-04-11T08:25:52.300Z :platinum.libera.chat 353 bigboss @ #TEHUAN_WORLD :@bigboss
+>> @time=2024-04-11T08:25:52.300Z :platinum.libera.chat 366 bigboss #TEHUAN_WORLD :End of /NAMES list.
+<< MODE #TEHUAN_WORLD
+>> @time=2024-04-11T08:25:54.813Z :platinum.libera.chat 324 bigboss #TEHUAN_WORLD +Cnst
+--> chanquery mode
+>> @time=2024-04-11T08:25:54.813Z :platinum.libera.chat 329 bigboss #TEHUAN_WORLD 1712823952
+--> event 329
+<< WHO #TEHUAN_WORLD %tcuhnfdar,743
+>> @time=2024-04-11T08:25:57.328Z :platinum.libera.chat 354 bigboss 743 #TEHUAN_WORLD ~somebody 5.195.225.158 bigboss H@ 0 0 :Unknown
+--> silent event whox
+>> @time=2024-04-11T08:25:57.328Z :platinum.libera.chat 315 bigboss #TEHUAN_WORLD :End of /WHO list.
+--> chanquery who end
+<< MODE #TEHUAN_WORLD b
+>> @time=2024-04-11T08:25:59.847Z :platinum.libera.chat 368 bigboss #TEHUAN_WORLD :End of Channel Ban List
+--> chanquery ban end
+<< PING platinum.libera.chat
+>> @time=2024-04-11T08:26:04.972Z :platinum.libera.chat PONG platinum.libera.chat :platinum.libera.chat
+--> lag pong
+<< JOIN #tehuan_worlds
+>> @time=2024-04-11T08:26:23.829Z :bigboss!~somebody@5.195.225.158 JOIN #tehuan_worlds * :Unknown
+>> @time=2024-04-11T08:26:23.829Z :platinum.libera.chat 353 bigboss @ #tehuan_worlds :bigboss @ASDF
+>> @time=2024-04-11T08:26:23.829Z :platinum.libera.chat 366 bigboss #tehuan_worlds :End of /NAMES list.
+<< MODE #tehuan_worlds
+>> @time=2024-04-11T08:26:26.343Z :platinum.libera.chat 324 bigboss #tehuan_worlds +Cnst
+--> chanquery mode
+>> @time=2024-04-11T08:26:26.343Z :platinum.libera.chat 329 bigboss #tehuan_worlds 1712816720
+--> event 329
+<< WHO #tehuan_worlds %tcuhnfdar,743
+>> @time=2024-04-11T08:26:28.856Z :platinum.libera.chat 354 bigboss 743 #tehuan_worlds ~somebody 5.195.225.158 bigboss H 0 0 :Unknown
+--> silent event whox
+>> @time=2024-04-11T08:26:28.856Z :platinum.libera.chat 354 bigboss 743 #tehuan_worlds ~somebody 5.195.225.158 ASDF H@ 0 0 :Unknown
+--> silent event whox
+>> @time=2024-04-11T08:26:28.856Z :platinum.libera.chat 315 bigboss #tehuan_worlds :End of /WHO list.
+--> chanquery who end
+<< MODE #tehuan_worlds b
+>> @time=2024-04-11T08:26:31.366Z :platinum.libera.chat 368 bigboss #tehuan_worlds :End of Channel Ban List
+--> chanquery ban end
+>> @time=2024-04-11T08:26:44.598Z :ASDF!~somebody@5.195.225.158 KICK #tehuan_worlds bigboss :bigboss
+<< PING platinum.libera.chat
+>> @time=2024-04-11T08:27:06.074Z :platinum.libera.chat PONG platinum.libera.chat :platinum.libera.chat
+--> lag pong
+<< PING platinum.libera.chat
+>> @time=2024-04-11T08:28:06.187Z :platinum.libera.chat PONG platinum.libera.chat :platinum.libera.chat
+--> lag pong
+<< PING platinum.libera.chat
+>> @time=2024-04-11T08:29:07.298Z :platinum.libera.chat PONG platinum.libera.chat :platinum.libera.chat
+--> lag pong
+<< JOIN #tehuan_worlds
+>> @time=2024-04-11T08:30:04.300Z :bigboss!~somebody@5.195.225.158 JOIN #tehuan_worlds * :Unknown
+>> @time=2024-04-11T08:30:04.300Z :platinum.libera.chat 353 bigboss @ #tehuan_worlds :bigboss @ASDF
+>> @time=2024-04-11T08:30:04.300Z :platinum.libera.chat 366 bigboss #tehuan_worlds :End of /NAMES list.
+<< MODE #tehuan_worlds
+>> @time=2024-04-11T08:30:06.817Z :platinum.libera.chat 324 bigboss #tehuan_worlds +Cnst
+--> chanquery mode
+>> @time=2024-04-11T08:30:06.817Z :platinum.libera.chat 329 bigboss #tehuan_worlds 1712816720
+--> event 329
+<< WHO #tehuan_worlds %tcuhnfdar,743
+>> @time=2024-04-11T08:30:09.326Z :platinum.libera.chat 354 bigboss 743 #tehuan_worlds ~somebody 5.195.225.158 bigboss H 0 0 :Unknown
+--> silent event whox
+>> @time=2024-04-11T08:30:09.326Z :platinum.libera.chat 354 bigboss 743 #tehuan_worlds ~somebody 5.195.225.158 ASDF H@ 0 0 :Unknown
+--> silent event whox
+>> @time=2024-04-11T08:30:09.326Z :platinum.libera.chat 315 bigboss #tehuan_worlds :End of /WHO list.
+--> chanquery who end
+<< MODE #tehuan_worlds b
+>> @time=2024-04-11T08:30:11.831Z :platinum.libera.chat 368 bigboss #tehuan_worlds :End of Channel Ban List
+--> chanquery ban end
+<< PING platinum.libera.chat
+>> @time=2024-04-11T08:30:14.389Z :platinum.libera.chat PONG platinum.libera.chat :platinum.libera.chat
+--> lag pong
+>> @time=2024-04-11T08:30:17.904Z :ASDF!~somebody@5.195.225.158 KICK #tehuan_worlds bigboss :talk too much
+<< PING platinum.libera.chat
+>> @time=2024-04-11T08:31:15.501Z :platinum.libera.chat PONG platinum.libera.chat :platinum.libera.chat
+--> lag pong
+--> lag pong
+<< PING platinum.libera.chat
+>> @time=2024-04-11T07:44:23.424Z :platinum.libera.chat PONG platinum.libera.chat :platinum.libera.chat
+--> lag pong
+<< PING platinum.libera.chat
+>> @time=2024-04-11T07:45:24.576Z :platinum.libera.chat PONG platinum.libera.chat :platinum.libera.chat
+--> lag pong
+<< PING platinum.libera.chat
+>> @time=2024-04-11T07:46:25.694Z :platinum.libera.chat PONG platinum.libera.chat :platinum.libera.chat
+--> lag pong
+<< PING platinum.libera.chat
+>> @time=2024-04-11T07:47:26.807Z :platinum.libera.chat PONG platinum.libera.chat :platinum.libera.chat
+--> lag pong
+<< PING platinum.libera.chat
+>> @time=2024-04-11T07:48:27.918Z :platinum.libera.chat PONG platinum.libera.chat :platinum.libera.chat
+--> lag pong
+<< PING platinum.libera.chat
+>> @time=2024-04-11T07:49:29.029Z :platinum.libera.chat PONG platinum.libera.chat :platinum.libera.chat
+--> lag pong
+<< PING platinum.libera.chat
+>> @time=2024-04-11T07:50:29.138Z :platinum.libera.chat PONG platinum.libera.chat :platinum.libera.chat
+--> lag pong
+<< PING platinum.libera.chat
+>> @time=2024-04-11T07:51:30.238Z :platinum.libera.chat PONG platinum.libera.chat :platinum.libera.chat
+--> lag pong
+<< PING platinum.libera.chat
+>> @time=2024-04-11T07:52:31.358Z :platinum.libera.chat PONG platinum.libera.chat :platinum.libera.chat
+--> lag pong
+<< PING platinum.libera.chat
+>> @time=2024-04-11T07:53:32.510Z :platinum.libera.chat PONG platinum.libera.chat :platinum.libera.chat
+--> lag pong
+<< PING platinum.libera.chat
+>> @time=2024-04-11T07:54:33.641Z :platinum.libera.chat PONG platinum.libera.chat :platinum.libera.chat
+--> lag pong
+<< PING platinum.libera.chat
+>> @time=2024-04-11T07:55:34.756Z :platinum.libera.chat PONG platinum.libera.chat :platinum.libera.chat
+--> lag pong
+<< PING platinum.libera.chat
+>> @time=2024-04-11T07:56:35.897Z :platinum.libera.chat PONG platinum.libera.chat :platinum.libera.chat
+--> lag pong
+<< PING platinum.libera.chat
+>> @time=2024-04-11T07:57:37.051Z :platinum.libera.chat PONG platinum.libera.chat :platinum.libera.chat
+--> lag pong
+<< PING platinum.libera.chat
+>> @time=2024-04-11T07:58:37.218Z :platinum.libera.chat PONG platinum.libera.chat :platinum.libera.chat
+--> lag pong
+<< PING platinum.libera.chat
+>> @time=2024-04-11T07:59:38.388Z :platinum.libera.chat PONG platinum.libera.chat :platinum.libera.chat
+--> lag pong
+<< PING platinum.libera.chat
+>> @time=2024-04-11T08:00:39.546Z :platinum.libera.chat PONG platinum.libera.chat :platinum.libera.chat
+--> lag pong
+<< PING platinum.libera.chat
+>> @time=2024-04-11T08:01:40.686Z :platinum.libera.chat PONG platinum.libera.chat :platinum.libera.chat
+--> lag pong
+<< PING platinum.libera.chat
+>> @time=2024-04-11T08:02:41.799Z :platinum.libera.chat PONG platinum.libera.chat :platinum.libera.chat
+--> lag pong
+<< PING platinum.libera.chat
+>> @time=2024-04-11T08:03:42.931Z :platinum.libera.chat PONG platinum.libera.chat :platinum.libera.chat
+--> lag pong
+<< PING platinum.libera.chat
+>> @time=2024-04-11T08:04:44.077Z :platinum.libera.chat PONG platinum.libera.chat :platinum.libera.chat
+--> lag pong
+<< PING platinum.libera.chat
+>> @time=2024-04-11T08:05:44.248Z :platinum.libera.chat PONG platinum.libera.chat :platinum.libera.chat
+--> lag pong
+<< PING platinum.libera.chat
+>> @time=2024-04-11T08:06:45.342Z :platinum.libera.chat PONG platinum.libera.chat :platinum.libera.chat
+--> lag pong
+<< PING platinum.libera.chat
+>> @time=2024-04-11T08:07:46.456Z :platinum.libera.chat PONG platinum.libera.chat :platinum.libera.chat
+--> lag pong
+<< PING platinum.libera.chat
+>> @time=2024-04-11T08:08:47.581Z :platinum.libera.chat PONG platinum.libera.chat :platinum.libera.chat
+--> lag pong
+<< PING platinum.libera.chat
+>> @time=2024-04-11T08:09:48.714Z :platinum.libera.chat PONG platinum.libera.chat :platinum.libera.chat
+--> lag pong
+<< PING platinum.libera.chat
+>> @time=2024-04-11T08:10:49.857Z :platinum.libera.chat PONG platinum.libera.chat :platinum.libera.chat
+--> lag pong
+<< PING platinum.libera.chat
+>> @time=2024-04-11T08:11:51.008Z :platinum.libera.chat PONG platinum.libera.chat :platinum.libera.chat
+--> lag pong
+<< PING platinum.libera.chat
+>> @time=2024-04-11T08:12:51.141Z :platinum.libera.chat PONG platinum.libera.chat :platinum.libera.chat
+--> lag pong
+<< PING platinum.libera.chat
+>> @time=2024-04-11T08:13:52.271Z :platinum.libera.chat PONG platinum.libera.chat :platinum.libera.chat
+--> lag pong
+<< PING platinum.libera.chat
+>> @time=2024-04-11T08:14:53.377Z :platinum.libera.chat PONG platinum.libera.chat :platinum.libera.chat
+--> lag pong
+<< PING platinum.libera.chat
+>> @time=2024-04-11T08:15:54.539Z :platinum.libera.chat PONG platinum.libera.chat :platinum.libera.chat
+--> lag pong
+<< PING platinum.libera.chat
+>> @time=2024-04-11T08:16:55.713Z :platinum.libera.chat PONG platinum.libera.chat :platinum.libera.chat
+--> lag pong
+<< PING platinum.libera.chat
+>> @time=2024-04-11T08:17:56.839Z :platinum.libera.chat PONG platinum.libera.chat :platinum.libera.chat
+--> lag pong
+<< PING platinum.libera.chat
+>> @time=2024-04-11T08:18:57.993Z :platinum.libera.chat PONG platinum.libera.chat :platinum.libera.chat
+--> lag pong
+<< PING platinum.libera.chat
+>> @time=2024-04-11T08:19:58.159Z :platinum.libera.chat PONG platinum.libera.chat :platinum.libera.chat
+--> lag pong
+<< PING platinum.libera.chat
+>> @time=2024-04-11T08:20:59.330Z :platinum.libera.chat PONG platinum.libera.chat :platinum.libera.chat
+--> lag pong
+<< PING platinum.libera.chat
+>> @time=2024-04-11T08:22:00.467Z :platinum.libera.chat PONG platinum.libera.chat :platinum.libera.chat
+--> lag pong
+<< PING platinum.libera.chat
+>> @time=2024-04-11T08:23:01.624Z :platinum.libera.chat PONG platinum.libera.chat :platinum.libera.chat
+--> lag pong
+<< PING platinum.libera.chat
+>> @time=2024-04-11T08:24:02.747Z :platinum.libera.chat PONG platinum.libera.chat :platinum.libera.chat
+--> lag pong
+<< PING platinum.libera.chat
+>> @time=2024-04-11T08:25:03.867Z :platinum.libera.chat PONG platinum.libera.chat :platinum.libera.chat
+--> lag pong
+<< JOIN #TEHUAN_WORLD
+>> @time=2024-04-11T08:25:52.300Z :bigboss!~somebody@5.195.225.158 JOIN #TEHUAN_WORLD * :Unknown
+>> @time=2024-04-11T08:25:52.300Z :platinum.libera.chat MODE #TEHUAN_WORLD +Cnst
+>> @time=2024-04-11T08:25:52.300Z :platinum.libera.chat 353 bigboss @ #TEHUAN_WORLD :@bigboss
+>> @time=2024-04-11T08:25:52.300Z :platinum.libera.chat 366 bigboss #TEHUAN_WORLD :End of /NAMES list.
+<< MODE #TEHUAN_WORLD
+>> @time=2024-04-11T08:25:54.813Z :platinum.libera.chat 324 bigboss #TEHUAN_WORLD +Cnst
+--> chanquery mode
+>> @time=2024-04-11T08:25:54.813Z :platinum.libera.chat 329 bigboss #TEHUAN_WORLD 1712823952
+--> event 329
+<< WHO #TEHUAN_WORLD %tcuhnfdar,743
+>> @time=2024-04-11T08:25:57.328Z :platinum.libera.chat 354 bigboss 743 #TEHUAN_WORLD ~somebody 5.195.225.158 bigboss H@ 0 0 :Unknown
+--> silent event whox
+>> @time=2024-04-11T08:25:57.328Z :platinum.libera.chat 315 bigboss #TEHUAN_WORLD :End of /WHO list.
+--> chanquery who end
+<< MODE #TEHUAN_WORLD b
+>> @time=2024-04-11T08:25:59.847Z :platinum.libera.chat 368 bigboss #TEHUAN_WORLD :End of Channel Ban List
+--> chanquery ban end
+<< PING platinum.libera.chat
+>> @time=2024-04-11T08:26:04.972Z :platinum.libera.chat PONG platinum.libera.chat :platinum.libera.chat
+--> lag pong
+<< JOIN #tehuan_worlds
+>> @time=2024-04-11T08:26:23.829Z :bigboss!~somebody@5.195.225.158 JOIN #tehuan_worlds * :Unknown
+>> @time=2024-04-11T08:26:23.829Z :platinum.libera.chat 353 bigboss @ #tehuan_worlds :bigboss @ASDF
+>> @time=2024-04-11T08:26:23.829Z :platinum.libera.chat 366 bigboss #tehuan_worlds :End of /NAMES list.
+<< MODE #tehuan_worlds
+>> @time=2024-04-11T08:26:26.343Z :platinum.libera.chat 324 bigboss #tehuan_worlds +Cnst
+--> chanquery mode
+>> @time=2024-04-11T08:26:26.343Z :platinum.libera.chat 329 bigboss #tehuan_worlds 1712816720
+--> event 329
+<< WHO #tehuan_worlds %tcuhnfdar,743
+>> @time=2024-04-11T08:26:28.856Z :platinum.libera.chat 354 bigboss 743 #tehuan_worlds ~somebody 5.195.225.158 bigboss H 0 0 :Unknown
+--> silent event whox
+>> @time=2024-04-11T08:26:28.856Z :platinum.libera.chat 354 bigboss 743 #tehuan_worlds ~somebody 5.195.225.158 ASDF H@ 0 0 :Unknown
+--> silent event whox
+>> @time=2024-04-11T08:26:28.856Z :platinum.libera.chat 315 bigboss #tehuan_worlds :End of /WHO list.
+--> chanquery who end
+<< MODE #tehuan_worlds b
+>> @time=2024-04-11T08:26:31.366Z :platinum.libera.chat 368 bigboss #tehuan_worlds :End of Channel Ban List
+--> chanquery ban end
+>> @time=2024-04-11T08:26:44.598Z :ASDF!~somebody@5.195.225.158 KICK #tehuan_worlds bigboss :bigboss
+<< PING platinum.libera.chat
+>> @time=2024-04-11T08:27:06.074Z :platinum.libera.chat PONG platinum.libera.chat :platinum.libera.chat
+--> lag pong
+<< PING platinum.libera.chat
+>> @time=2024-04-11T08:28:06.187Z :platinum.libera.chat PONG platinum.libera.chat :platinum.libera.chat
+--> lag pong
+<< PING platinum.libera.chat
+>> @time=2024-04-11T08:29:07.298Z :platinum.libera.chat PONG platinum.libera.chat :platinum.libera.chat
+--> lag pong
+<< JOIN #tehuan_worlds
+>> @time=2024-04-11T08:30:04.300Z :bigboss!~somebody@5.195.225.158 JOIN #tehuan_worlds * :Unknown
+>> @time=2024-04-11T08:30:04.300Z :platinum.libera.chat 353 bigboss @ #tehuan_worlds :bigboss @ASDF
+>> @time=2024-04-11T08:30:04.300Z :platinum.libera.chat 366 bigboss #tehuan_worlds :End of /NAMES list.
+<< MODE #tehuan_worlds
+>> @time=2024-04-11T08:30:06.817Z :platinum.libera.chat 324 bigboss #tehuan_worlds +Cnst
+--> chanquery mode
+>> @time=2024-04-11T08:30:06.817Z :platinum.libera.chat 329 bigboss #tehuan_worlds 1712816720
+--> event 329
+<< WHO #tehuan_worlds %tcuhnfdar,743
+>> @time=2024-04-11T08:30:09.326Z :platinum.libera.chat 354 bigboss 743 #tehuan_worlds ~somebody 5.195.225.158 bigboss H 0 0 :Unknown
+--> silent event whox
+>> @time=2024-04-11T08:30:09.326Z :platinum.libera.chat 354 bigboss 743 #tehuan_worlds ~somebody 5.195.225.158 ASDF H@ 0 0 :Unknown
+--> silent event whox
+>> @time=2024-04-11T08:30:09.326Z :platinum.libera.chat 315 bigboss #tehuan_worlds :End of /WHO list.
+--> chanquery who end
+<< MODE #tehuan_worlds b
+>> @time=2024-04-11T08:30:11.831Z :platinum.libera.chat 368 bigboss #tehuan_worlds :End of Channel Ban List
+--> chanquery ban end
+<< PING platinum.libera.chat
+>> @time=2024-04-11T08:30:14.389Z :platinum.libera.chat PONG platinum.libera.chat :platinum.libera.chat
+--> lag pong
+>> @time=2024-04-11T08:30:17.904Z :ASDF!~somebody@5.195.225.158 KICK #tehuan_worlds bigboss :talk too much
+<< PING platinum.libera.chat
+>> @time=2024-04-11T08:31:15.501Z :platinum.libera.chat PONG platinum.libera.chat :platinum.libera.chat
+--> lag pong
