@@ -14,9 +14,9 @@ class Channel {
         std::string             topic;
         std::string             password;
 		int						userLimit;
+        std::map<char, int>    modes;
         std::map<int, Client*>  users;
         std::map<int, Client*>  operators;
-        std::map<char, int>    modes;
         std::map<int, Client*>::iterator it_usr;
         std::map<int, Client*>::iterator it_ops;
         std::map<int, Client*>::iterator it_mod;
@@ -29,42 +29,43 @@ class Channel {
         Channel& operator=(const Channel& copy);
         ~Channel();
 
-        void                    addUser(Client& user);
-        void                    removeUser(Client& user);
-        void                    addOperator(Client& user);
-        void                    removeOperator(Client& user);
-        void                    broadcast(std::string message);
+        void                                addUser(Client& user);
+        void                                removeUser(Client& user);
+        void                                addOperator(Client& user);
+        void                                removeOperator(Client& user);
+        void                                broadcast(std::string message);
 
         /////   GETTERS    //////
 
-        std::string             getName();
-        std::string             getTopic();
-        std::string             getPassword();
-        int                     getUserLimit();
-        std::map<int, Client*>  getUsers();
-        std::map<int, Client*>  getOperators();
-        std::map<char, int>     getModes();
-        std::string             getListOfUsers();
+        int                                 getUserLimit();
+        std::string                         getName();
+        std::string                         getTopic();
+        std::string                         getPassword();
+        std::string                         getListOfUsers();
+        std::map<int, Client*>              getUsers();
+        std::map<int, Client*>              getOperators();
+        std::map<char, int>                 getModes();
 
         /////   SETTERS    //////
 
-        void                    setName(std::string name);
-        void                    setTopic(std::string topic, Client& user);
-        void                    setPassword(std::string password);
-        void                    setUserLimit(int userLimit);
-        void                    setMode(char mode, int value);
+        void                                setName(std::string name);
+        void                                setTopic(std::string topic, Client& user);
+        void                                setPassword(std::string password);
+        void                                setUserLimit(int userLimit);
+        void                                setMode(char mode, int value);
 
         /////   CHECKERS    //////
-        int                     howManyUsers();
-        bool                    isUser(Client& user);
-        bool                    isOperator(Client& user);
-        bool                    hasTopic();
-        bool                    isMode(char mode);
+        
+        int                                 howManyUsers();
+        bool                                isUser(Client& user);
+        bool                                isOperator(Client& user);
+        bool                                hasTopic();
+        bool                                isMode(char mode);
 
         /////   UTILS   //////
 
-        static void             validate_channels(std::vector<std::string>& params);
-        static std::vector<std::string> split(std::string str, char del);
+        static void                         validate_channels(std::vector<std::string>& params);
+        static std::vector<std::string>     split(std::string str, char del);
 };
 
 

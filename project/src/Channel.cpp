@@ -127,6 +127,13 @@ std::string Channel::getListOfUsers() {
 
 void Channel::setName(std::string name) { this->name = name; }
 
+
+void Channel::setPassword(std::string password) { this->password = password; }
+
+void Channel::setUserLimit(int userLimit) { this->userLimit = userLimit; }
+
+void Channel::setMode(char mode, int value) { this->modes[mode] = value; }
+
 void Channel::setTopic(std::string topic, Client& user) { 
     //check later how to set the no topic reply in case they test with nc, cause in irssi you do not have to set it
     std::string message = "";
@@ -140,13 +147,6 @@ void Channel::setTopic(std::string topic, Client& user) {
     }
     send(user.client_fd, message.c_str(), message.size(), 0);
 }
-
-void Channel::setPassword(std::string password) { this->password = password; }
-
-void Channel::setUserLimit(int userLimit) { this->userLimit = userLimit; }
-
-void Channel::setMode(char mode, int value) { this->modes[mode] = value; }
-
 
 /////   CHECKERS    //////
 
