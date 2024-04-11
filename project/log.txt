@@ -1,0 +1,121 @@
+<< CAP LS 302
+<< JOIN :
+>> :irssi CAP * LS : 
+<< CAP END
+<< PASS 1234
+<< NICK root
+<< USER root root localhost :root
+>> :localhost 461 irssi JOIN :Not enough parameters.
+>> :localhost 001 root :Welcome to the Internet Relay Network :root!root@localhost
+>> :localhost 002  :Your host is irssi (localhost), running version 1
+>> :localhost 003  :This server was created Thu Apr 11 2024 at 09:16:39 UTC
+>> :localhost 004  irssi 1   
+>> :localhost 005   :are supported by this server
+>> :localhost 375  :- irssi Message of the day - 
+>> :localhost 372 irssi :You are braver than you believe, stronger than you seem,
+>> :localhost 372 irssi : and smarter than you think. Shine on today!
+>> :localhost 372 irssi :
+>> :localhost 372 irssi :    _       _       _       _       _       _       _       _       _    
+>> :localhost 372 irssi :   /\\__   /\\__   /\\__   /\\__   /\\__   /\\__   /\\__   /\\__   /\\__ 
+>> :localhost 372 irssi :  /    \\ /    \\ /    \\ /    \\ /    \\ /    \\ /    \\ /    \\ /    \\
+>> :localhost 372 irssi : _\  \_//_\  \_//_\  \_//_\  \_//_\  \_//_\  \_//_\  \_//_\  \_//_\  \_//
+>> :localhost 372 irssi :// \:.\ // \:.\ // \:.\ // \:.\ // \:.\ // \:.\ // \:.\ // \:.\ // \:.\  
+>> :localhost 372 irssi :\\__  / \\__  / \\__  / \\__  / \\__  / \\__  / \\__  / \\__  / \\__  /  
+>> :localhost 372 irssi :   \\/     \\/     \\/     \\/     \\/     \\/     \\/     \\/     \\/   
+>> :localhost 372 irssi :__        __   _                            _____       ___ ____   ____  
+>> :localhost 372 irssi :\ \      / /__| | ___ ___  _ __ ___   ___  |_   _|__   |_ _|  _ \ / ___| 
+>> :localhost 372 irssi : \ \ /\ / / _ \ |/ __/ _ \| '_ ` _ \ / _ \   | |/ _ \   | || |_) | |     
+>> :localhost 372 irssi :  \ V  V /  __/ | (_| (_) | | | | | |  __/   | | (_) |  | ||  _ <| |___  
+>> :localhost 372 irssi :   \_/\_/ \___|_|\___\___/|_| |_| |_|\___|   |_|\___/  |___|_| \_\\____|  
+>> :localhost 372 irssi :    _       _       _       _       _       _       _       _       _    
+>> :localhost 372 irssi :   /\\__   /\\__   /\\__   /\\__   /\\__   /\\__   /\\__   /\\__   /\\__ 
+>> :localhost 372 irssi :  /    \\ /    \\ /    \\ /    \\ /    \\ /    \\ /    \\ /    \\ /    \\
+>> :localhost 372 irssi : _\  \_//_\  \_//_\  \_//_\  \_//_\  \_//_\  \_//_\  \_//_\  \_//_\  \_//
+>> :localhost 372 irssi :// \:.\ // \:.\ // \:.\ // \:.\ // \:.\ // \:.\ // \:.\ // \:.\ // \:.\  
+>> :localhost 372 irssi :\\__  / \\__  / \\__  / \\__  / \\__  / \\__  / \\__  / \\__  / \\__  /  
+>> :localhost 372 irssi :   \\/     \\/     \\/     \\/     \\/     \\/     \\/     \\/     \\/   
+>> :localhost 376 irssi :End of /MOTD command.
+<< MODE root +i
+<< NICK tehuan
+>> :root!root@localhost NICK tehuan
+<< PING localhost
+>> :tehuan!root@localhost PONG localhost
+--> lag pong
+<< JOIN #hello
+>> :tehuan!root@localhost JOIN :#hello
+>> :localhost 353 tehuan @ #hello :@tehuan
+>> :localhost 366 tehuan #hello :End of /NAMES list.
+<< MODE #hello
+<< INVITE boss #hello
+>> :tehuan!root@localhost 341 tehuan boss #hello
+<< PING localhost
+>> :tehuan!root@localhost PONG localhost
+--> lag pong
+<< PING localhost
+>> :tehuan!root@localhost PONG localhost
+--> FAILED mode channel: chanquery abort
+--> lag pong
+<< MODE #hello
+<< PING localhost
+>> :tehuan!root@localhost PONG localhost
+--> lag pong
+<< CAP LS 302
+<< JOIN :
+>> :irssi CAP * LS : 
+<< CAP END
+<< PASS 1234
+<< NICK root
+<< USER root root localhost :root
+>> :localhost 461 irssi JOIN :Not enough parameters.
+>> :localhost 001 root :Welcome to the Internet Relay Network :root!root@localhost
+>> :localhost 002  :Your host is irssi (localhost), running version 1
+>> :localhost 003  :This server was created Thu Apr 11 2024 at 09:16:39 UTC
+>> :localhost 004  irssi 1   
+>> :localhost 005   :are supported by this server
+>> :localhost 375  :- irssi Message of the day - 
+>> :localhost 372 irssi :Kindness is a superpower. Use it generously today,
+>> :localhost 372 irssi :and watch the world around you brighten.
+>> :localhost 372 irssi :
+>> :localhost 372 irssi :    _       _       _       _       _       _       _       _       _    
+>> :localhost 372 irssi :   /\\__   /\\__   /\\__   /\\__   /\\__   /\\__   /\\__   /\\__   /\\__ 
+>> :localhost 372 irssi :  /    \\ /    \\ /    \\ /    \\ /    \\ /    \\ /    \\ /    \\ /    \\
+>> :localhost 372 irssi : _\  \_//_\  \_//_\  \_//_\  \_//_\  \_//_\  \_//_\  \_//_\  \_//_\  \_//
+>> :localhost 372 irssi :// \:.\ // \:.\ // \:.\ // \:.\ // \:.\ // \:.\ // \:.\ // \:.\ // \:.\  
+>> :localhost 372 irssi :\\__  / \\__  / \\__  / \\__  / \\__  / \\__  / \\__  / \\__  / \\__  /  
+>> :localhost 372 irssi :   \\/     \\/     \\/     \\/     \\/     \\/     \\/     \\/     \\/   
+>> :localhost 372 irssi :__        __   _                            _____       ___ ____   ____  
+>> :localhost 372 irssi :\ \      / /__| | ___ ___  _ __ ___   ___  |_   _|__   |_ _|  _ \ / ___| 
+>> :localhost 372 irssi : \ \ /\ / / _ \ |/ __/ _ \| '_ ` _ \ / _ \   | |/ _ \   | || |_) | |     
+>> :localhost 372 irssi :  \ V  V /  __/ | (_| (_) | | | | | |  __/   | | (_) |  | ||  _ <| |___  
+>> :localhost 372 irssi :   \_/\_/ \___|_|\___\___/|_| |_| |_|\___|   |_|\___/  |___|_| \_\\____|  
+>> :localhost 372 irssi :    _       _       _       _       _       _       _       _       _    
+>> :localhost 372 irssi :   /\\__   /\\__   /\\__   /\\__   /\\__   /\\__   /\\__   /\\__   /\\__ 
+>> :localhost 372 irssi :  /    \\ /    \\ /    \\ /    \\ /    \\ /    \\ /    \\ /    \\ /    \\
+>> :localhost 372 irssi : _\  \_//_\  \_//_\  \_//_\  \_//_\  \_//_\  \_//_\  \_//_\  \_//_\  \_//
+>> :localhost 372 irssi :// \:.\ // \:.\ // \:.\ // \:.\ // \:.\ // \:.\ // \:.\ // \:.\ // \:.\  
+>> :localhost 372 irssi :\\__  / \\__  / \\__  / \\__  / \\__  / \\__  / \\__  / \\__  / \\__  /  
+>> :localhost 372 irssi :   \\/     \\/     \\/     \\/     \\/     \\/     \\/     \\/     \\/   
+>> :localhost 376 irssi :End of /MOTD command.
+<< MODE root +i
+<< NICK boss
+>> :root!root@localhost NICK boss
+<< PING localhost
+>> :boss!root@localhost PONG localhost
+--> lag pong
+>> :tehuan!root@localhost INVITE boss :#hello
+<< JOIN #hello
+>> :boss!root@localhost JOIN :#hello
+>> :localhost 353 boss @ #hello :@tehuan @boss
+>> :localhost 366 boss #hello :End of /NAMES list.
+<< MODE #hello
+<< PING localhost
+>> :boss!root@localhost PONG localhost
+--> lag pong
+<< PING localhost
+>> :boss!root@localhost PONG localhost
+--> FAILED mode channel: chanquery abort
+--> lag pong
+<< MODE #hello
+<< PING localhost
+>> :boss!root@localhost PONG localhost
+--> lag pong
