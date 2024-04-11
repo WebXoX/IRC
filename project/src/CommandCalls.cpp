@@ -7,9 +7,21 @@
 #include <sys/stat.h>
 #include <string.h>
 
-
+void Server::callMotd(Client * user)
+{
+    if(user->registerstatus() == true)
+    {
+        this->definedmessage(user->client_fd, RPL_WELCOME(user_id(user->nickname,user->username),user->nickname));
+        this->definedmessage(user->client_fd, RPL_YOURHOST(user->hostname,"irssi", "1"));
+        this->definedmessage(user->client_fd, RPL_CREATED(user->hostname,this->creation_date));
+        this->definedmessage(user->client_fd, RPL_MYINFO(user->hostname,"irssi", "1", "","",""));
+        this->definedmessage(user->client_fd, RPL_ISUPPORT(user->hostname,""));
+        MOTD(user);
+    }
+}
 int Server::MOTD(Client * user)
 {
+    // (void)user;
     this->definedmessage(user->client_fd, RPL_MOTDSTART(user->hostname,this->server_name));
     std::srand(static_cast<unsigned>(time(0)));
     int num = (rand() % 7 ) + 1;
@@ -53,13 +65,7 @@ void Server::adduser(Client * user, ircMessage msg)
                 else
                     user->realname = msg.params[1];
 			}
-            user->regi_status = 6;
-            this->definedmessage(user->client_fd, RPL_WELCOME(user_id(user->nickname,user->username),user->nickname));
-            this->definedmessage(user->client_fd, RPL_YOURHOST(user->hostname,"irssi", "1"));
-            this->definedmessage(user->client_fd, RPL_CREATED(user->hostname,this->creation_date));
-            this->definedmessage(user->client_fd, RPL_MYINFO(user->hostname,"irssi", "1", "","",""));
-            this->definedmessage(user->client_fd, RPL_ISUPPORT(user->hostname,""));
-            MOTD(user);
+            callMotd(user);
         }
         // while(user->nick_status == 1)
         // {
@@ -76,29 +82,24 @@ void Server::nick(Client * user, std::string str)
     if(this->nicknames.empty() == false && std::find(this->nicknames.begin(), this->nicknames.end(), str) != this->nicknames.end())
     {
             definedmessage(user->client_fd ,ERR_NICKNAMEINUSE(this->server_name,str));
-            user->nick_status = 1;
     }
     else if(str.find_first_of("# @:&") != std::string::npos)
     {
-        user->nick_status = 1;
         definedmessage(user->client_fd ,ERR_ERRONEUSNICKNAME(this->server_name,str));
     }
     else if (str.empty() == true)
     {
-        user->nick_status = 1;
         definedmessage(user->client_fd,ERR_NONICKNAMEGIVEN(this->server_name));
     }
     else
     {
-        user->nick_status = 0;
         this->nicknames.push_back(str);
-        user->regi_status = 5;
-        if(user->nickname.empty() == false)
-        {
             std::cout << "------------------" << std::endl;
             for (size_t i = 0; i < this->nicknames.size(); i++)
                 std::cout << "nicks " << this->nicknames[i] << std::endl;
             std::cout << "------------------" << std::endl;
+        if(user->nickname.empty() == false)
+        {
             for(std::vector<std::string>::iterator it = this->nicknames.begin(); it != this->nicknames.end(); ++it)
             {
                 if(*it == user->nickname)
@@ -117,7 +118,6 @@ void Server::cap_ls(Client *user)
 {
     std::string str =  this->msg("irssi", "CAP * LS", "","").c_str();
     int len = str.length();
-    user->regi_status = 1;
     send(user->client_fd,str.c_str(),len,0);
 }
 
@@ -125,57 +125,52 @@ void Server::cap_ack(Client *user)
 {
     std::string str = this->msg("irssi", "CAP * ACK","","").c_str();
     int len = str.length();
-    user->regi_status = 2;
     send(user->client_fd,str.c_str(),len,0);
 }
 
 int Server::register_user(ircMessage msg, Client * user)
 {
-    if(msg.command.compare("CAP") == 0)
+    if(user->registerstatus() == false)
     {
-        if(msg.params[0].compare("LS") == 0 && user->regi_status == 0)
-            cap_ls(user);
-        else if(msg.params[0].compare("REQ") == 0 && user->regi_status == 1)
-            cap_ack(user);
-        else if(msg.params[0].compare("END") == 0 && user->regi_status == 2)
+        if(msg.command.compare("CAP") == 0)
         {
-            user->regi_status = 3;
-        }
-        return 1;
-    }
-    else if(msg.command.compare("PASS") == 0)
-    {
-        if(user->pass_status == 0)
-        {
-            if(msg.params[0].compare(this->pass) == 0)
+            if(msg.params[0].compare("LS") == 0)
+                cap_ls(user);
+            else if(msg.params[0].compare("REQ") == 0)
+                cap_ack(user);
+            else if(msg.params[0].compare("END") == 0)
             {
-                user->regi_status = 4;
-                user->pass_status = 1;
+                // user->regi_status = 3;
+            }
+            return 1;
+        }
+        else if(msg.command.compare("PASS") == 0)
+        {
+            if(user->pass_status == 0)
+            {
+                if(msg.params[0].compare(this->pass) == 0)
+                {
+                    user->pass_status = 1;
+                }
+                else
+                {
+                    close(user->client_fd);
+                    user->client_fd = -1;
+                    definedmessage(user->client_fd ,ERR_PASSWDMISMATCH(this->server_name));
+                }
             }
             else
-            {
-                close(user->client_fd);
-                user->client_fd = -1;
-                definedmessage(user->client_fd ,ERR_PASSWDMISMATCH(this->server_name));
-            }
+                definedmessage(user->client_fd ,ERR_ALREADYREGISTERED(this->server_name));
+            return 1;    
+        }	
+        else if(msg.command.compare("USER") == 0 )
+        {
+            adduser(user,msg);
+            return 1;    
         }
-        else
-            definedmessage(user->client_fd ,ERR_ALREADYREGISTERED(this->server_name));
-        return 1;    
-    }	
-    else if(msg.command.compare("NICK") == 0 )
-    {
-        nick(user,msg.params[0]);
-        return 1;    
     }
-    else if(msg.command.compare("USER") == 0 && (user->regi_status == 4 ||user->regi_status == 5))
-    {
-        adduser(user,msg);
-        return 1;    
-    }
+    
     return 0;
-    // else if ( user->regi_status == 6)
-    //     definedmessage(user->client_fd ,ERR_ALREADYREGISTERED(this->server_name));
 }
 
 
@@ -184,41 +179,54 @@ void Server::commandPath(ircMessage msg, Client * user)
 	std::string		str;
     if(msg.params.size() > 0)
     {
-        if(register_user(msg,user) == 1)
+        if(user->registerstatus()== false) 
         {
-
+            register_user(msg,user);
         }
-		else if(msg.command.compare("PING") == 0)
-		{	
-            if(user->regi_status > 1)
-                this->definedmessage(user->client_fd,RPL_PONG(user_id(user->nickname,user->username),msg.params[0]));
-        }
-        else if (msg.command.compare("JOIN") == 0)
+        else 
         {
-            this->joinCommand(msg, *user);
+            if(msg.command.compare("PING") == 0)
+            {	
+                    this->definedmessage(user->client_fd,RPL_PONG(user_id(user->nickname,user->username),msg.params[0]));
+            }
+            else if (msg.command.compare("JOIN") == 0)
+            {
+                this->joinCommand(msg, *user);
+            }
+            else if (msg.command.compare("TOPIC") == 0) {
+                this->topicCommand(msg, *user);
+            }
+            else if (msg.command.compare("KICK") == 0) {
+                this->kickCommand(msg, *user);
+            }
+            else if (msg.command.compare("PRIVMSG") == 0) {
+                this->privmsgCommand(msg, *user);
+            }
+            else if (msg.command.compare("INVITE") == 0) {
+                this->inviteCommand(msg, *user);
+            }
+            else if(msg.command.compare("MOTD") == 0)
+                MOTD(user);
+            else if (msg.command.compare("NICK") != 0 )
+            {
+                std::string message = "<" + user->nickname + "> " + msg.message;
+                this->channels[user->currentChannel].broadcast(message);
+            }
         }
-        else if (msg.command.compare("TOPIC") == 0) {
-            this->topicCommand(msg, *user);
+        if(msg.command.compare("NICK") == 0 )
+        {
+            if(user->registerstatus() == true)
+            {
+                nick(user,msg.params[0]);
+            }
+            else
+            {
+                nick(user,msg.params[0]);
+                callMotd(user);
+            }
         }
-        else if (msg.command.compare("KICK") == 0) {
-            this->kickCommand(msg, *user);
-        }
-        else if (msg.command.compare("PRIVMSG") == 0) {
-            this->privmsgCommand(msg, *user);
-        }
-        else if (msg.command.compare("INVITE") == 0) {
-            this->inviteCommand(msg, *user);
-        }
-		else
-		{
-			// std::cerr << "Invalid command" << std::endl;
-            std::string message = "<" + user->nickname + "> " + msg.message;
-            this->channels[user->currentChannel].broadcast(message);
-
-		}
 	}
-    else if(msg.command.compare("MOTD") == 0 && user->regi_status == 6)
-        MOTD(user);
+    
 	else
         this->definedmessage(user->client_fd,ERR_NEEDMOREPARAMS(this->server_name ,msg.command));
 	str.clear();

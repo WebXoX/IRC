@@ -89,9 +89,10 @@ class Server
 		void 			adduser(Client * user, ircMessage msg);
 		void			nick(Client * user, std::string str);
 		// std::string int_tostring(int guest);
-
+		
 		int				Recv_end(int fd, std::string & line);
 		void			commandPath(ircMessage msg, Client * user);
+		void 			callMotd(Client * user);
 		int 			MOTD(Client * user);
 		int 			definedmessage(int fd,std::string str);
 		std::string		msg(std::string source, std::string command, std::string param, std::string text);

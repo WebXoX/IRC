@@ -5,9 +5,9 @@ Client::Client ()
 {
 	// this->nickname = "somebody";
 	this->client_fd = 0;
-	this->regi_status = 0;
+	// this->regi_status = 0;
 	this->pass_status = 0;
-	this->nick_status = 0;
+	// this->nick_status = 0;
 	memset(this->buffer,0,1024);
 	// std::cout << "Client default constructor" << std::endl;
 }
@@ -16,7 +16,7 @@ Client::Client (const Client &a)
 {
 	std::cout << "Client copy constructor " << std::endl;
 		this->client_fd = a.client_fd;
-		this->regi_status = a.regi_status;
+		// this->regi_status = a.regi_status;
 		this->hostname = a.hostname; // Real name/address of the host
 		this->ip = a.ip; // Real name/address of the host
 		this->username = a.username;  // Username of the client on the host
@@ -47,7 +47,7 @@ Client& Client::operator=(const Client& rhs)
     {
         // std::cout << "Client copy assignment operator = " << std::endl;
 		this->client_fd = rhs.client_fd;
-		this->regi_status = rhs.regi_status;
+		// this->regi_status = rhs.regi_status;
 		this->hostname = rhs.hostname; // Real name/address of the host
 		this->ip = rhs.ip; // Real name/address of the host
 		this->username = rhs.username;  // Username of the client on the host
@@ -69,6 +69,12 @@ Client& Client::operator=(const Client& rhs)
 }
 /* orth Client */
 /*extra*/
+	bool Client::registerstatus()
+	{
+		if(this->pass_status == 1 && this->username.empty() == false && this->realname.empty() == false && this->nickname.empty() == false )
+			return true;
+		return false;
+	}
 
 /*extra*/
 /*getter and setters*/

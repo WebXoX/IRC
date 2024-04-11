@@ -14,9 +14,9 @@ class Client
 	/* VARIABLES*/
 	public:
 		int client_fd;
-		int regi_status;
+		// int regi_status;
 		int pass_status;
-		int nick_status;
+		// int nick_status;
 		std::string hostname; // Real name/address of the host
 		std::string ip; // Real name/address of the host
 		std::string username;  // Username of the client on the host
@@ -52,6 +52,7 @@ class Client
 	/*getters and setters*/
 	/*getters and setters*/
 	/*extra*/
+	bool registerstatus();
 	/*extra*/
 
 	// ****** CHANNEL ATRIBUTES ****** //

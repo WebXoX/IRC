@@ -1,0 +1,6 @@
+<< CAP LS
+<< PASS a
+<< NICK root
+<< USER root root localhost :root
+>> :irssi CAP * LS : 
+<< CAP END
