@@ -68,24 +68,43 @@ void Channel::addUser(Client& user) {
         perror("Error send: ");
 }
 
+void Channel::addOperator(Client& user) {
+    this->operators[user.client_fd] = &user;
+}
+
+void Channel::addInvited(Client& user) {
+    this->operators[user.client_fd] = &user;
+}
+
 void Channel::removeUser(Client& user) {
-    for (it_usr = users.begin(); it_usr != users.end(); it_usr++) {
-        if (it_usr->second->client_fd == user.client_fd) {
-            this->users.erase(it_usr);
+    for (it = users.begin(); it != users.end(); it++) {
+        if (it->second->client_fd == user.client_fd) {
+            this->users.erase(it);
             break;
         }
     }
 }
 
-void Channel::addOperator(Client& user) {
-    this->operators[user.client_fd] = &user;
+void Channel::removeOperator(Client& user) {
+     for (it = operators.begin(); it != operators.end(); it++) {
+        if (it->second->client_fd == user.client_fd)
+            this->operators.erase(it);
+            break;
+    }
 }
 
-void Channel::removeOperator(Client& user) {
-     for (it_ops = users.begin(); it_ops != users.end(); it_ops++) {
-        if (it_ops->second->client_fd == user.client_fd)
-            this->users.erase(it_ops);
+void Channel::removeInvited(Client& user) {
+     for (it = inviteds.begin(); it != inviteds.end(); it++) {
+        if (it->second->client_fd == user.client_fd)
+            this->inviteds.erase(it);
+            break;
     }
+}
+
+void Channel::removeFromAll(Client& user) {
+        this->removeUser(user);
+        this->removeOperator(user);
+        this->removeInvited(user);
 }
 
 void Channel::broadcast(std::string message) {
@@ -110,7 +129,8 @@ std::map<int, Client*> Channel::getOperators() { return this->operators; }
 
 std::map<char, int> Channel::getModes() { return this->modes; }
 
-// returns a string with the nicknames of all users in the channel
+// returns a string with the nicknames of all users in the channel separated by a space
+// with prefix @ for operators 
 std::string Channel::getListOfUsers() {
     std::string listusers = "";
     std::map<int, Client*>::iterator it = users.begin();
@@ -127,7 +147,6 @@ std::string Channel::getListOfUsers() {
 
 void Channel::setName(std::string name) { this->name = name; }
 
-
 void Channel::setPassword(std::string password) { this->password = password; }
 
 void Channel::setUserLimit(int userLimit) { this->userLimit = userLimit; }
@@ -136,10 +155,7 @@ void Channel::setMode(char mode, int value) { this->modes[mode] = value; }
 
 bool Channel::isModeSet(char mode) { return this->modes[mode]; }    
 
-void Channel::setTopic(std::string topic) { 
-    //check later how to set the no topic reply in case they test with nc, cause in irssi you do not have to set it
-    this->topic = topic;
-}
+void Channel::setTopic(std::string topic) { this->topic = topic; }
 
 /////   CHECKERS    //////
 

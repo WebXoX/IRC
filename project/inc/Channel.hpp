@@ -17,9 +17,8 @@ class Channel {
         std::map<char, int>                 modes;
         std::map<int, Client*>              users;
         std::map<int, Client*>              operators;
-        std::map<int, Client*>::iterator    it_usr;
-        std::map<int, Client*>::iterator    it_ops;
-        std::map<int, Client*>::iterator    it_mod;
+        std::map<int, Client*>              inviteds;
+        std::map<int, Client*>::iterator    it;
 
     public:
 
@@ -34,6 +33,9 @@ class Channel {
         void                                addOperator(Client& user);
         void                                removeOperator(Client& user);
         void                                broadcast(std::string message);
+        void                                addInvited(Client& user);
+        void                                removeInvited(Client& user);
+        void                                removeFromAll(Client& user);
 
         /////   GETTERS    //////
 

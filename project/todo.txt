@@ -2,6 +2,10 @@
 
 
 
-1 - when a client disconnect remove them from channels
-2 - chaeck if the nickname is really changed
-3 - cant test multiple clients on irssi looks they all have the same name 
+1 - when a client disconnect remove it from channels
+2 - check if the nickname is changed looks the new nick is created and the old one remains
+3 - cant test multiple clients on irssi looks they all have the same name, or their nicknames are the same
+4 - privmsgs
+5 - invite (tehuan working)
+6 - mode
+7 - remove join implementation from channel class to CmdJoin file

@@ -36,15 +36,13 @@ void Server::kickCommand(ircMessage msg, Client& user) {
             }
 
             if (this->channels[chanName].isUser(kickedClient)) {
-                this->channels[chanName].removeUser(kickedClient);
+                this->channels[chanName].removeFromAll(kickedClient);
                 if (reason.empty())
                     reason = kickedList[i];
                 message = RPL_KICK(user_id(user.nickname, user.username), chanName, kickedList[i], reason);
             } else {
                 message = ERR_NOSUCHNICK(kicker, kickedList[i]);
             }
-            if (this->channels[chanName].isOperator(kickedClient))
-                this->channels[chanName].removeOperator(kickedClient);
 
             send(user.client_fd, message.c_str(), message.size(), 0);
         }
