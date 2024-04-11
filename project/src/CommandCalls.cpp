@@ -61,14 +61,14 @@ void Server::adduser(Client * user, ircMessage msg)
             this->definedmessage(user->client_fd, RPL_ISUPPORT(user->hostname,""));
             MOTD(user);
         }
-        while(user->nick_status == 1)
-        {
-            std::string str = "guest";
-            str += int_tostring(this->guestuser);
-            nick(user,str);
-            std::cout << "nicks " << str << std::endl;
-            this->guestuser++;
-        }
+        // while(user->nick_status == 1)
+        // {
+        //     std::string str = "guest";
+        //     str += int_tostring(this->guestuser);
+        //     nick(user,str);
+        //     // std::cout << "nicks " << str << std::endl;
+        //     this->guestuser++;
+        // }
     }
 }
 void Server::nick(Client * user, std::string str)
@@ -93,22 +93,13 @@ void Server::nick(Client * user, std::string str)
         user->nick_status = 0;
         this->nicknames.push_back(str);
         user->regi_status = 5;
-            std::cout << "------------------" << std::endl;
-
-        for (size_t i = 0; i < this->nicknames.size(); i++)
-        {
-            std::cout << "nicks " << this->nicknames[i] << std::endl;
-        }
-            std::cout << "------------------" << std::endl;
-        
         if(user->nickname.empty() == false)
         {
-
-            this->nicknames.erase(std::find(this->nicknames.begin(), this->nicknames.end(), user->nickname));
-            this->definedmessage(user->client_fd, RPL_NICK(this->server_name,user->nickname,str));
-            // str1 = this->msg("irssi", NULL,user->nickname,"NICK "+ str).c_str();
-            // len = str1.length();
-            // send(user->client_fd,str1.c_str(),len,0);
+            std::cout << "------------------" << std::endl;
+            for (size_t i = 0; i < this->nicknames.size(); i++)
+                std::cout << "nicks " << this->nicknames[i] << std::endl;
+            std::cout << "------------------" << std::endl;
+            this->definedmessage(user->client_fd, RPL_NICK(user->nickname,user->username,str));
             user->nickname.clear();
         }
         user->nickname = str;
@@ -142,8 +133,6 @@ int Server::register_user(ircMessage msg, Client * user)
         {
             user->regi_status = 3;
         }
-        else
-            definedmessage(user->client_fd ,ERR_ALREADYREGISTERED(this->server_name));
         return 1;
     }
     else if(msg.command.compare("PASS") == 0)

@@ -87,7 +87,8 @@ void Channel::removeUser(Client& user) {
 
 void Channel::removeOperator(Client& user) {
      for (it = operators.begin(); it != operators.end(); it++) {
-        if (it->second->client_fd == user.client_fd) {
+        if (it->second->client_fd == user.client_fd)
+        {
             this->operators.erase(it);
             break;
         }
@@ -96,11 +97,12 @@ void Channel::removeOperator(Client& user) {
 
 void Channel::removeInvited(Client& user) {
      for (it = inviteds.begin(); it != inviteds.end(); it++) {
-        if (it->second->client_fd == user.client_fd) {
+        if (it->second->client_fd == user.client_fd)
+        {
             this->inviteds.erase(it);
             break;
         }
-     }
+    }
 }
 
 void Channel::removeFromAll(Client& user) {
