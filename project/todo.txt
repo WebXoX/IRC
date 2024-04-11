@@ -9,3 +9,4 @@
 5 - invite (tehuan working)
 6 - mode
 7 - remove join implementation from channel class to CmdJoin file
+8 - if is invite mode no one can join the channel at creation
