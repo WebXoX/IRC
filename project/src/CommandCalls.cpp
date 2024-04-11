@@ -195,8 +195,8 @@ void Server::commandPath(ircMessage msg, Client * user)
         else if (msg.command.compare("KICK") == 0) {
             this->kickCommand(msg, *user);
         }
-        else if (msg.command.compare("KICK") == 0) {
-            this->kickCommand(msg, *user);
+        else if (msg.command.compare("PRIVMSG") == 0) {
+            this->privmsgCommand(msg, *user);
         }
 		else
 		{
