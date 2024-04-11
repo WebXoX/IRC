@@ -214,6 +214,10 @@ std::string Server::msg(std::string source, std::string command, std::string par
 
 int Server::definedmessage(int fd,std::string str)
 {
+    std::cout << "-------------------" << std::endl;
+    std::cout << "Server send: " << str << std::endl;
+    std::cout << "-------------------" << std::endl;
+
     if(send(fd, str.c_str(), str.length(), 0) == -1)
     {
         std::cerr << "Error sending message" << std::endl;
