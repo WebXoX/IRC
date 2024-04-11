@@ -206,6 +206,9 @@ void Server::commandPath(ircMessage msg, Client * user)
         else if (msg.command.compare("KICK") == 0) {
             this->kickCommand(msg, *user);
         }
+        else if (msg.command.compare("INVITE") == 0) {
+            this->inviteCommand(msg, *user);
+        }
 		else
 		{
 			// std::cerr << "Invalid command" << std::endl;

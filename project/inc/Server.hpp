@@ -104,18 +104,22 @@ class Server
 
 		// ********** CHANNEL ********** //
 
-		std::map<std::string, Channel> channels;
 
-		int 		addChannelInServer( Channel& channel);
-		bool 		hasChannelInServer(std::string channelName);
-		Channel& 	getChannel(std::string channelName);
+		std::map<std::string, Channel>	channels;
+
+		bool 							isUser(Client& user);
+		bool 							isUserNick(std::string nickname);
+
+		int 							addChannelInServer( Channel& channel);
+		bool 							hasChannelInServer(std::string channelName);
+		Channel& 						getChannel(std::string channelName);
 
 		// ********** COMMANDS ********** //
 
-		void 		joinCommand(ircMessage msg,  Client& user);
-		void 		topicCommand(ircMessage msg, Client& user);
-		void 		kickCommand(ircMessage msg, Client& user);
-		void 		inviteCommand(ircMessage msg, Client& user);
+		void 							joinCommand(ircMessage msg,  Client& user);
+		void 							topicCommand(ircMessage msg, Client& user);
+		void 							kickCommand(ircMessage msg, Client& user);
+		void 							inviteCommand(ircMessage msg, Client& user);
 	/*exception*/
 	/*getters and setters*/
 	/*getters and setters*/
