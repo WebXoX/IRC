@@ -134,18 +134,11 @@ void Channel::setUserLimit(int userLimit) { this->userLimit = userLimit; }
 
 void Channel::setMode(char mode, int value) { this->modes[mode] = value; }
 
-void Channel::setTopic(std::string topic, Client& user) { 
+bool Channel::isModeSet(char mode) { return this->modes[mode]; }    
+
+void Channel::setTopic(std::string topic) { 
     //check later how to set the no topic reply in case they test with nc, cause in irssi you do not have to set it
-    std::string message = "";
-    if (!this->isUser(user)) 
-        message = ERR_NOTONCHANNEL(user.nickname, this->name);
-    else if (this->modes['t'] && !this->isOperator(user)) 
-        message = ERR_CHANOPRIVSNEEDED(user.nickname, this->name);
-    else {
-        this->topic = topic;
-        message = RPL_TOPIC(user.nickname, this->name, this->topic);
-    }
-    send(user.client_fd, message.c_str(), message.size(), 0);
+    this->topic = topic;
 }
 
 /////   CHECKERS    //////

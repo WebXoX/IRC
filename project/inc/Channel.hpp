@@ -10,16 +10,16 @@
 class Channel {
     private:
 
-        std::string             name;
-        std::string             topic;
-        std::string             password;
-		int						userLimit;
-        std::map<char, int>    modes;
-        std::map<int, Client*>  users;
-        std::map<int, Client*>  operators;
-        std::map<int, Client*>::iterator it_usr;
-        std::map<int, Client*>::iterator it_ops;
-        std::map<int, Client*>::iterator it_mod;
+        std::string                         name;
+        std::string                         topic;
+        std::string                         password;
+		int						            userLimit;
+        std::map<char, int>                 modes;
+        std::map<int, Client*>              users;
+        std::map<int, Client*>              operators;
+        std::map<int, Client*>::iterator    it_usr;
+        std::map<int, Client*>::iterator    it_ops;
+        std::map<int, Client*>::iterator    it_mod;
 
     public:
 
@@ -49,18 +49,19 @@ class Channel {
         /////   SETTERS    //////
 
         void                                setName(std::string name);
-        void                                setTopic(std::string topic, Client& user);
+        void                                setTopic(std::string topic);
         void                                setPassword(std::string password);
         void                                setUserLimit(int userLimit);
         void                                setMode(char mode, int value);
 
         /////   CHECKERS    //////
-        
+
         int                                 howManyUsers();
         bool                                isUser(Client& user);
         bool                                isOperator(Client& user);
         bool                                hasTopic();
         bool                                isMode(char mode);
+        bool                                isModeSet(char mode);
 
         /////   UTILS   //////
 

@@ -16,10 +16,11 @@
 #include <map>
 #include <fcntl.h>
 #include <cstring>
-#include "../inc/Client.hpp"
-#include "../inc/parsing.hpp"
-#include "../inc/Channel.hpp"
-#include "../inc/common.hpp"
+#include "Client.hpp"
+#include "parsing.hpp"
+#include "Channel.hpp"
+#include "common.hpp"
+#include "Reply.hpp"
 
 #include <netdb.h>
 /*
