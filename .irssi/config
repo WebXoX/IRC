@@ -312,5 +312,6 @@ settings = {
     real_name = "Unknown";
     user_name = "somebody";
     nick = "somebody";
+    server_connect_timeout = "1000";
   };
 };
