@@ -1,0 +1,15 @@
+Server default constructor
+Client 1 sent: CAP LS
+Client 1 sent: PASS a
+Client 1 sent: NICK joe
+Client 1 sent: USER joe joe localhost :joe
+Client 1 sent: CAP END
+Client 1 sent: MODE joe +i
+Client 1 sent: PING localhost
+Client 1 sent: QUIT :leaving
+Client 1 sent: CAP LS
+Client 1 sent: PASS a
+Client 1 sent: NICK joe
+Client 1 sent: USER joe joe localhost :joe
+Client 1 sent: CAP END
+Client 1 sent: NICK _

@@ -306,6 +306,15 @@ bool Server::isUser(Client& user) {
 bool Server::isUserNick(std::string nickname) {
     return std::find(this->nicknames.begin(), this->nicknames.end(), nickname) != this->nicknames.end();
 }
+int Server::getuser_fd(std::string name)
+{
+    for(int i = 0; i < this->number_of_clients; i++)
+    {
+        if(this->client[i]->nickname == name)
+            return this->client[i]->client_fd;
+    }
+    return -1;
+}
 
 // ****** CHANNEL ****** //
 

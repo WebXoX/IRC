@@ -101,6 +101,7 @@ class Server
 		void 	cap_ls(Client *user);
 		void 	cap_ack(Client *user);
 		std::string 	date_now();
+		int 			getuser_fd(std::string name);
 
 
 		// ********** CHANNEL ********** //

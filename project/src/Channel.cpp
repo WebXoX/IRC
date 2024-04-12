@@ -116,7 +116,14 @@ void Channel::broadcast(std::string message) {
     for (; it != users.end(); it++) 
             send(it->first, message.c_str(), message.size(), 0);
 }
-
+void Channel::broadcast_others(Client user,std::string message) {
+    std::map<int, Client*>::iterator it = users.begin();
+    for (; it != users.end(); it++)
+    {
+        if(it->first != user.client_fd)
+            send(it->first, message.c_str(), message.size(), 0);
+    } 
+}
 /////   GETTERS     /////
 
 std::string Channel::getName() { return this->name; }
