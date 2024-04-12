@@ -45,27 +45,7 @@ Channel& Channel::operator=(const Channel& copy) {
 Channel::~Channel() {}
 
 void Channel::addUser(Client& user) {
-    std::string message;
-    if (this->isUser(user))
-        message = ERR_USERONCHANNEL(user.hostname, user.nickname, this->name);
-    else if (this->modes['l'] && this->howManyUsers() >= this->userLimit) {
-        message = ERR_CHANNELISFULL(user.hostname, this->name);
-    } else if (this->modes['i']) {
-
-    } else {
-        this->users[user.client_fd] = &user;
-        if (this->howManyUsers() == 1)
-            this->addOperator(user);
-        message = RPL_JOIN(user_id(user.nickname, user.username), this->name);
-        if (this->hasTopic())
-            message += RPL_TOPIC(user.nickname, this->name, this->topic);
-        message += RPL_NAMREPLY(user.nickname, "@", this->name, this->getListOfUsers());
-        message += RPL_ENDOFNAMES(user.nickname, this->name);
-    }
-    std::cout << message << std::endl;
-    int ret = send(user.client_fd, message.c_str(), message.size(), 0);
-    if (ret == -1)
-        perror("Error send: ");
+    this->users[user.client_fd] = &user;
 }
 
 void Channel::addOperator(Client& user) {
@@ -73,7 +53,7 @@ void Channel::addOperator(Client& user) {
 }
 
 void Channel::addInvited(Client& user) {
-    this->operators[user.client_fd] = &user;
+    this->inviteds[user.client_fd] = &user;
 }
 
 void Channel::removeUser(Client& user) {
@@ -87,8 +67,7 @@ void Channel::removeUser(Client& user) {
 
 void Channel::removeOperator(Client& user) {
      for (it = operators.begin(); it != operators.end(); it++) {
-        if (it->second->client_fd == user.client_fd)
-        {
+        if (it->second->client_fd == user.client_fd){
             this->operators.erase(it);
             break;
         }
@@ -97,8 +76,7 @@ void Channel::removeOperator(Client& user) {
 
 void Channel::removeInvited(Client& user) {
      for (it = inviteds.begin(); it != inviteds.end(); it++) {
-        if (it->second->client_fd == user.client_fd)
-        {
+        if (it->second->client_fd == user.client_fd){
             this->inviteds.erase(it);
             break;
         }
@@ -169,6 +147,8 @@ bool Channel::isUser(Client& user) { return this->users.find(user.client_fd) != 
 
 bool Channel::isOperator(Client& user) { return this->operators.find(user.client_fd) != this->operators.end(); }
 
+bool Channel::isInvited(Client& user) { return this->inviteds.find(user.client_fd) != this->inviteds.end(); }
+
 bool Channel::hasTopic() { return this->topic != ""; }
 
 bool Channel::isMode(char mode) { return this->modes[mode]; }
@@ -176,35 +156,7 @@ bool Channel::isMode(char mode) { return this->modes[mode]; }
 
 /////   UTILS   /////
 
-std::vector<std::string> Channel::split(std::string str, char del)
-{
-    std::stringstream ss(str);
-    std::string substr;
-    std::vector<std::string> result;
-    while (ss.good()) {
-        getline(ss, substr, del);
-        result.push_back(substr);
-    }
-    return result;
-}
 
-void Channel::splitChannelsName(std::vector<std::string>& params) {
-    if (params.empty()) return;
-    
-    if (params[0].find(",") != std::string::npos) {
-        std::stringstream ss(params[0]);
-        std::vector<std::string> newVector;
-        newVector = Channel::split(params[0], ',');
-        params = newVector;
-        return;
-    } 
-
-    for (size_t i = 0; i < params.size(); i++) {
-        if (params[i][0] != '#' || params[i].length() < 2) {
-            params.erase(params.begin() + i);
-        }
-    }
-}
 
 
 

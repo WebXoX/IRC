@@ -16,7 +16,7 @@ void Server::kickCommand(ircMessage msg, Client& user) {
     // in this case we need to split the nicknames into a vector
     std::vector<std::string> kickedList;
     if (kickedName.find(',') != std::string::npos)
-        kickedList = Channel::split(kickedName, ',');
+        kickedList = split(kickedName, ',');
     else
         kickedList.push_back(kickedName);
 

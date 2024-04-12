@@ -113,7 +113,6 @@ class Server
 
 		int 							addChannelInServer( Channel& channel);
 		bool 							hasChannelInServer(std::string channelName);
-		Channel& 						getChannel(std::string channelName);
 
 		// ********** COMMANDS ********** //
 

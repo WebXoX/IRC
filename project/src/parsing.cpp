@@ -1,16 +1,7 @@
 #include "../inc/parsing.hpp"
+#include "../inc/utils.hpp"
 
-std::string trimFunction(std::string str)
-{
-    size_t first = str.find_first_not_of(" \n\r\t");
-    size_t last = str.find_last_not_of(" \n\r\t");
 
-    if (first == std::string::npos || last == std::string::npos) {
-        return "";
-    }
-
-    return str.substr(first, (last - first + 1));
-}
 
 bool isValidParam(std::string param)
 {
