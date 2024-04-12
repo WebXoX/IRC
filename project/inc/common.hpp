@@ -1,6 +1,4 @@
 #pragma once
-#ifndef __COMMON_HPP__
-#define __COMMON_HPP__
 
 #include <iostream>
 #include <cerrno>
@@ -9,12 +7,10 @@
 #include <sys/socket.h>
 #include <unistd.h>
 #include <fcntl.h>
-#include <vector>
 #include <poll.h>
 #include <cstdio>
 #include <sstream>
 #include <algorithm>
 #include <map>
+#include <vector>
 #include <cstdlib>
-
-#endif

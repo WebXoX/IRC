@@ -1,5 +1,4 @@
-#ifndef __PARSING_HPP__
-#define __PARSING_HPP__
+#pragma once
 
 #include "common.hpp"
 
@@ -13,8 +12,5 @@ struct ircMessage {
     std::string errorMessage;
 };
 
-std::string trimFunction(std::string str);
 ircMessage parseMessage(std::string message);
 void printCommand(ircMessage message);
-
-#endif

@@ -156,35 +156,7 @@ bool Channel::isMode(char mode) { return this->modes[mode]; }
 
 /////   UTILS   /////
 
-std::vector<std::string> Channel::split(std::string str, char del)
-{
-    std::stringstream ss(str);
-    std::string substr;
-    std::vector<std::string> result;
-    while (ss.good()) {
-        getline(ss, substr, del);
-        result.push_back(substr);
-    }
-    return result;
-}
 
-void Channel::splitChannelsName(std::vector<std::string>& params) {
-    if (params.empty()) return;
-    
-    if (params[0].find(",") != std::string::npos) {
-        std::stringstream ss(params[0]);
-        std::vector<std::string> newVector;
-        newVector = Channel::split(params[0], ',');
-        params = newVector;
-        return;
-    } 
-
-    for (size_t i = 0; i < params.size(); i++) {
-        if (params[i][0] != '#' || params[i].length() < 2) {
-            params.erase(params.begin() + i);
-        }
-    }
-}
 
 
 

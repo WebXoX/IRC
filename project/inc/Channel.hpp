@@ -1,10 +1,9 @@
-#ifndef CHANNEL_HPP
-#define CHANNEL_HPP
+#pragma once
 
 #include "common.hpp"
+#include "utils.hpp"
 #include "Reply.hpp"
 #include "Client.hpp"
-#include "parsing.hpp"
 
 
 class Channel {
@@ -66,12 +65,7 @@ class Channel {
         bool                                isMode(char mode);
         bool                                isModeSet(char mode);
 
-        /////   UTILS   //////
 
-        static void                         splitChannelsName(std::vector<std::string>& params);
-        static std::vector<std::string>     split(std::string str, char del);
 };
 
 
-
-#endif
