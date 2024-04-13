@@ -1,7 +1,6 @@
 #include "../inc/Server.hpp"
 
 void Server::privmsgCommand(ircMessage msg, Client& user) {
-    std::cout << "PRIVMSG command" << std::endl;
     if (msg.params.size() == 1) {
         
         std::string target = msg.params[0];

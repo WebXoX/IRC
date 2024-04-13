@@ -13,7 +13,7 @@ RESET = \033[0m
 OBJDIR = ./obj/
 SRCDIR = ./src/
 
-SRC = Server.cpp Client.cpp parsing.cpp main.cpp CommandCalls.cpp Channel.cpp CmdKick.cpp CmdTopic.cpp CmdJoin.cpp CmdInvite.cpp CmdPrivmsg.cpp utils.cpp CmdMode_t.cpp
+SRC = Server.cpp Client.cpp parsing.cpp main.cpp CommandCalls.cpp Channel.cpp CmdKick.cpp CmdTopic.cpp CmdJoin.cpp CmdInvite.cpp CmdPrivmsg.cpp CmdModes.cpp
 # SRC = Server.cpp Client.cpp parsing.cpp commandPath.cpp Channel.cpp serverChannel.cpp
 
 OBJ = $(addprefix $(OBJDIR), $(SRC:.cpp=.o))

@@ -67,14 +67,6 @@ void Server::adduser(Client * user, ircMessage msg)
 			}
             callMotd(user);
         }
-        // while(user->nick_status == 1)
-        // {
-        //     std::string str = "guest";
-        //     str += int_tostring(this->guestuser);
-        //     nick(user,str);
-        //     // std::cout << "nicks " << str << std::endl;
-        //     this->guestuser++;
-        // }
     }
 }
 void Server::nick(Client * user, std::string str)

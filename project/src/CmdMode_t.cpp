@@ -75,37 +75,37 @@
 // 21:24     /MODE mike +iw
 
 
-void Server::modeCommand(ircMessage& msg, Client& user) {
+// void Server::modeCommand(ircMessage& msg, Client& user) {
 
-    std::string reply;
-    std::cout << "im inside the mode" << std::endl;
-    if (msg.params.size() < 1) {
-        reply = ERR_NEEDMOREPARAMS(user.username, "MODE");
-        send(user.client_fd, reply.c_str(), reply.length(), 0);
-        return;
-    }
+//     std::string reply;
+//     std::cout << "im inside the mode" << std::endl;
+//     if (msg.params.size() < 1) {
+//         reply = ERR_NEEDMOREPARAMS(user.username, "MODE");
+//         send(user.client_fd, reply.c_str(), reply.length(), 0);
+//         return;
+//     }
     
-    if (msg.params.size() >= 1) {
-        if (this->hasChannelInServer(msg.params[0])) {
-            if (msg.params.size() == 1) {
-                reply = RPL_CHANNELMODEIS(user.nickname, msg.params[0], this->channels[msg.params[0]].getModes());
-                send(user.client_fd, reply.c_str(), reply.length(), 0);
-                return;
-            }
+//     if (msg.params.size() >= 1) {
+//         if (this->hasChannelInServer(msg.params[0])) {
+//             if (msg.params.size() == 1) {
+//                 reply = RPL_CHANNELMODEIS(user.nickname, msg.params[0], this->channels[msg.params[0]].getModes());
+//                 send(user.client_fd, reply.c_str(), reply.length(), 0);
+//                 return;
+//             }
 
-        }
-        else {
-            std::cout << "theres no channel" << std::endl;
-            reply = ERR_NOSUCHCHANNEL(user.nickname, msg.params[0]);
-            send(user.client_fd, reply.c_str(), reply.length(), 0);
-            return;
-        }
+//         }
+//         else {
+//             std::cout << "theres no channel" << std::endl;
+//             reply = ERR_NOSUCHCHANNEL(user.nickname, msg.params[0]);
+//             send(user.client_fd, reply.c_str(), reply.length(), 0);
+//             return;
+//         }
 
         
-    }
+//     }
 
     
 
 
-}
+// }
        
