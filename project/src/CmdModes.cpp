@@ -151,11 +151,11 @@ void Server::modeCommand(ircMessage msg, Client& user) {
         if(this->hasChannelInServer(target))
         {
             //I WANT TO GET CHANNEL VARIABLE HERE
-            if(getChannel(target).isOperator(user) == false)
-            {
-                this->definedmessage(user.client_fd, ERR_CHANOPRIVSNEEDED(user.nickname,target));
-            }
-            else if(msg.params.size() > 0)
+            // if(getChannel(target).isOperator(user) == false)
+            // {
+            //     this->definedmessage(user.client_fd, ERR_CHANOPRIVSNEEDED(user.nickname,target));
+            // }
+            if(msg.params.size() > 0)
             {
                 std::map<std::string,std::string> mode  = modeParser(msg);
                 if(this->channels[target].isOperator(user) == true)

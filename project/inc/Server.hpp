@@ -97,8 +97,6 @@ class Server
 		int 				MOTD(Client * user);
 		int 				definedmessage(int fd,std::string str);
 		std::string			msg(std::string source, std::string command, std::string param, std::string text);
-		void				modeCommand(ircMessage msg, Client& user);
-		int 				modechange(std::map<std::string,std::string> mode, Channel& channel);
 		std::map<std::string,std::string> modeParser(ircMessage msg);
 
 		// std::string 	cap_ls();
@@ -123,11 +121,12 @@ class Server
 
 		// ********** COMMANDS ********** //
 
+		void										modeCommand(ircMessage msg, Client& user);
+		int 										modechange(std::map<std::string,std::string> mode, Channel& channel);
 		void 										joinCommand(ircMessage& msg,  Client& user);
 		void 										topicCommand(ircMessage msg, Client& user);
 		void 										kickCommand(ircMessage msg, Client& user);
 		void 										inviteCommand(ircMessage msg, Client& user);
-		void 										modeCommand(ircMessage& msg, Client& user);
 		void 										privmsgCommand(ircMessage msg, Client& user);
 	/*exception*/
 	/*getters and setters*/
