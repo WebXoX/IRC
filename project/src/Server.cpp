@@ -151,67 +151,6 @@ std::string Server::msg(std::string source, std::string command, std::string par
     return (":"+source+ " " +command+" :"+param+" "+text + "\r\n");
 }
 
-// std::string Server::cap_ls()
-// {
-// 	std::string cap_list;
-// 	// if(this->account_notify)
-//     // {
-// 	// 	cap_list += "account-notify ";
-
-//     // }
-// 	// if(this->away_notify)
-//     // {
-//     //     cap_list += "away-notify ";
-
-//     // }	
-// 	// if(this->chghost)
-//     // {
-// 	// 	cap_list += "chghost ";
-
-//     // }
-// 	// if(this->extended_join)
-//     // {
-//     //     cap_list += "extended-join ";
-        
-//     // }
-//     // if(this->multi_prefix)
-// 	// 	cap_list += "multi-prefix ";
-//     // cap_list += "sasl="+this->sasl+" server-time";
-//     // return ("account-notify away-notify chghost extended-join multi-prefix sasl=PLAIN server-time");
-// 	return cap_list;
-// }
-
-
-// std::string Server::cap_ack( ircMessage msg)
-// {
-//     (void)msg;
-// 	std::string str;
-// 	std::string ack;
-// 	// std::string cap_list[] = {"account-notify","away-notify","chghost","extended-join","multi-prefix","sasl="+this->sasl+" server-time"};
-// 	// ack = msg.trailing.substr(0, msg.trailing.find_first_of(" "));
-// 	// while (msg.trailing.empty() == false)
-// 	// {
-// 	// 	if(std::find(&cap_list[0], (&cap_list[6]), ack) != &cap_list[6])
-// 	// 	{
-// 	// 		str += ack + " ";
-// 	// 	}
-// 	// 	if(msg.trailing.empty() == true)
-// 	// 		break;
-//     //     // std::cout << msg.trailing << std::endl;
-// 	// 	msg.trailing.erase(0, msg.trailing.find_first_of(" ") + 1);
-//     //     int subint = msg.trailing.find_first_of(" ");
-//     //     if(  msg.trailing.find_first_of(" ") == std::string::npos)
-//     //     {
-//     //         ack = msg.trailing;
-//     //         msg.trailing.clear();
-//     //     }
-//     //     else
-//     //         ack = msg.trailing.substr(0, subint);
-// 	// }
-//     return (str);
-// }
-
-
 int Server::definedmessage(int fd,std::string str)
 {
     std::cout << "-------------------" << std::endl;
@@ -305,6 +244,15 @@ bool Server::isUser(Client& user) {
 
 bool Server::isUserNick(std::string nickname) {
     return std::find(this->nicknames.begin(), this->nicknames.end(), nickname) != this->nicknames.end();
+}
+int Server::getuser_fd(std::string name)
+{
+    for(int i = 0; i < this->number_of_clients; i++)
+    {
+        if(this->client[i]->nickname == name)
+            return this->client[i]->client_fd;
+    }
+    return -1;
 }
 
 // ****** CHANNEL ****** //

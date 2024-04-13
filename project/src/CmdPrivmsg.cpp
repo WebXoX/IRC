@@ -1,37 +1,34 @@
 #include "../inc/Server.hpp"
 
 void Server::privmsgCommand(ircMessage msg, Client& user) {
-    (void)user;
-    (void)msg;
-    
-    // TOPIC #tehuan_world :new topic message
-    // std::string message = "";
-    // std::string topic = msg.trailing;
-    // std::string chanName = msg.params[0];
-
-    // if (msg.params.size() != 1) {
-    //     message = ERR_NEEDMOREPARAMS(user.nickname, "TOPIC");
-    //     send(user.client_fd, message.c_str(), message.size(), 0);
-    //     return;
-    // } else if (msg.trailing.empty()) {
-    //     if (this->channels[chanName].hasTopic())
-    //         message = RPL_TOPIC(user.nickname, chanName, this->channels[chanName].getTopic());
-    //     else
-    //         message = RPL_NOTOPIC(user.nickname, chanName);
-    // } else {
-
-    //     if (!this->channels[chanName].isUser(user)) 
-    //         message = ERR_NOTONCHANNEL(user.nickname, chanName);
-    //     else if (this->channels[chanName].isModeSet('t') && !this->channels[chanName].isOperator(user)) 
-    //         message = ERR_CHANOPRIVSNEEDED(user.nickname, chanName);
-    //     else {
-    //         this->channels[chanName].setTopic(topic);
-    //         message = RPL_TOPIC(user.nickname, chanName, topic);
-    //     }
-
-    // }
-
-    // send(user.client_fd, message.c_str(), message.size(), 0);
-    
-
+    std::cout << "PRIVMSG command" << std::endl;
+    if (msg.params.size() == 1) {
+        
+        std::string target = msg.params[0];
+        if(msg.trailing.empty()== false)
+        {
+            std::string message = msg.trailing;
+            if(target[0] =='#')
+            {
+                if(this->hasChannelInServer(target))
+                {
+                    if(this->channels[target].isUser(user))
+                        this->channels[target].broadcast_others(user,RPL_PRIVMSG(user.nickname, user.username, target, message));
+                }
+                else
+                    this->definedmessage(user.client_fd, ERR_CANNOTSENDTOCHAN(user.nickname, target));    
+            }
+            else
+            {
+                if(this->isUserNick(target))
+                    this->definedmessage(this->getuser_fd(target), RPL_PRIVMSG(user.nickname, user.username, target, message));   
+                else
+                    this->definedmessage(user.client_fd, ERR_NOSUCHNICK(user.nickname, target));
+            }
+        }
+        else
+            this->definedmessage(user.client_fd, ERR_NORECIPIENT(user.nickname));
+    }
+    else
+        this->definedmessage(user.client_fd, ERR_NOTEXTTOSEND(user.nickname));
 }

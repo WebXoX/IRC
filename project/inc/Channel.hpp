@@ -33,6 +33,7 @@ class Channel {
         void                                addOperator(Client& user);
         void                                removeOperator(Client& user);
         void                                broadcast(std::string message);
+        void                                broadcast_others(Client user,std::string message);
         void                                addInvited(Client& user);
         void                                removeInvited(Client& user);
         void                                removeFromAll(Client& user);

@@ -177,6 +177,12 @@ int Server::register_user(ircMessage msg, Client * user)
 void Server::commandPath(ircMessage msg, Client * user)
 {
 	std::string		str;
+    printCommand(msg);
+    std::map<std::string, Channel>::iterator it;
+    for (it = this->channels.begin(); it != this->channels.end(); it++)
+    {
+        std::cout << "channel name: " << it->first << std::endl;
+    }
     if(msg.params.size() > 0)
     {
         if(user->registerstatus()== false) 
@@ -210,7 +216,7 @@ void Server::commandPath(ircMessage msg, Client * user)
             }
             else if(msg.command.compare("MOTD") == 0)
                 MOTD(user);
-            else if (msg.command.compare("NICK") != 0 )
+            else 
             {
                 std::string message = "<" + user->nickname + "> " + msg.message;
                 this->channels[user->currentChannel].broadcast(message);
@@ -229,7 +235,6 @@ void Server::commandPath(ircMessage msg, Client * user)
             }
         }
 	}
-    
 	else
         this->definedmessage(user->client_fd,ERR_NEEDMOREPARAMS(this->server_name ,msg.command));
 	str.clear();
