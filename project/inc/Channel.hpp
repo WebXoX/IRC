@@ -12,6 +12,7 @@ class Channel {
         std::string                         name;
         std::string                         topic;
         std::string                         password;
+        // std::time_t                         creationTime;
 		int						            userLimit;
         std::map<char, int>                 modes;
         std::map<int, Client*>              users;

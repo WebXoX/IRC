@@ -47,6 +47,7 @@ std::string welcomeMessage(Client& user, Channel& channel) {
     std::string reply;
 
     reply = RPL_JOIN(user_id(user.nickname, user.username), channel.getName());
+    reply += MODE_CHANNELMSG(channel.getName(), channel.getModes());
     if (channel.hasTopic()) // if has a topic append it to the message
         reply += RPL_TOPIC(user.nickname, channel.getName(), channel.getTopic());
     reply += RPL_NAMREPLY(user.nickname, '@', channel.getName(), channel.getListOfUsers());

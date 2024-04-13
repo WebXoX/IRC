@@ -88,7 +88,7 @@ void Server::modeCommand(ircMessage& msg, Client& user) {
     if (msg.params.size() >= 1) {
         if (this->hasChannelInServer(msg.params[0])) {
             if (msg.params.size() == 1) {
-                reply = RPL_CHANNELMODEIS(user.nickname, msg.params[0], "tokil");
+                reply = RPL_CHANNELMODEIS(user.nickname, msg.params[0], this->channels[msg.params[0]].getModes());
                 send(user.client_fd, reply.c_str(), reply.length(), 0);
                 return;
             }

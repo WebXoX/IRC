@@ -20,7 +20,7 @@ Channel::Channel(std::string& name, Client& user) {
 	this->topic = "";
 	this->password = "asdf";
 	this->userLimit = 3;
-	this->modes['i'] = 0;
+	this->modes['i'] = 1;
 	this->modes['t'] = 1;
 	this->modes['k'] = 1;
 	this->modes['l'] = 1;
@@ -117,12 +117,10 @@ std::string Channel::getModes() {
         if (it->second) {
             char c = it->first;
             std::string str(1, c);
-            mode += "+", c;
-        }
-        else
-            mode += "-" + it->first;
+            mode += str;
+        }  
     }
-    return mode; 
+    return mode.empty() ? "" : "+" + mode; 
 }
 
 std::map<int, Client*>::iterator Channel::getUser(std::string nickname) {
