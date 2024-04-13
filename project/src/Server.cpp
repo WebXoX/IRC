@@ -320,6 +320,10 @@ bool Server::hasChannelInServer(std::string channelName) {
     return this->channels.find(channelName) != this->channels.end();
 }
 
+std::map<std::string, Channel>::iterator	Server::getChannelIt(std::string chanName) {
+    return this->channels.find(chanName);
+}
+
 
 
 

@@ -45,7 +45,8 @@ class Channel {
         std::string                         getListOfUsers();
         std::map<int, Client*>              getUsers();
         std::map<int, Client*>              getOperators();
-        std::map<char, int>                 getModes();
+        std::string                         getModes();
+        std::map<int, Client*>::iterator    getUser(std::string);
 
         /////   SETTERS    //////
 
@@ -59,6 +60,7 @@ class Channel {
 
         int                                 howManyUsers();
         bool                                isUser(Client& user);
+        bool                                isUser(std::string& user);
         bool                                isOperator(Client& user);
         bool                                isInvited(Client& user);
         bool                                hasTopic();

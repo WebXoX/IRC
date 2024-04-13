@@ -1,8 +1,8 @@
 NAME = ircserver
 
 CXX = c++
-# CXXFLAGS = -Wall -Werror -Wextra -std=c++98  -fsanitize=address -g3
-CXXFLAGS = -Wall -Werror -Wextra -std=c++98  
+CXXFLAGS = -Wall -Werror -Wextra -std=c++98  -fsanitize=address -g3
+# CXXFLAGS = -Wall -Werror -Wextra -std=c++98  
 
 RED = \033[1;31m
 GREEN = \033[1;32m
@@ -13,7 +13,7 @@ RESET = \033[0m
 OBJDIR = ./obj/
 SRCDIR = ./src/
 
-SRC = Server.cpp Client.cpp parsing.cpp main.cpp CommandCalls.cpp Channel.cpp CmdKick.cpp CmdTopic.cpp CmdJoin.cpp CmdInvite.cpp CmdPrivmsg.cpp utils.cpp
+SRC = Server.cpp Client.cpp parsing.cpp main.cpp CommandCalls.cpp Channel.cpp CmdKick.cpp CmdTopic.cpp CmdJoin.cpp CmdInvite.cpp CmdPrivmsg.cpp utils.cpp CmdMode_t.cpp
 # SRC = Server.cpp Client.cpp parsing.cpp commandPath.cpp Channel.cpp serverChannel.cpp
 
 OBJ = $(addprefix $(OBJDIR), $(SRC:.cpp=.o))

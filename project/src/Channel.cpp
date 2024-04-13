@@ -12,19 +12,18 @@ Channel::Channel() {
 	this->modes['t'] = 0;
 	this->modes['k'] = 0;
 	this->modes['o'] = 0;
-	this->modes['l'] = 0;
+	this->modes['l'] = 1;
 }
 
 Channel::Channel(std::string& name, Client& user) {
     this->name = name;
 	this->topic = "";
-	this->password = "";
-	this->userLimit = 0;
+	this->password = "asdf";
+	this->userLimit = 3;
 	this->modes['i'] = 0;
 	this->modes['t'] = 1;
-	this->modes['k'] = 0;
-	this->modes['o'] = 0;
-	this->modes['l'] = 0;
+	this->modes['k'] = 1;
+	this->modes['l'] = 1;
     this->addUser(user);
     this->addOperator(user);
 }
@@ -36,9 +35,11 @@ Channel& Channel::operator=(const Channel& copy) {
     this->topic = copy.topic;
     this->password = copy.password;
     this->userLimit = copy.userLimit;
+    this->modes = copy.modes;
     this->users = copy.users;
     this->operators = copy.operators;
-    this->modes = copy.modes;
+    this->inviteds = copy.inviteds;
+    this->it = copy.it;
     return *this;
 }
 
@@ -109,7 +110,28 @@ std::map<int, Client*> Channel::getUsers() { return this->users; }
 
 std::map<int, Client*> Channel::getOperators() { return this->operators; }
 
-std::map<char, int> Channel::getModes() { return this->modes; }
+std::string Channel::getModes() { 
+    std::map<char, int>::iterator it;
+    std::string mode = "";
+    for (it = this->modes.begin(); it != this->modes.end(); it++) {
+        if (it->second) {
+            char c = it->first;
+            std::string str(1, c);
+            mode += "+", c;
+        }
+        else
+            mode += "-" + it->first;
+    }
+    return mode; 
+}
+
+std::map<int, Client*>::iterator Channel::getUser(std::string nickname) {
+    for (it = users.begin(); it != users.end(); it++) {
+        if (it->second->nickname == nickname)
+            break;
+    }
+    return it;
+}
 
 // returns a string with the nicknames of all users in the channel separated by a space
 // with prefix @ for operators 
@@ -144,6 +166,14 @@ void Channel::setTopic(std::string topic) { this->topic = topic; }
 int Channel::howManyUsers() { return this->users.size(); }
 
 bool Channel::isUser(Client& user) { return this->users.find(user.client_fd) != this->users.end(); }
+
+bool Channel::isUser(std::string& user) {
+    for (it = this->users.begin(); it != this->users.end(); it++) {
+        if (it->second->nickname == user)
+            break;
+    }
+    return it != this->users.end();
+}
 
 bool Channel::isOperator(Client& user) { return this->operators.find(user.client_fd) != this->operators.end(); }
 

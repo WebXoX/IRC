@@ -1,78 +1,102 @@
 #include "../inc/Server.hpp"
 #include "../inc/Reply.hpp"
 
-#define MSG_JOIN(nickname, channel) (":" + nickname + " JOIN " + channel + "\r\n")
+// conditions to check in order to join a channel
+    // channel exists? (yes)
+    //     is already inside the channel?
+    //         send error return
+    //     has modes enabled?
+    //         has limits enabled 'l'?
+    //             channel is full?
+    //                 send error and return
+    //         has invite only enabled'i'?
+    //             is user in the invites lists? (no)
+    //                 send error and return
+    //         has password enabled'k'? (yes)
+    //             check the password: (wrong)
+    //                 send error and return
+    //     broadcast join reply
+    //     add user in the channel
+    // channel exists? (no)
+    //     create channel
+    //     add user in
+    //     set user as operator
+    //     add channel into the server
+    // send welcome to the user
 
 std::vector<std::pair<std::string, std::string> > createChannelKeyMap(std::vector<std::string> args) {
-
-    std::vector<std::pair<std::string, std::string> > channelKeyList;
-    std::vector<std::string> channelList;
-    std::vector<std::string> keyList;
-
+    std::vector<std::pair<std::string, std::string> > channelKeyList; // a vector of pairs to store the channel and its password, a vector was choosen because map sorts the insertion and we want to keep the order
+    std::vector<std::string> channelList; // list to store the channels
+    std::vector<std::string> keyList; // list to store the passwords
     for (size_t i = 0; i < args.size(); i++) {
-        if (i == 0)
-            channelList = split(args[i], ',');
-        else if (i == 1)
-            keyList = split(args[i], ',');
+        if (i == 0) // makes sure the first argument will be the channels
+            channelList = split(args[i], ','); // if theres a comma split the arguments
+        else if (i == 1) // makes sure the second argument is the passwords
+            keyList = split(args[i], ','); /// if comma found split 
     }
-
-
-    for (std::size_t i = 0; i < channelList.size(); ++i) {
-        if (i < keyList.size()) {
-            channelKeyList.push_back(std::make_pair(channelList[i], keyList[i]));
-        } else {
-            channelKeyList.push_back(std::make_pair(channelList[i], ""));
-        }
+    for (std::size_t i = 0; i < channelList.size(); ++i) { // iterates over the channels list
+        if (i < keyList.size()) // if there is a password on the password list 
+            channelKeyList.push_back(std::make_pair(channelList[i], keyList[i])); // make a pair and store them 
+        else 
+            channelKeyList.push_back(std::make_pair(channelList[i], "")); // otherwise give a empty string to the pass and store both
     }
-
     return channelKeyList;
 }
 
-void Server::joinCommand(ircMessage msg, Client& user) {
-    (void)user;
+std::string welcomeMessage(Client& user, Channel& channel) {
+    std::string reply;
+
+    reply = RPL_JOIN(user_id(user.nickname, user.username), channel.getName());
+    if (channel.hasTopic()) // if has a topic append it to the message
+        reply += RPL_TOPIC(user.nickname, channel.getName(), channel.getTopic());
+    reply += RPL_NAMREPLY(user.nickname, '@', channel.getName(), channel.getListOfUsers());
+    reply += RPL_ENDOFNAMES(user.username, channel.getName());
+
+    return reply;
+}
+
+
+void Server::joinCommand(ircMessage& msg, Client& user) {
+
     std::string reply = "";
+    if (msg.params.size() > 2) { return; }  // check if we have only two parameters channels name and passwords
 
-    // check if we have at least on parameter a channel
-    if (msg.params.size() > 2) { return; }
-
-    // creates a map in wich channel name as the key and password(key) as the value
+    // creates a map in wich channel name as the key and password as the value
     std::vector<std::pair<std::string, std::string> > channelKeyList = createChannelKeyMap(msg.params);
+   
+    for (size_t i = 0; i < channelKeyList.size(); ++i) {  // loops the list of channels
+        std::string chanName = channelKeyList[i].first; // the channel name to be searched
+        if (this->hasChannelInServer(chanName)) { // channel exists in the server (yes)
+            this->chan_it = this->getChannelIt(chanName); // gets an iterator to the current channel
+            Channel channel = chan_it->second;
+            if (channel.isUser(user)) // is already inside the channel?
+                reply = ERR_USERONCHANNEL(user.username, user.nickname, chanName);
+            else if (!channel.isInvited(user) && channel.isModeSet('l') && channel.howManyUsers() >= channel.getUserLimit()) // has mode limit seted? (yes) check if the channel is full
+                reply = ERR_CHANNELISFULL(user.nickname, chanName);
+            else if (channel.isModeSet('i') && !channel.isInvited(user)) // is invite only seted? (yes) Is the user in the invite list
+                reply = ERR_INVITEONLYCHAN(user.nickname, chanName);
+            else if (channel.isModeSet('k') && channelKeyList[i].second != channel.getPassword()) // is password mode seted? (yes) check if the password match
+                reply = ERR_BADCHANNELKEY(user.nickname, chanName);
+            else {
+                reply = RPL_JOIN(user_id(user.nickname, user.username), chanName);
+                chan_it->second.broadcast(reply);
+                chan_it->second.addUser(user);
+                reply = welcomeMessage(user, channel);
+            }
+            send(user.client_fd, reply.c_str(), reply.length(), 0);
+            return;
+        }
+        else { // channel exists in the server (no)
+            Channel newChannel(chanName, user); // this contructor already add the user and set as operator
+            this->channels[chanName] = newChannel; // create a copy into the server. At the creation time is okay
+        }   
 
-    for (size_t i = 0; i < channelKeyList.size(); ++i) {
-        std::cout << channelKeyList[i].first << " => " << channelKeyList[i].second << std::endl;
+        // send the welcome message to the user who requested the join
+        reply = welcomeMessage(user, this->getChannelIt(chanName)->second);
+        send(user.client_fd, reply.c_str(), reply.length(), 0);
+        
+        std::cout << "server ==>> "<< reply << std::endl;
     }
 
-
-    printCommand(msg);
-
-    // std::vector<std::string> chans = msg.params;
-
-    // for (size_t i = 0; i < chans.size(); i++) {
-    //     if (hasChannelInServer(chans[i])) {
-    //         if (this->channels[chans[i]].isUser(user)) 
-    //             reply = ERR_USERONCHANNEL(user.username, user.nickname, chans[i]);
-    //         else if (this->channels[chans[i]].isModeSet('l') && this->channels[chans[i]].howManyUsers() >= this->channels[chans[i]].getUserLimit()) 
-    //             reply = ERR_CHANNELISFULL(user.hostname, chans[i]);
-    //         else if (this->channels[chans[i]].isModeSet('i') && !this->channels[chans[i]].isInvited(user)) 
-    //             reply = ERR_INVITEONLYCHAN(user.nickname, chans[i]);
-    //         else {
-    //             reply += RPL_JOIN(user_id(user.nickname, user.username), chans[i]);
-    //             this->channels[chans[i]].broadcast(reply);
-    //             if (this->channels[chans[i]].hasTopic()) 
-    //                 reply += RPL_TOPIC(user.nickname, chans[i], this->channels[chans[i]].getTopic());
-    //             this->channels[chans[i]].addUser(user);
-    //             reply += RPL_NAMREPLY(user.nickname, '@', chans[i], this->channels[chans[i]].getListOfUsers());
-    //             reply += RPL_ENDOFNAMES(user.nickname, chans[i]);
-    //         }
-    //     }
-    //     else {
-    //         Channel newChannel(msg.params[i], user);
-    //         this->addChannelInServer(newChannel);
-    //         reply += RPL_JOIN(user_id(user.nickname, user.username), chans[i]);
-    //         reply += RPL_NAMREPLY(user.nickname, '@', chans[i], this->channels[chans[i]].getListOfUsers());
-    //         reply += RPL_ENDOFNAMES(user.nickname, chans[i]);
-    //     }
-    //     send(user.client_fd, reply.c_str(), reply.size(), 0);
-    // }
 }
 

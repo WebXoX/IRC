@@ -11,10 +11,7 @@ void Server::kickCommand(ircMessage msg, Client& user) {
     std::string kickedName = msg.params[1];
     std::string reason = msg.trailing;
     
-    
-    // nc does not split the nicknames case tested on nc
-    // in this case we need to split the nicknames into a vector
-    std::vector<std::string> kickedList;
+    std::vector<std::string> kickedList; // nc does not split the nicknames. In this case we need to split the nicknames into a vector
     if (kickedName.find(',') != std::string::npos)
         kickedList = split(kickedName, ',');
     else
@@ -26,25 +23,25 @@ void Server::kickCommand(ircMessage msg, Client& user) {
         message = ERR_CHANOPRIVSNEEDED(kicker, chanName);
     } else {
         for (size_t i = 0; i < kickedList.size(); i++) {
-
+            // As the client list is a vector of pointers thats the way to get a client reference
             Client newClient;
             Client& kickedClient = newClient;
-
             for (size_t j = 0; j < this->client.size(); j++) {
                 if (this->client[j]->nickname == kickedList[i])
                     kickedClient = *this->client[j];
             }
 
-            if (this->channels[chanName].isUser(kickedClient)) {
-                this->channels[chanName].removeFromAll(kickedClient);
-                if (reason.empty())
+            if (this->channels[chanName].isUser(kickedClient)) { // check if the user to be kicked is in the channel
+                if (reason.empty()) // if no reason given set it to the kicked username
                     reason = kickedList[i];
                 message = RPL_KICK(user_id(user.nickname, user.username), chanName, kickedList[i], reason);
-            } else {
+                this->channels[chanName].broadcast(message);
+                this->channels[chanName].removeFromAll(kickedClient); // remove the user from all lists in the channel
+            } 
+            else { // if the user is not in the channel return this message
                 message = ERR_NOSUCHNICK(kicker, kickedList[i]);
+                send(user.client_fd, message.c_str(), message.size(), 0);
             }
-
-            send(user.client_fd, message.c_str(), message.size(), 0);
         }
         return;
     }

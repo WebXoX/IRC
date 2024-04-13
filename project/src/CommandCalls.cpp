@@ -187,7 +187,7 @@ void Server::commandPath(ircMessage msg, Client * user)
         {
             if(msg.command.compare("PING") == 0)
             {	
-                    this->definedmessage(user->client_fd,RPL_PONG(user_id(user->nickname,user->username),msg.params[0]));
+                this->definedmessage(user->client_fd,RPL_PONG(user_id(user->nickname,user->username),msg.params[0]));
             }
             else if (msg.command.compare("JOIN") == 0)
             {
@@ -204,6 +204,9 @@ void Server::commandPath(ircMessage msg, Client * user)
             }
             else if (msg.command.compare("INVITE") == 0) {
                 this->inviteCommand(msg, *user);
+            }
+            else if (msg.command.compare("MODE") == 0) {
+                this->modeCommand(msg, *user);
             }
             else if(msg.command.compare("MOTD") == 0)
                 MOTD(user);

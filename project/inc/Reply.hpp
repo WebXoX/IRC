@@ -40,6 +40,7 @@
 #define ERR_UMODEUNKNOWNFLAG(client) (":localhost 501 " + client + " :Unknown MODE flag\r\n")
 #define ERR_USERSDONTMATCH(client) ("502 " + client + " :Cant change mode for other users\r\n")
 #define RPL_UMODEIS(client, mode) (":localhost 221 " + client + " " + mode + "\r\n")
+#define ERR_UNKNOWNMODE(client, modechar) (":localhost 472 " + client + " " + modechar + " :is unknown mode char to me\r\n")
 /* channel mode */
 #define MODE_CHANNELMSG(channel, mode) (":localhost MODE " + channel + " " + mode + "\r\n")
 #define MODE_CHANNELMSGWITHPARAM(channel, mode, param) (":localhost MODE " + channel + " " + mode + " " + param + "\r\n")
@@ -106,7 +107,7 @@
 // TOPIC
 # define RPL_TOPIC(client, channel, topic) (":localhost 332 " + client + " " + channel + " " + topic + "\r\n")
 # define RPL_NOTOPIC(client, channel) (":localhost 331 " + client + " " + channel + " :No topic is set\r\n")
-
+# define RPL_CHANGETOPIC(user_id, channel, topic) (user_id + " TOPIC " + channel + " " + topic + "\r\n")
 // USER
 #define ERR_ALREADYREGISTERED(client) (":localhost 462 " + client + " :You may not reregister.\r\n")
 
