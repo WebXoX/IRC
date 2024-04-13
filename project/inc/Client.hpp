@@ -17,6 +17,7 @@ class Client
 		// int regi_status;
 		int pass_status;
 		// int nick_status;
+		std::string line;
 		std::string hostname; // Real name/address of the host
 		std::string ip; // Real name/address of the host
 		std::string username;  // Username of the client on the host

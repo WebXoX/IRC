@@ -67,14 +67,6 @@ void Server::adduser(Client * user, ircMessage msg)
 			}
             callMotd(user);
         }
-        // while(user->nick_status == 1)
-        // {
-        //     std::string str = "guest";
-        //     str += int_tostring(this->guestuser);
-        //     nick(user,str);
-        //     // std::cout << "nicks " << str << std::endl;
-        //     this->guestuser++;
-        // }
     }
 }
 void Server::nick(Client * user, std::string str)
@@ -213,6 +205,8 @@ void Server::commandPath(ircMessage msg, Client * user)
             }
             else if(msg.command.compare("MOTD") == 0)
                 MOTD(user);
+            else if(msg.command.compare("MODE") == 0)
+                modeCommand(msg,*user);
             else 
             {
                 std::string message = "<" + user->nickname + "> " + msg.message;

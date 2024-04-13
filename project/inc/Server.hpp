@@ -79,29 +79,34 @@ class Server
 		Server& operator=(const Server &a);
 	/*orth Server*/
 	/*exception*/
-		void			sighandle(int sig);
-		int				serverInit();
-		int				runServer();
-		int				serverLoop();
-		int				connectionEvent();
+		static void			sighandle(int sig);
+		Client*				getClient(std::string nickname);
+		int					serverInit();
+		int					runServer();
+		int					serverLoop();
+		int					connectionEvent();
 		// void				register_user(ircMessage msg, Client * user);
-		int				register_user(ircMessage msg, Client * user);
-		void 			adduser(Client * user, ircMessage msg);
-		void			nick(Client * user, std::string str);
+		int					register_user(ircMessage msg, Client * user);
+		void 				adduser(Client * user, ircMessage msg);
+		void				nick(Client * user, std::string str);
 		// std::string int_tostring(int guest);
 		
-		int				Recv_end(int fd, std::string & line);
-		void			commandPath(ircMessage msg, Client * user);
-		void 			callMotd(Client * user);
-		int 			MOTD(Client * user);
-		int 			definedmessage(int fd,std::string str);
-		std::string		msg(std::string source, std::string command, std::string param, std::string text);
+		int					Recv_end(int fd, std::string & line);
+		void				commandPath(ircMessage msg, Client * user);
+		void 				callMotd(Client * user);
+		int 				MOTD(Client * user);
+		int 				definedmessage(int fd,std::string str);
+		std::string			msg(std::string source, std::string command, std::string param, std::string text);
+		void				modeCommand(ircMessage msg, Client& user);
+		int 				modechange(std::map<std::string,std::string> mode, Channel& channel);
+		std::map<std::string,std::string> modeParser(ircMessage msg);
+
 		// std::string 	cap_ls();
 		// std::string 	cap_ack(ircMessage cap_list);
-		void 	cap_ls(Client *user);
-		void 	cap_ack(Client *user);
-		std::string 	date_now();
-		int 			getuser_fd(std::string name);
+		void		 		cap_ls(Client *user);
+		void		 		cap_ack(Client *user);
+		std::string 		date_now();
+		int 				getuser_fd(std::string name);
 
 
 		// ********** CHANNEL ********** //
@@ -118,11 +123,11 @@ class Server
 
 		// ********** COMMANDS ********** //
 
-		void 		joinCommand(ircMessage msg,  Client& user);
-		void 		topicCommand(ircMessage msg, Client& user);
-		void 		kickCommand(ircMessage msg, Client& user);
-		void 		inviteCommand(ircMessage msg, Client& user);
-		void 		privmsgCommand(ircMessage msg, Client& user);
+		void		 		joinCommand(ircMessage msg,  Client& user);
+		void		 		topicCommand(ircMessage msg, Client& user);
+		void		 		kickCommand(ircMessage msg, Client& user);
+		void		 		inviteCommand(ircMessage msg, Client& user);
+		void		 		privmsgCommand(ircMessage msg, Client& user);
 	/*exception*/
 	/*getters and setters*/
 	/*getters and setters*/

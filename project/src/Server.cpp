@@ -118,8 +118,8 @@ int Server::runServer()
 int Server::connectionEvent()
 {
     // checking for new connections events
-    // signal(SIGTSTP,  this->sighandle);
-    // signal(SIGINT, this->sighandle);
+    signal(SIGTSTP,  this->sighandle);
+    signal(SIGINT, this->sighandle);
     if (this->fd_poll[0].revents & POLLIN)
     {
         Client *new_client = new Client();
@@ -140,7 +140,7 @@ int Server::connectionEvent()
         // setting poll for tracking events of the new client
 		pollfd poll;
 		poll.fd = new_client->client_fd;
-		poll.events = POLLIN | POLLOUT;
+		poll.events = POLLIN | POLLOUT | POLLHUP;
 		this->fd_poll.push_back(poll);
         this->number_of_clients++;
     }
@@ -150,67 +150,6 @@ std::string Server::msg(std::string source, std::string command, std::string par
 {
     return (":"+source+ " " +command+" :"+param+" "+text + "\r\n");
 }
-
-// std::string Server::cap_ls()
-// {
-// 	std::string cap_list;
-// 	// if(this->account_notify)
-//     // {
-// 	// 	cap_list += "account-notify ";
-
-//     // }
-// 	// if(this->away_notify)
-//     // {
-//     //     cap_list += "away-notify ";
-
-//     // }	
-// 	// if(this->chghost)
-//     // {
-// 	// 	cap_list += "chghost ";
-
-//     // }
-// 	// if(this->extended_join)
-//     // {
-//     //     cap_list += "extended-join ";
-        
-//     // }
-//     // if(this->multi_prefix)
-// 	// 	cap_list += "multi-prefix ";
-//     // cap_list += "sasl="+this->sasl+" server-time";
-//     // return ("account-notify away-notify chghost extended-join multi-prefix sasl=PLAIN server-time");
-// 	return cap_list;
-// }
-
-
-// std::string Server::cap_ack( ircMessage msg)
-// {
-//     (void)msg;
-// 	std::string str;
-// 	std::string ack;
-// 	// std::string cap_list[] = {"account-notify","away-notify","chghost","extended-join","multi-prefix","sasl="+this->sasl+" server-time"};
-// 	// ack = msg.trailing.substr(0, msg.trailing.find_first_of(" "));
-// 	// while (msg.trailing.empty() == false)
-// 	// {
-// 	// 	if(std::find(&cap_list[0], (&cap_list[6]), ack) != &cap_list[6])
-// 	// 	{
-// 	// 		str += ack + " ";
-// 	// 	}
-// 	// 	if(msg.trailing.empty() == true)
-// 	// 		break;
-//     //     // std::cout << msg.trailing << std::endl;
-// 	// 	msg.trailing.erase(0, msg.trailing.find_first_of(" ") + 1);
-//     //     int subint = msg.trailing.find_first_of(" ");
-//     //     if(  msg.trailing.find_first_of(" ") == std::string::npos)
-//     //     {
-//     //         ack = msg.trailing;
-//     //         msg.trailing.clear();
-//     //     }
-//     //     else
-//     //         ack = msg.trailing.substr(0, subint);
-// 	// }
-//     return (str);
-// }
-
 
 int Server::definedmessage(int fd,std::string str)
 {
@@ -272,23 +211,29 @@ int Server::serverLoop()
         {
             if (this->fd_poll[i].revents & POLLIN )
             {
-                std::string	line;
-                int readed = this->Recv_end( this->client[i - 1]->client_fd,line);;
-                if (readed > 0)
+               
+                int readed = this->Recv_end( this->client[i - 1]->client_fd,this->client[i - 1]->line);
+                std::cout << "Client " << i << " sent l: :" << this->client[i - 1]->line[this->client[i - 1]->line.size()-1]<< ":" << std::endl;
+                if (readed > 0)// && this->client[i - 1]->line[this->client[i - 1]->line.size() - 1] == '\n')
                 {
-                    std::cout << "Client " << i << " sent: " << line << std::endl;
-					commandPath(parseMessage(line),this->client[i - 1]);
-                    line.clear();
+                    std::cout << "Client " << i << " sent: " << this->client[i - 1]->line << std::endl;
+					commandPath(parseMessage(this->client[i - 1]->line),this->client[i - 1]);
+                    this->client[i - 1]->line.clear();
                 }
                 else if (readed <= 0 ){
                     std::cerr << "Client disconnected" << std::endl;
                     close(this->client[i - 1]->client_fd);
-                    this->nicknames.erase(std::find(this->nicknames.begin(), this->nicknames.end(), (this->client[i - 1]->nickname)));
+                    if(this->client[i - 1]->nickname.empty() == false)
+                        this->nicknames.erase(std::find(this->nicknames.begin(), this->nicknames.end(), (this->client[i - 1]->nickname)));
                     delete this->client[i - 1];
                     this->client.erase(this->client.begin() + i - 1);
                     this->fd_poll.erase(this->fd_poll.begin() + i);
                     this->number_of_clients--;
                 }
+            }
+            if (this->fd_poll[i].revents & POLLHUP)
+            {
+                std::cout << "Client " << i << " is ready to write" << std::endl;
             }
         }
     }
@@ -315,7 +260,16 @@ int Server::getuser_fd(std::string name)
     }
     return -1;
 }
-
+Client* Server::getClient(std::string nickname)
+{
+   for(int i = 0; i < this->number_of_clients; i++)
+    {
+        if(this->client[i]->nickname == nickname)
+            return this->client[i];
+    }
+    Client *client =NULL;
+    return client;
+}
 // ****** CHANNEL ****** //
 
 int Server::addChannelInServer(Channel& channel) {
