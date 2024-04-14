@@ -48,6 +48,7 @@ int Server::modechange(std::map<std::string,std::string> mode, Channel& channel)
             {
                 channel.setPassword(it->second);
                 channel.setMode('k',1);
+                // this->definedmessage(channel.getUsers(), RPL_CHANNELMODEIS(channel.getName(),channel.getName()));
             }
             else
             {
@@ -150,11 +151,11 @@ void Server::modeCommand(ircMessage msg, Client& user) {
     {
         if(this->hasChannelInServer(target))
         {
-            if(getChannel(target).isOperator(user) == false)
-            {
-                this->definedmessage(user.client_fd, ERR_CHANOPRIVSNEEDED(user.nickname,target));
-            }
-            else if(msg.params.size() > 0)
+            // if(getChannel(target).isOperator(user) == false)
+            // {
+            //     this->definedmessage(user.client_fd, ERR_CHANOPRIVSNEEDED(user.nickname,target));
+            // }
+             if(msg.params.size() > 0)
             {
                 std::map<std::string,std::string> mode  = modeParser(msg);
                 if(this->channels[target].isOperator(user) == true)
