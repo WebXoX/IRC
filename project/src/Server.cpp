@@ -188,11 +188,11 @@ int Server::Recv_end(int fd, std::string & line)
         line = line + buffer;
         total += len; 
         if(line.find('\n') != std::string::npos || line.find("\r\n") != std::string::npos)
+        {
             break;
+        }
        memset(buffer, 0, 1024);
     }
-    if(line.find("\r\n") != std::string::npos)
-        line = line.substr(0,line.find("\r\n"));
     return total;
 }
 
@@ -211,17 +211,14 @@ int Server::serverLoop()
         {
             if (this->fd_poll[i].revents & POLLIN )
             {
-               
                 int readed = this->Recv_end( this->client[i - 1]->client_fd,this->client[i - 1]->line);
-                std::cout << "Client " << i << " sent l: :" << this->client[i - 1]->line[this->client[i - 1]->line.size()-1]<< ":" << std::endl;
-                if (readed > 0)// && this->client[i - 1]->line[this->client[i - 1]->line.size() - 1] == '\n')
+                std::cout << this->client[i - 1]->line;
+                if (readed > 0 && this->client[i - 1]->line.find("\n") !=std::string::npos)
                 {
-                    std::cout << "Client " << i << " sent: " << this->client[i - 1]->line << std::endl;
 					commandPath(parseMessage(this->client[i - 1]->line),this->client[i - 1]);
                     this->client[i - 1]->line.clear();
                 }
                 else if (readed <= 0 ){
-                    std::cerr << "Client disconnected" << std::endl;
                     close(this->client[i - 1]->client_fd);
                     if(this->client[i - 1]->nickname.empty() == false)
                         this->nicknames.erase(std::find(this->nicknames.begin(), this->nicknames.end(), (this->client[i - 1]->nickname)));
@@ -230,10 +227,6 @@ int Server::serverLoop()
                     this->fd_poll.erase(this->fd_poll.begin() + i);
                     this->number_of_clients--;
                 }
-            }
-            if (this->fd_poll[i].revents & POLLHUP)
-            {
-                std::cout << "Client " << i << " is ready to write" << std::endl;
             }
         }
     }
@@ -246,6 +239,9 @@ int Server::serverLoop()
 
 bool Server::isUser(Client& user) {
     return std::find(this->client.begin(), this->client.end(), &user) != this->client.end();
+}
+Channel&    Server::getChannel(std::string channelName){
+    return this->channels.find(channelName)->second;
 }
 
 bool Server::isUserNick(std::string nickname) {

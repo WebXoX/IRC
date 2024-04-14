@@ -98,7 +98,7 @@ class Server
 		int 				definedmessage(int fd,std::string str);
 		std::string			msg(std::string source, std::string command, std::string param, std::string text);
 		void				modeCommand(ircMessage msg, Client& user);
-		int 				modechange(std::map<std::string,std::string> mode, Channel& channel);
+		int 				modechange(std::map<std::string,std::string> mode,  Channel& channel,Client& user);
 		std::map<std::string,std::string> modeParser(ircMessage msg);
 
 		// std::string 	cap_ls();

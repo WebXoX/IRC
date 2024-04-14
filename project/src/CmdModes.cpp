@@ -21,10 +21,10 @@
 //     return 0;
 // }
 
-int Server::modechange(std::map<std::string,std::string> mode, Channel& channel)
+int Server::modechange(std::map<std::string,std::string> mode, Channel& channel, Client& user)
 {
     std::map<std::string,std::string>::iterator it;
-    
+    std::string param;
     for(it=mode.begin();it != mode.end();++it )
     {
         char sign = it->first[0];
@@ -55,6 +55,7 @@ int Server::modechange(std::map<std::string,std::string> mode, Channel& channel)
                 channel.setPassword(NULL);
                 channel.setMode('k',0);
             }
+            param += it->second + "";
         }
         else if(it->first[1] == 'o')
         {
@@ -68,6 +69,7 @@ int Server::modechange(std::map<std::string,std::string> mode, Channel& channel)
                 {
                     channel.removeOperator(*getClient(it->second));
                 }
+                param += it->second + "";
             }
         }
         else if(it->first[1] == 'l')
@@ -86,11 +88,14 @@ int Server::modechange(std::map<std::string,std::string> mode, Channel& channel)
                 }
                 
             }
+                param += it->second + "";
         }
         else
             return 0;
-    }
+        // channel.broadcast(RPL_ADDVOICE(user.nickname,user.username,channel.getName(),str,param));
     return 1;
+}
+return 0 ;
 }
 bool isModeSet(std::string mode,int flag)
 {
@@ -151,15 +156,15 @@ void Server::modeCommand(ircMessage msg, Client& user) {
     {
         if(this->hasChannelInServer(target))
         {
-            // if(getChannel(target).isOperator(user) == false)
-            // {
-            //     this->definedmessage(user.client_fd, ERR_CHANOPRIVSNEEDED(user.nickname,target));
-            // }
-             if(msg.params.size() > 0)
+            if(getChannel(target).isOperator(user) == false)
+            {
+                this->definedmessage(user.client_fd, ERR_CHANOPRIVSNEEDED(user.nickname,target));
+            }
+            else if(msg.params.size() > 1)
             {
                 std::map<std::string,std::string> mode  = modeParser(msg);
                 if(this->channels[target].isOperator(user) == true)
-                    modechange(mode, this->channels[target]);
+                    modechange(mode ,this->channels[target],user);
             }
             else
                 this->definedmessage(user.client_fd, RPL_CHANNELMODEIS(user.nickname,target, target));
