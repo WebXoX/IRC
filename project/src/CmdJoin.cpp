@@ -47,7 +47,8 @@ std::string welcomeMessage(Client& user, Channel& channel) {
     std::string reply;
 
     reply = RPL_JOIN(user_id(user.nickname, user.username), channel.getName());
-    reply += MODE_CHANNELMSG(channel.getName(), channel.getModes());
+    if (channel.howManyUsers() == 1)
+        reply += MODE_CHANNELMSG(channel.getName(), channel.getModes());
     if (channel.hasTopic()) // if has a topic append it to the message
         reply += RPL_TOPIC(user.nickname, channel.getName(), channel.getTopic());
     reply += RPL_NAMREPLY(user.nickname, '@', channel.getName(), channel.getListOfUsers());
@@ -69,7 +70,7 @@ void Server::joinCommand(ircMessage& msg, Client& user) {
         std::string chanName = channelKeyList[i].first; // the channel name to be searched
         if (this->hasChannelInServer(chanName)) { // channel exists in the server (yes)
             this->chan_it = this->getChannelIt(chanName); // gets an iterator to the current channel
-            Channel channel = chan_it->second;
+            Channel channel = chan_it->second; // create a copy of the real channel just to be easy to read
             if (channel.isUser(user)) // is already inside the channel?
                 reply = ERR_USERONCHANNEL(user.username, user.nickname, chanName);
             else if (!channel.isInvited(user) && channel.isModeSet('l') && channel.howManyUsers() >= channel.getUserLimit()) // has mode limit seted? (yes) check if the channel is full
@@ -80,9 +81,9 @@ void Server::joinCommand(ircMessage& msg, Client& user) {
                 reply = ERR_BADCHANNELKEY(user.nickname, chanName);
             else {
                 reply = RPL_JOIN(user_id(user.nickname, user.username), chanName);
-                chan_it->second.broadcast(reply);
+                chan_it->second.broadcast(reply); // cant use channel variable here cause will add the user into the copy
                 chan_it->second.addUser(user);
-                reply = welcomeMessage(user, channel);
+                reply = welcomeMessage(user, chan_it->second);
             }
             send(user.client_fd, reply.c_str(), reply.length(), 0);
             return;

@@ -11,8 +11,7 @@ Channel::Channel() {
 	this->modes['i'] = 0;
 	this->modes['t'] = 0;
 	this->modes['k'] = 0;
-	this->modes['o'] = 0;
-	this->modes['l'] = 1;
+	this->modes['l'] = 0;
 }
 
 Channel::Channel(std::string& name, Client& user) {
@@ -20,10 +19,10 @@ Channel::Channel(std::string& name, Client& user) {
 	this->topic = "";
 	this->password = "asdf";
 	this->userLimit = 3;
-	this->modes['i'] = 1;
+	this->modes['i'] = 0;
 	this->modes['t'] = 1;
-	this->modes['k'] = 1;
-	this->modes['l'] = 1;
+	this->modes['k'] = 0;
+	this->modes['l'] = 0;
     this->addUser(user);
     this->addOperator(user);
 }
@@ -95,6 +94,7 @@ void Channel::broadcast(std::string message) {
     for (; it != users.end(); it++) 
             send(it->first, message.c_str(), message.size(), 0);
 }
+
 void Channel::broadcast_others(Client user,std::string message) {
     std::map<int, Client*>::iterator it = users.begin();
     for (; it != users.end(); it++)
@@ -170,7 +170,7 @@ void Channel::setTopic(std::string topic) { this->topic = topic; }
 
 int Channel::howManyUsers() { return this->users.size(); }
 
-bool Channel::isUser(Client& user) { return this->users.find(user.client_fd) != this->users.end(); }
+bool Channel::isUser(Client& user) {  return this->users.find(user.client_fd) != this->users.end(); }
 
 bool Channel::isUser(std::string& user) {
     for (it = this->users.begin(); it != this->users.end(); it++) {

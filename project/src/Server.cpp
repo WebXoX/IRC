@@ -287,6 +287,14 @@ std::map<std::string, Channel>::iterator	Server::getChannelIt(std::string chanNa
     return this->channels.find(chanName);
 }
 
+Client* Server::getUser(std::string name) {
+    for (size_t i = 0; i != this->client.size(); i++) {
+        if (this->client[i]->nickname == name )
+            return this->client[i];
+    }
+    return NULL;
+}
+
 
 
 

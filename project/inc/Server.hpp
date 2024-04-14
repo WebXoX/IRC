@@ -118,10 +118,11 @@ class Server
 		int 										addChannelInServer( Channel& channel);
 		bool 										hasChannelInServer(std::string channelName);
 		std::map<std::string, Channel>::iterator	getChannelIt(std::string chanName);
+		Client*										getUser(std::string name);
 
 		// ********** COMMANDS ********** //
 
-		void										modeCommand(ircMessage msg, Client& user);
+		void										modeCommand(ircMessage& msg, Client& user);
 		int 										modechange(std::map<std::string,std::string> mode, Channel& channel);
 		void 										joinCommand(ircMessage& msg,  Client& user);
 		void 										topicCommand(ircMessage msg, Client& user);
