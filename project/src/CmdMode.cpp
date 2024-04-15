@@ -101,14 +101,18 @@ std::string getModestringSeted(std::map<char, std::pair<int, std::string> > mode
             plusModes += str;
             modesParams += it->second.second+" ";
         } 
-        else
+        else {
             minusModes += str;
+            if (str[0] == 'o')
+                modesParams += it->second.second+" ";
+
+        }
     }
     std::string finalstring = "";
     minusModes.empty() ? "" : finalstring += "-"+minusModes;
-    plusModes.empty() ? "" : finalstring += "+"+plusModes + " "+trimFunction(modesParams);
+    plusModes.empty() ? "" : finalstring += "+"+plusModes;
     
-    return finalstring;
+    return finalstring +" "+trimFunction(modesParams);
 }
 
 bool validateNumberModeParameters(std::string modestring, std::vector<std::string> modeParams) {
@@ -166,19 +170,19 @@ void Server::modeCommand(ircMessage& msg, Client& user)
     if (msg.params.size() < 1) {
         reply = ERR_NEEDMOREPARAMS(user.nickname, "MODE");
     }
-    else if (msg.params[0][0] != '#')
-    {
-        std::string target = msg.params[0];
-        if(this->isUserNick(target))
-        {
-            if(msg.params.size() > 1)
-                reply = ERR_UMODEUNKNOWNFLAG(user.nickname);
-            else
-                reply =  RPL_CHANNELMODEIS(user.nickname,"", "");
-        }
-        else
-            reply = ERR_USERSDONTMATCH(user.nickname);
-    }
+    // else if (msg.params[0][0] != '#')
+    // {
+    //     std::string target = msg.params[0];
+    //     if(this->isUserNick(target))
+    //     {
+    //         if(msg.params.size() > 1)
+    //             reply = ERR_UMODEUNKNOWNFLAG(user.nickname);
+    //         else
+    //             reply =  RPL_CHANNELMODEIS(user.nickname,"", "");
+    //     }
+    //     else
+    //         reply = ERR_USERSDONTMATCH(user.nickname);
+    // }
     else if (chan_it == this->channels.end()) {
         reply = ERR_NOSUCHCHANNEL(user.nickname, channel);
     }
@@ -207,8 +211,6 @@ void Server::modeCommand(ircMessage& msg, Client& user)
             int flag = it->second.first;
             std::string parameter = it->second.second;
             char mode = it->first;
-
-            std::cout << "mode: " << mode << " / " << "flag: " << flag << " / " << "parameter: " << (parameter.empty() ? "no patameter" : parameter) << std::endl;
 
             if (mode == 'l' && flag) {
                     this->channels[channel].setUserLimit(std::atoi(parameter.c_str()));
