@@ -67,7 +67,10 @@ Server& Server::operator=(const Server& rhs)
 }
 /* orth Server */
 /*extra*/
-
+std::string Server::msg(std::string source, std::string command, std::string param, std::string text)
+{
+    return (":"+source+ " " +command+" :"+param+" "+text + "\r\n");
+}
 
 int Server::serverInit()
 {
@@ -183,47 +186,27 @@ int Server::serverLoop()
                     this->number_of_clients--;
                 }
             }
+            else if (this->fd_poll[i].revents & POLLOUT )
+            {
+                this->definedmessage(this->client[i - 1]);
+            }
         }
     }
     close(this->server);
     return 0;
 }
-std::string Server::msg(std::string source, std::string command, std::string param, std::string text)
+
+int Server::definedmessage(Client *user)
 {
-    return (":"+source+ " " +command+" :"+param+" "+text + "\r\n");
-}
-
-// void Server::broadcast(std::map<int, Client*>channelUser,std::string message) {
-//     std::map<int, Client*>::iterator it = channelUser.begin();
-//     for (; it != channelUser.end(); it++) 
-//             this->definedmessage(it->first, message);
-// }
-
-// void Server::broadcast_others(std::map<int, Client*>channelUser,Client user,std::string message) {
-//     std::map<int, Client*>::iterator it = channelUser.begin();
-//     for (; it != channelUser.end(); it++)
-//     {
-//         if(it->first != user.client_fd)
-//             this->definedmessage(it->first, message);
-
-//     } 
-// }
-
-int Server::definedmessage(int fd,std::string str)
-{
-    std::cout << "-------------------" << std::endl;
-    std::cout << "Server send: " << str ;
-    std::cout << "-------------------" << std::endl;
-    for (size_t i = 0; i < Server::fd_poll.size(); i++)
+    for (size_t i = 0; i < user->toSend.size(); i++)
     {
-        if(Server::fd_poll[i].fd == fd && Server::fd_poll[i].events & POLLOUT)
+        std::cout << "-------------------" << std::endl;
+        std::cout << "Server "<< user->nickname << " send: " << user->toSend[i] ;
+        std::cout << "-------------------" << std::endl;
+        if (send(user->client_fd, user->toSend[i].c_str(), user->toSend[i].length(), 0) == -1)
         {
-            if(send(fd, str.c_str(), str.length(), 0) == -1)
-            {
-                std::cerr << "Error sending message" << std::endl;
-                return 1;
-            }
-            return 0;
+            std::cerr << "Error sending message" << std::endl;
+            return 1;
         }
     }
     return 0;

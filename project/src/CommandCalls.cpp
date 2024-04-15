@@ -11,17 +11,17 @@ void Server::callMotd(Client * user)
 {
     if(user->registerstatus() == true)
     {
-        this->definedmessage(user->client_fd, RPL_WELCOME(user_id(user->nickname,user->username),user->nickname));
-        this->definedmessage(user->client_fd, RPL_YOURHOST(user->username,"irssi", "1"));
-        this->definedmessage(user->client_fd, RPL_CREATED(user->username,this->creation_date));
-        this->definedmessage(user->client_fd, RPL_MYINFO(user->username,"irssi", "1", "","",""));
-        this->definedmessage(user->client_fd, RPL_ISUPPORT(user->username,"CHANMODES=ikolt"));
+        user->toSend.push_back( RPL_WELCOME(user_id(user->nickname,user->username),user->nickname));
+        user->toSend.push_back( RPL_YOURHOST(user->username,"irssi", "1"));
+        user->toSend.push_back( RPL_CREATED(user->username,this->creation_date));
+        user->toSend.push_back( RPL_MYINFO(user->username,"irssi", "1", "","",""));
+        user->toSend.push_back( RPL_ISUPPORT(user->username,"CHANMODES=ikolt"));
         MOTD(user);
     }
 }
 int Server::MOTD(Client * user)
 {
-    this->definedmessage(user->client_fd, RPL_MOTDSTART(user->username,this->server_name));
+    user->toSend.push_back( RPL_MOTDSTART(user->username,this->server_name));
     std::srand(static_cast<unsigned>(time(0)));
     int num = (rand() % 7 ) + 1;
     std::ostringstream oss;
@@ -33,13 +33,13 @@ int Server::MOTD(Client * user)
     {
         while (std::getline(infile,line))
         {
-            this->definedmessage(user->client_fd, RPL_MOTD(this->server_name,line));
+            user->toSend.push_back( RPL_MOTD(this->server_name,line));
         }
         infile.close();
     }
     else
-        this->definedmessage(user->client_fd, ERR_NOMOTD(this->server_name));
-    this->definedmessage(user->client_fd, RPL_ENDOFMOTD(this->server_name));
+        user->toSend.push_back( ERR_NOMOTD(this->server_name));
+    user->toSend.push_back( RPL_ENDOFMOTD(this->server_name));
     return 1;
 }
 void Server::adduser(Client * user, ircMessage msg)
@@ -65,15 +65,15 @@ void Server::nick(Client * user, std::string str)
 {
     if(this->nicknames.empty() == false && std::find(this->nicknames.begin(), this->nicknames.end(), str) != this->nicknames.end())
     {
-            definedmessage(user->client_fd ,ERR_NICKNAMEINUSE(this->server_name,str));
+            user->toSend.push_back(ERR_NICKNAMEINUSE(this->server_name,str));
     }
     else if(str.find_first_of("# @:&") != std::string::npos)
     {
-        definedmessage(user->client_fd ,ERR_ERRONEUSNICKNAME(this->server_name,str));
+        user->toSend.push_back(ERR_ERRONEUSNICKNAME(this->server_name,str));
     }
     else if (str.empty() == true)
     {
-        definedmessage(user->client_fd,ERR_NONICKNAMEGIVEN(this->server_name));
+        user->toSend.push_back(ERR_NONICKNAMEGIVEN(this->server_name));
     }
     else
     {
@@ -92,7 +92,7 @@ void Server::nick(Client * user, std::string str)
                     break;
                 }
             }
-            this->definedmessage(user->client_fd, RPL_NICK(user->nickname,user->username,str));
+            user->toSend.push_back( RPL_NICK(user->nickname,user->username,str));
             user->nickname.clear();
         }
         user->nickname = str;
@@ -100,16 +100,12 @@ void Server::nick(Client * user, std::string str)
 }
 void Server::cap_ls(Client *user)
 {
-    std::string str =  this->msg("irssi", "CAP * LS", "","").c_str();
-    int len = str.length();
-    send(user->client_fd,str.c_str(),len,0);
+    user->toSend.push_back(this->msg("irssi", "CAP * LS", "",""));
 }
 
 void Server::cap_ack(Client *user)
 {
-    std::string str = this->msg("irssi", "CAP * ACK","","").c_str();
-    int len = str.length();
-    send(user->client_fd,str.c_str(),len,0);
+    user->toSend.push_back(this->msg("irssi", "CAP * ACK","",""));
 }
 
 int Server::register_user(ircMessage msg, Client * user)
@@ -137,13 +133,13 @@ int Server::register_user(ircMessage msg, Client * user)
                 }
                 else
                 {
-                    definedmessage(user->client_fd ,ERR_PASSWDMISMATCH(this->server_name));
+                    user->toSend.push_back(ERR_PASSWDMISMATCH(this->server_name));
                     close(user->client_fd);
                     user->client_fd = -1;
                 }
             }
             else
-                definedmessage(user->client_fd ,ERR_ALREADYREGISTERED(this->server_name));
+                user->toSend.push_back(ERR_ALREADYREGISTERED(this->server_name));
             return 1;    
         }	
         else if(msg.command.compare("USER") == 0 && user->pass_status == 1 )
@@ -154,7 +150,7 @@ int Server::register_user(ircMessage msg, Client * user)
     }
     else if (msg.command.compare("USER") == 0 || msg.command.compare("PASS") == 0)
     {
-        definedmessage(user->client_fd ,ERR_ALREADYREGISTERED(this->server_name));
+        user->toSend.push_back(ERR_ALREADYREGISTERED(this->server_name));
         return 1;    
     }
     
@@ -209,7 +205,7 @@ void Server::commandPath(ircMessage msg, Client * user)
         else 
         {
             if(msg.command.compare("PING") == 0)
-                this->definedmessage(user->client_fd,RPL_PONG(user_id(user->nickname,user->username),msg.params[0]));
+                user->toSend.push_back(RPL_PONG(user_id(user->nickname,user->username),msg.params[0]));
             else if (msg.command.compare("JOIN") == 0)
                 this->joinCommand(msg, *user);
             else if (msg.command.compare("TOPIC") == 0) 
@@ -238,9 +234,9 @@ void Server::commandPath(ircMessage msg, Client * user)
         
 	}
 	else if (msg.command.empty() == false && validcommand(msg.command)== true)
-        this->definedmessage(user->client_fd,ERR_NEEDMOREPARAMS(this->server_name ,msg.command));
+        user->toSend.push_back(ERR_NEEDMOREPARAMS(this->server_name ,msg.command));
 	else if (msg.command.empty() == false && validcommand(msg.command)== false)
-        this->definedmessage(user->client_fd,ERR_UNKNOWNCOMMAND(this->server_name ,msg.command));
+        user->toSend.push_back(ERR_UNKNOWNCOMMAND(this->server_name ,msg.command));
 	str.clear();
 }
 	

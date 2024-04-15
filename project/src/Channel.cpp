@@ -93,7 +93,7 @@ void Channel::removeFromAll(Client& user) {
 void Channel::broadcast(std::string message) {
     std::map<int, Client*>::iterator it = users.begin();
     for (; it != users.end(); it++) 
-            Server::definedmessage(it->first, message);
+                it->second->toSend.push_back(message);
 }
 
 void Channel::broadcast_others(Client user,std::string message) {
@@ -101,8 +101,7 @@ void Channel::broadcast_others(Client user,std::string message) {
     for (; it != users.end(); it++)
     {
         if(it->first != user.client_fd)
-            Server::definedmessage(it->first, message);
-;
+            it->second->toSend.push_back(message);
     } 
 }
 /////   GETTERS     /////

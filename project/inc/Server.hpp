@@ -43,7 +43,7 @@ class Server
 		std::string creation_date;
 		int number_of_clients;
 		std::vector <Client*> client;
-		std::vector <std::string> nicknames;
+		std::vector<std::string> nicknames;
 	/*   server info  */
 
 	/*   future extras  */
@@ -52,7 +52,7 @@ class Server
     /* VARIABLES*/
 	public:
 	/*orth form*/
-		static std::vector <struct pollfd> fd_poll;
+		std::vector <struct pollfd> fd_poll;
     	Server ();
 		Server (std::string port,std::string pass);
     	Server (const Server &a);
@@ -66,7 +66,7 @@ class Server
 		int					runServer();
 		int					serverLoop();
 		int					Recv_end(int fd, std::string & line);
-		static int 			definedmessage(int fd,std::string str);
+		int 				definedmessage(Client *user);
 		int					connectionEvent();
 		/* **********SERVER **********	*/
 		/* **********REGISTRATION COMMANDS**********	*/

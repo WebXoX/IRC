@@ -33,5 +33,5 @@ void Server::topicCommand(ircMessage msg, Client& user) {
             return;
         }
     }
-this->definedmessage(user.client_fd, reply);
+    user.toSend.push_back(reply);
 }

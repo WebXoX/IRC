@@ -257,9 +257,7 @@ void Server::modeCommand(ircMessage& msg, Client& user)
         }
     }
 
-    this->definedmessage(user.client_fd, reply.c_str());
-
-
+    user.toSend.push_back(reply);
 
 }
    

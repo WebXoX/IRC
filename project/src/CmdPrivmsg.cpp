@@ -15,19 +15,19 @@ void Server::privmsgCommand(ircMessage msg, Client& user) {
                         this->channels[target].broadcast_others(user,RPL_PRIVMSG(user.nickname, user.username, target, message));
                 }
                 else
-                    this->definedmessage(user.client_fd, ERR_CANNOTSENDTOCHAN(user.nickname, target));    
+                    user.toSend.push_back(ERR_CANNOTSENDTOCHAN(user.nickname, target));    
             }
             else
             {
                 if(this->isUserNick(target))
-                    this->definedmessage(this->getuser_fd(target), RPL_PRIVMSG(user.nickname, user.username, target, message));   
+                    this->getUser(target)->toSend.push_back(RPL_PRIVMSG(user.nickname, user.username, target, message));   
                 else
-                    this->definedmessage(user.client_fd, ERR_NOSUCHNICK(user.nickname, target));
+                    user.toSend.push_back(ERR_NOSUCHNICK(user.nickname, target));
             }
         }
         else
-            this->definedmessage(user.client_fd, ERR_NORECIPIENT(user.nickname));
+            user.toSend.push_back(ERR_NORECIPIENT(user.nickname));
     }
     else
-        this->definedmessage(user.client_fd, ERR_NOTEXTTOSEND(user.nickname));
+        user.toSend.push_back(ERR_NOTEXTTOSEND(user.nickname));
 }

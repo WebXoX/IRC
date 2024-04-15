@@ -5,6 +5,7 @@
 #include <string>
 #include <stdlib.h>
 #include <algorithm>
+#include <vector>
 #include <map>
 #include <cstring>
 /*
@@ -22,6 +23,7 @@ class Client
 		std::string hostname; // Real name/address of the host
 		std::string server;   // Server to which the client is connected
 		std::string channel;   // channel to which the client is connected
+		std::vector<std::string> toSend;   // channel to which the client is connected
 		char 		buffer[1024];
 		int 		port;
 		// ****** CHANNEL ATRIBUTES ****** //
