@@ -193,14 +193,30 @@ std::string Server::msg(std::string source, std::string command, std::string par
     return (":"+source+ " " +command+" :"+param+" "+text + "\r\n");
 }
 
+// void Server::broadcast(std::map<int, Client*>channelUser,std::string message) {
+//     std::map<int, Client*>::iterator it = channelUser.begin();
+//     for (; it != channelUser.end(); it++) 
+//             this->definedmessage(it->first, message);
+// }
+
+// void Server::broadcast_others(std::map<int, Client*>channelUser,Client user,std::string message) {
+//     std::map<int, Client*>::iterator it = channelUser.begin();
+//     for (; it != channelUser.end(); it++)
+//     {
+//         if(it->first != user.client_fd)
+//             this->definedmessage(it->first, message);
+
+//     } 
+// }
+
 int Server::definedmessage(int fd,std::string str)
 {
     std::cout << "-------------------" << std::endl;
     std::cout << "Server send: " << str ;
     std::cout << "-------------------" << std::endl;
-    for (size_t i = 0; i < this->fd_poll.size(); i++)
+    for (size_t i = 0; i < Server::fd_poll.size(); i++)
     {
-        if(this->fd_poll[i].fd == fd && this->fd_poll[i].events & POLLOUT)
+        if(Server::fd_poll[i].fd == fd && Server::fd_poll[i].events & POLLOUT)
         {
             if(send(fd, str.c_str(), str.length(), 0) == -1)
             {

@@ -36,7 +36,6 @@ class Server
 		int port;
 		std::string ports;
 		std::string server_name;
-		std::vector <struct pollfd> fd_poll;
 		int guestuser;
 	/*   server socket variables  */
 	/*   server info  */
@@ -53,6 +52,7 @@ class Server
     /* VARIABLES*/
 	public:
 	/*orth form*/
+		static std::vector <struct pollfd> fd_poll;
     	Server ();
 		Server (std::string port,std::string pass);
     	Server (const Server &a);
@@ -66,7 +66,7 @@ class Server
 		int					runServer();
 		int					serverLoop();
 		int					Recv_end(int fd, std::string & line);
-		int 				definedmessage(int fd,std::string str);
+		static int 			definedmessage(int fd,std::string str);
 		int					connectionEvent();
 		/* **********SERVER **********	*/
 		/* **********REGISTRATION COMMANDS**********	*/
@@ -95,6 +95,7 @@ class Server
 		bool 										isUserNick(std::string nickname);
 		int 										addChannelInServer( Channel& channel);
 		bool 										hasChannelInServer(std::string channelName);
+		void 										broadcast(std::map<int, Client*>channelUser,std::string message);
 
 		// ********** COMMANDS ********** //
 
