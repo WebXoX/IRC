@@ -89,7 +89,8 @@ class Server
 
 		std::map<std::string, Channel>				channels;
 		std::map<std::string, Channel>::iterator	chan_it;
-
+		void 										quitCmd(std::string msg, Client * user);
+		bool										validcommand(std::string cmd);
 		bool 										isUser(Client& user);
 		bool 										isUserNick(std::string nickname);
 		int 										addChannelInServer( Channel& channel);

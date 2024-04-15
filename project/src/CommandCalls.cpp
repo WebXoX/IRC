@@ -42,30 +42,23 @@ int Server::MOTD(Client * user)
     this->definedmessage(user->client_fd, RPL_ENDOFMOTD(this->server_name));
     return 1;
 }
-std::string int_tostring(int guest)
-{
-    std::string str;
-    std::ostringstream oss;
-    oss << guest;
-    str = oss.str();
-    return str;
-}
 void Server::adduser(Client * user, ircMessage msg)
 {
-    if(user->username.empty() == true)
+    std::cout << "------------------user -------------" << std::endl;
+    if(user->username.empty() == true && msg.params.size() > 0)
     {
-        if(user->username.empty() == true)
+        std::cout << "------------------user -------------" << std::endl;
+        user->username = msg.params[0];
+        if(msg.params.size()  > 1)
         {
-            user->username = msg.params[0];
-            if(msg.params.size() > 2)
-            {
-                if(msg.params[1].compare("0") && msg.params[2].compare("*") && msg.trailing.empty() == false)
-                    user->realname = msg.trailing;
-                else
-                    user->realname = msg.params[1];
-			}
-            callMotd(user);
+            if(msg.params[1].compare("0") && msg.params[2].compare("*") && msg.trailing.empty() == false)
+                user->realname = msg.trailing;
+            else
+                user->realname = msg.params[1];
         }
+        else
+            user->realname = user->username;
+        callMotd(user);
     }
 }
 void Server::nick(Client * user, std::string str)
@@ -153,17 +146,47 @@ int Server::register_user(ircMessage msg, Client * user)
                 definedmessage(user->client_fd ,ERR_ALREADYREGISTERED(this->server_name));
             return 1;    
         }	
-        else if(msg.command.compare("USER") == 0 )
+        else if(msg.command.compare("USER") == 0 && user->pass_status == 1 )
         {
             adduser(user,msg);
             return 1;    
         }
     }
+    else if (msg.command.compare("USER") == 0 || msg.command.compare("PASS") == 0)
+    {
+        definedmessage(user->client_fd ,ERR_ALREADYREGISTERED(this->server_name));
+        return 1;    
+    }
     
     return 0;
 }
-
-
+bool Server::validcommand(std::string cmd) {
+    std::string cmds[] = {"JOIN", "MODE", "TOPIC", "NICK", "QUIT", "PRIVMSG", "INVITE", "PING", "MOTD","CAP","PASS","USER"};
+    for (size_t i = 0; i < 12; ++i) {
+        if (cmds[i] == cmd) {
+            return true;
+        }
+    }
+    return false;
+}
+void Server::quitCmd(std::string trailing, Client * user)
+{
+    for(this->chan_it = this->channels.begin(); this->chan_it != this->channels.end(); this->chan_it++)
+    {
+        std::string str = " has quit";
+        if(this->chan_it->second.isUser(*user) == true)
+        {
+            this->chan_it->second.removeFromAll(*user);
+            if(trailing.empty() == false)
+                this->chan_it->second.broadcast_others(*user, RPL_QUIT(user_id(user->nickname,user->username),trailing));
+            else
+                this->chan_it->second.broadcast_others(*user, RPL_ERROR(user_id(user->nickname,user->username),str));
+        
+        }
+    }
+    close(user->client_fd);
+    user->client_fd = -1;
+}
 void Server::commandPath(ircMessage msg, Client * user)
 {
 	std::string		str;
@@ -177,69 +200,36 @@ void Server::commandPath(ircMessage msg, Client * user)
     std::cout << "---------------------------------" << std::endl;
 
     if(msg.command.compare("QUIT") == 0 )
+        quitCmd(msg.trailing,user);
+    else if(msg.params.size() > 0 || msg.trailing.empty() == false)
     {
-        for(this->chan_it = this->channels.begin(); this->chan_it != this->channels.end(); this->chan_it++)
+        if(register_user(msg,user) == 1)
         {
-            std::string str = " has quit";
-            if(this->chan_it->second.isUser(*user) == true)
-            {
-                this->chan_it->second.removeFromAll(*user);
-                if(msg.trailing.empty() == false)
-                    this->chan_it->second.broadcast_others(*user, RPL_QUIT(user_id(user->nickname,user->username),msg.trailing));
-                else
-                    this->chan_it->second.broadcast_others(*user, RPL_ERROR(user_id(user->nickname,user->username),str));
-            
-            }
-        }
-        close(user->client_fd);
-        user->client_fd = -1;
-    }
-    if(msg.params.size() > 0 || msg.trailing.empty() == false)
-    {
-        if(user->registerstatus()== false) 
-        {
-            register_user(msg,user);
         }
         else 
         {
             if(msg.command.compare("PING") == 0)
-            {	
                 this->definedmessage(user->client_fd,RPL_PONG(user_id(user->nickname,user->username),msg.params[0]));
-            }
             else if (msg.command.compare("JOIN") == 0)
-            {
                 this->joinCommand(msg, *user);
-            }
-            else if (msg.command.compare("TOPIC") == 0) {
+            else if (msg.command.compare("TOPIC") == 0) 
                 this->topicCommand(msg, *user);
-            }
-            else if (msg.command.compare("KICK") == 0) {
+            else if (msg.command.compare("KICK") == 0) 
                 this->kickCommand(msg, *user);
-            }
-            else if (msg.command.compare("PRIVMSG") == 0) {
+            else if (msg.command.compare("PRIVMSG") == 0) 
                 this->privmsgCommand(msg, *user);
-            }
-            else if (msg.command.compare("INVITE") == 0) {
+            else if (msg.command.compare("INVITE") == 0) 
                 this->inviteCommand(msg, *user);
-            }
-            else if (msg.command.compare("MODE") == 0) {
+            else if (msg.command.compare("MODE") == 0) 
                 this->modeCommand(msg, *user);
-            }
             else if(msg.command.compare("MOTD") == 0)
                 MOTD(user);
-            else 
-            {
-                std::string message = "<" + user->nickname + "> " + msg.message;
-                this->channels[user->currentChannel].broadcast(message);
-            }
         }
         if(msg.command.compare("NICK") == 0 )
         {
             if(user->registerstatus() == true)
-            {
                 nick(user,msg.params[0]);
-            }
-            else
+            else if (user->pass_status == 1 && user->registerstatus() == false)
             {
                 nick(user,msg.params[0]);
                 callMotd(user);
@@ -247,8 +237,10 @@ void Server::commandPath(ircMessage msg, Client * user)
         }
         
 	}
-	else if (msg.command.empty() == false)
+	else if (msg.command.empty() == false && validcommand(msg.command)== true)
         this->definedmessage(user->client_fd,ERR_NEEDMOREPARAMS(this->server_name ,msg.command));
+	else if (msg.command.empty() == false && validcommand(msg.command)== false)
+        this->definedmessage(user->client_fd,ERR_UNKNOWNCOMMAND(this->server_name ,msg.command));
 	str.clear();
 }
 	

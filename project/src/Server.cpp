@@ -174,6 +174,7 @@ int Server::serverLoop()
                 else if (readed <= 0 ){
                     std::cerr << "Client:- " << this->client[i - 1]->nickname << " disconnected" << std::endl;
                     close(this->client[i - 1]->client_fd);
+                    quitCmd("",this->client[i - 1]);
                     if(this->client[i - 1]->nickname.empty() == false)
                         this->nicknames.erase(std::find(this->nicknames.begin(), this->nicknames.end(), (this->client[i - 1]->nickname)));
                     delete this->client[i - 1];
@@ -197,11 +198,17 @@ int Server::definedmessage(int fd,std::string str)
     std::cout << "-------------------" << std::endl;
     std::cout << "Server send: " << str ;
     std::cout << "-------------------" << std::endl;
-
-    if(send(fd, str.c_str(), str.length(), 0) == -1)
+    for (size_t i = 0; i < this->fd_poll.size(); i++)
     {
-        std::cerr << "Error sending message" << std::endl;
-        return 1;
+        if(this->fd_poll[i].fd == fd && this->fd_poll[i].events & POLLOUT)
+        {
+            if(send(fd, str.c_str(), str.length(), 0) == -1)
+            {
+                std::cerr << "Error sending message" << std::endl;
+                return 1;
+            }
+            return 0;
+        }
     }
     return 0;
 }

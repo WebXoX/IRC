@@ -1,8 +1,8 @@
 NAME = ircserver
 
 CXX = c++
-CXXFLAGS = -Wall -Werror -Wextra -std=c++98  -fsanitize=address -g3
-# CXXFLAGS = -Wall -Werror -Wextra -std=c++98  -g3
+# CXXFLAGS = -Wall -Werror -Wextra -std=c++98  -fsanitize=address -g3
+CXXFLAGS = -Wall -Werror -Wextra -std=c++98  -g3
 
 RED = \033[1;31m
 GREEN = \033[1;32m

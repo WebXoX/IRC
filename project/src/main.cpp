@@ -8,7 +8,7 @@ int main (int argc, char *argv[])
 		std::string port = argv[1];
 		std::string pass = argv[2];
 		if(port.find_first_not_of("0123456789") != std::string::npos 
-			&& atoi(port.c_str()) >= 0 && atoi(port.c_str()) <= 65535)
+			&& atoi(port.c_str()) >= 1024 && atoi(port.c_str()) <= 65535)
 		{
 			std::cerr << "Invalid port Range( 0 - 65535)" << std::endl;
 			return 1;

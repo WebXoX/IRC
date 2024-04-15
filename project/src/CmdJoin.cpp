@@ -96,8 +96,6 @@ void Server::joinCommand(ircMessage& msg, Client& user) {
         // send the welcome message to the user who requested the join
         reply = welcomeMessage(user, this->getChannelIt(chanName)->second);
         this->definedmessage(user.client_fd, reply);
-
-        
         std::cout << "server ==>> "<< reply << std::endl;
     }
 
