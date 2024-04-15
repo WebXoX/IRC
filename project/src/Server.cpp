@@ -12,16 +12,9 @@ Server::Server ()
 
 Server::Server (std::string port , std::string pass)
 {
-	try
-	{
-		this->port = std::atoi(port.c_str());
-		this->ports = port;
-		this->pass = pass;
-	}
-	catch(const std::exception& e)
-	{
-		std::cerr << e.what() << '\n';
-	}
+    this->port = std::atoi(port.c_str());
+    this->ports = port;
+    this->pass = pass;
 	std::cout << "Server default constructor" << std::endl;
 }
 
@@ -50,15 +43,17 @@ Server& Server::operator=(const Server& rhs)
 }
 /* orth Server */
 /*extra*/
- void	Server::sighandle(int sig)
+bool server_status = true;
+
+void	sighandle(int sig)
 {
 	if (sig == SIGINT)
 	{
-		exit(0);
+		server_status = false;
 	}
 	else if (sig == SIGTSTP)
 	{
-		exit(0);
+        server_status = false;
 	}
 }
 
@@ -118,8 +113,8 @@ int Server::runServer()
 int Server::connectionEvent()
 {
     // checking for new connections events
-    signal(SIGTSTP,  this->sighandle);
-    signal(SIGINT, this->sighandle);
+    // signal(SIGTSTP,  this->sighandle);
+    // signal(SIGINT, sighandle);
     if (this->fd_poll[0].revents & POLLIN)
     {
         Client *new_client = new Client();
@@ -191,15 +186,19 @@ int Server::Recv_end(int fd, std::string & line)
             break;
        memset(buffer, 0, 1024);
     }
-    if(line.find("\r\n") != std::string::npos)
-        line = line.substr(0,line.find("\r\n"));
     return total;
 }
-
+void Server::free_delete()
+{
+    for(size_t i = 0; i < this->client.size(); i++)
+    {
+        delete this->client[i];
+    }
+}
 
 int Server::serverLoop()
 {
-	while(1)
+	while(server_status == true)
     {
         if (poll((&this->fd_poll[0]), this->number_of_clients, 1000) == -1)
         {
@@ -213,10 +212,8 @@ int Server::serverLoop()
             {
                
                 int readed = this->Recv_end( this->client[i - 1]->client_fd,this->client[i - 1]->line);
-                std::cout << "Client " << i << " sent l: :" << this->client[i - 1]->line[this->client[i - 1]->line.size()-1]<< ":" << std::endl;
-                if (readed > 0)// && this->client[i - 1]->line[this->client[i - 1]->line.size() - 1] == '\n')
+                if (readed > 0 && this->client[i - 1]->line[this->client[i - 1]->line.size() - 1] == '\n')
                 {
-                    std::cout << "Client " << i << " sent: " << this->client[i - 1]->line << std::endl;
 					commandPath(parseMessage(this->client[i - 1]->line),this->client[i - 1]);
                     this->client[i - 1]->line.clear();
                 }
@@ -237,6 +234,7 @@ int Server::serverLoop()
             }
         }
     }
+    free_delete();
     close(this->server);
     return 0;
 }

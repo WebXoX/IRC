@@ -25,7 +25,7 @@
 #include <netdb.h>
 /*
 */
-// static int g_signal;
+// int server_status;
 class Server
 {
 	/* VARIABLES*/
@@ -79,7 +79,7 @@ class Server
 		Server& operator=(const Server &a);
 	/*orth Server*/
 	/*exception*/
-		static void			sighandle(int sig);
+		// static void				sighandle(int sig);
 		Client*				getClient(std::string nickname);
 		int					serverInit();
 		int					runServer();
@@ -105,6 +105,7 @@ class Server
 		void		 		cap_ack(Client *user);
 		std::string 		date_now();
 		int 				getuser_fd(std::string name);
+		void free_delete();
 
 
 		// ********** CHANNEL ********** //
