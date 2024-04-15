@@ -85,7 +85,7 @@ void Server::joinCommand(ircMessage& msg, Client& user) {
                 chan_it->second.addUser(user);
                 reply = welcomeMessage(user, chan_it->second);
             }
-            send(user.client_fd, reply.c_str(), reply.length(), 0);
+                this->definedmessage(user.client_fd, reply);
             return;
         }
         else { // channel exists in the server (no)
@@ -95,7 +95,8 @@ void Server::joinCommand(ircMessage& msg, Client& user) {
 
         // send the welcome message to the user who requested the join
         reply = welcomeMessage(user, this->getChannelIt(chanName)->second);
-        send(user.client_fd, reply.c_str(), reply.length(), 0);
+        this->definedmessage(user.client_fd, reply);
+
         
         std::cout << "server ==>> "<< reply << std::endl;
     }

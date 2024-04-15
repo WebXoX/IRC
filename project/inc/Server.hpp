@@ -39,11 +39,8 @@ class Server
 		std::vector <struct pollfd> fd_poll;
 		int guestuser;
 	/*   server socket variables  */
-	/*   server authentication  */
-		std::string pass;
-	/*   server authentication  */
-
 	/*   server info  */
+		std::string pass;
 		std::string creation_date;
 		int number_of_clients;
 		std::vector <Client*> client;
@@ -51,21 +48,6 @@ class Server
 	/*   server info  */
 
 	/*   future extras  */
-		/*Capability Negotiation Settings for IRSSI SERVER SIDE*/
-		// bool multi_prefix;
-		// bool extended_join;
-		// bool away_notify;
-		// bool chghost;
-		// bool account_notify;
-		// bool server_time;
-		// std::string sasl;
-		/*complex settings*/
-		// bool tls;
-		// bool account_tag;
-		// bool cap_notify;
-		// bool echo_message;
-		/*complex settings*/
-		/*Capability Negotiation Settings*/
 	/*   future extras  */
 
     /* VARIABLES*/
@@ -73,40 +55,35 @@ class Server
 	/*orth form*/
     	Server ();
 		Server (std::string port,std::string pass);
-
     	Server (const Server &a);
     	~Server ();
 		Server& operator=(const Server &a);
 	/*orth Server*/
 	/*exception*/
-		// static void				sighandle(int sig);
-		Client*				getClient(std::string nickname);
+		/* **********SERVER **********	*/
+	
 		int					serverInit();
 		int					runServer();
 		int					serverLoop();
+		int					Recv_end(int fd, std::string & line);
+		int 				definedmessage(int fd,std::string str);
 		int					connectionEvent();
-		// void				register_user(ircMessage msg, Client * user);
+		/* **********SERVER **********	*/
+		/* **********REGISTRATION COMMANDS**********	*/
 		int					register_user(ircMessage msg, Client * user);
+		void				commandPath(ircMessage msg, Client * user);
 		void 				adduser(Client * user, ircMessage msg);
 		void				nick(Client * user, std::string str);
-		// std::string int_tostring(int guest);
-		
-		int					Recv_end(int fd, std::string & line);
-		void				commandPath(ircMessage msg, Client * user);
 		void 				callMotd(Client * user);
 		int 				MOTD(Client * user);
-		int 				definedmessage(int fd,std::string str);
-		std::string			msg(std::string source, std::string command, std::string param, std::string text);
-		std::map<std::string,std::string> modeParser(ircMessage msg);
-
-		// std::string 	cap_ls();
-		// std::string 	cap_ack(ircMessage cap_list);
 		void		 		cap_ls(Client *user);
 		void		 		cap_ack(Client *user);
-		std::string 		date_now();
-		int 				getuser_fd(std::string name);
-		void free_delete();
-
+		std::string 		date_now(char *buffer);
+		/* **********REGISTRATION COMMANDS**********	*/
+		void 				free_delete();
+		
+		std::string			msg(std::string source, std::string command, std::string param, std::string text);
+		// std::map<std::string,std::string> modeParser(ircMessage msg);
 
 		// ********** CHANNEL ********** //
 
@@ -115,11 +92,8 @@ class Server
 
 		bool 										isUser(Client& user);
 		bool 										isUserNick(std::string nickname);
-
 		int 										addChannelInServer( Channel& channel);
 		bool 										hasChannelInServer(std::string channelName);
-		std::map<std::string, Channel>::iterator	getChannelIt(std::string chanName);
-		Client*										getUser(std::string name);
 
 		// ********** COMMANDS ********** //
 
@@ -132,6 +106,10 @@ class Server
 		void 										privmsgCommand(ircMessage msg, Client& user);
 	/*exception*/
 	/*getters and setters*/
+		Client*										getClient(std::string nickname);
+		std::map<std::string, Channel>::iterator	getChannelIt(std::string chanName);
+		Client*										getUser(std::string name);
+		int 										getuser_fd(std::string name);
 	/*getters and setters*/
 	/*extra*/
 	/*extra*/

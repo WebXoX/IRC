@@ -13,30 +13,20 @@ class Client
 {
 	/* VARIABLES*/
 	public:
-		int client_fd;
-		// int regi_status;
-		int pass_status;
-		// int nick_status;
+		int 		client_fd;
+		int 		pass_status;
 		std::string line;
-		std::string hostname; // Real name/address of the host
-		std::string ip; // Real name/address of the host
+		std::string nickname;   // Nickname chosen by the client
 		std::string username;  // Username of the client on the host
 		std::string realname;  // Realname of the client on the host
-		std::string nickname;   // Nickname chosen by the client
+		std::string hostname; // Real name/address of the host
 		std::string server;   // Server to which the client is connected
 		std::string channel;   // channel to which the client is connected
-
-		char buffer[1024];
-		
-		int port;
-		/*Capability Negotiation Settings for IRSSI CLIENT SIDE*/
-		bool multi_prefix;
-		bool extended_join;
-		bool away_notify;
-		bool chghost;
-		bool account_notify;
-		bool server_time;
-		/*Capability Negotiation Settings*/
+		char 		buffer[1024];
+		int 		port;
+		// ****** CHANNEL ATRIBUTES ****** //
+		std::string currentChannel;
+		// ****** CHANNEL MEMBERS****** //
 
     /* VARIABLES*/
 	// public:
@@ -53,13 +43,9 @@ class Client
 	/*getters and setters*/
 	/*getters and setters*/
 	/*extra*/
+	int addChannelInClient(std::string& channel);
 	bool registerstatus();
 	/*extra*/
 
-	// ****** CHANNEL ATRIBUTES ****** //
-	std::string currentChannel;
-
-	// ****** CHANNEL MEMBERS****** //
-	int addChannelInClient(std::string& channel);
 };
 #endif

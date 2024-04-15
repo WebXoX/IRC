@@ -29,12 +29,12 @@ void Server::inviteCommand(ircMessage msg, Client& user) {
         reply = ERR_USERONCHANNEL(user.nickname, invitedNick, chanName);
     } else {
         reply = RPL_INVITE(user_id(user.nickname, user.username), invitedNick, chanName);
-        send(invitedClient.client_fd, reply.c_str(), reply.size(), 0);
+        this->definedmessage(invitedClient.client_fd, reply);
         reply = RPL_INVITING(user_id(user.nickname, user.username), user.nickname, invitedNick, chanName);
-        send(user.client_fd, reply.c_str(), reply.size(), 0);
+        this->definedmessage(user.client_fd, reply);
         this->chan_it->second.addInvited(invitedClient);
         return;
     }
-    send(user.client_fd, reply.c_str(), reply.size(), 0);
+    this->definedmessage(user.client_fd, reply);
       
 }

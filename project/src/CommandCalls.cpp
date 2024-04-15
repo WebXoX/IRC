@@ -12,17 +12,16 @@ void Server::callMotd(Client * user)
     if(user->registerstatus() == true)
     {
         this->definedmessage(user->client_fd, RPL_WELCOME(user_id(user->nickname,user->username),user->nickname));
-        this->definedmessage(user->client_fd, RPL_YOURHOST(user->hostname,"irssi", "1"));
-        this->definedmessage(user->client_fd, RPL_CREATED(user->hostname,this->creation_date));
-        this->definedmessage(user->client_fd, RPL_MYINFO(user->hostname,"irssi", "1", "","",""));
-        this->definedmessage(user->client_fd, RPL_ISUPPORT(user->hostname,""));
+        this->definedmessage(user->client_fd, RPL_YOURHOST(user->username,"irssi", "1"));
+        this->definedmessage(user->client_fd, RPL_CREATED(user->username,this->creation_date));
+        this->definedmessage(user->client_fd, RPL_MYINFO(user->username,"irssi", "1", "","",""));
+        this->definedmessage(user->client_fd, RPL_ISUPPORT(user->username,"CHANMODES=ikolt"));
         MOTD(user);
     }
 }
 int Server::MOTD(Client * user)
 {
-    // (void)user;
-    this->definedmessage(user->client_fd, RPL_MOTDSTART(user->hostname,this->server_name));
+    this->definedmessage(user->client_fd, RPL_MOTDSTART(user->username,this->server_name));
     std::srand(static_cast<unsigned>(time(0)));
     int num = (rand() % 7 ) + 1;
     std::ostringstream oss;
@@ -30,7 +29,7 @@ int Server::MOTD(Client * user)
     std::string line;
     std::ifstream infile;
     infile.open(("./src/messages/motd"+  oss.str() + ".txt").c_str(), std::ios::in);
-    if ( infile.is_open())
+    if (infile.is_open())
     {
         while (std::getline(infile,line))
         {
@@ -132,7 +131,6 @@ int Server::register_user(ircMessage msg, Client * user)
                 cap_ack(user);
             else if(msg.params[0].compare("END") == 0)
             {
-                // user->regi_status = 3;
             }
             return 1;
         }
@@ -146,9 +144,9 @@ int Server::register_user(ircMessage msg, Client * user)
                 }
                 else
                 {
+                    definedmessage(user->client_fd ,ERR_PASSWDMISMATCH(this->server_name));
                     close(user->client_fd);
                     user->client_fd = -1;
-                    definedmessage(user->client_fd ,ERR_PASSWDMISMATCH(this->server_name));
                 }
             }
             else
@@ -171,11 +169,32 @@ void Server::commandPath(ircMessage msg, Client * user)
 	std::string		str;
     printCommand(msg);
     std::map<std::string, Channel>::iterator it;
+    std::cout << "---------------channels------------------" << std::endl;
     for (it = this->channels.begin(); it != this->channels.end(); it++)
     {
         std::cout << "channel name: " << it->first << std::endl;
     }
-    if(msg.params.size() > 0)
+    std::cout << "---------------------------------" << std::endl;
+
+    if(msg.command.compare("QUIT") == 0 )
+    {
+        for(this->chan_it = this->channels.begin(); this->chan_it != this->channels.end(); this->chan_it++)
+        {
+            std::string str = " has quit";
+            if(this->chan_it->second.isUser(*user) == true)
+            {
+                this->chan_it->second.removeFromAll(*user);
+                if(msg.trailing.empty() == false)
+                    this->chan_it->second.broadcast_others(*user, RPL_QUIT(user_id(user->nickname,user->username),msg.trailing));
+                else
+                    this->chan_it->second.broadcast_others(*user, RPL_ERROR(user_id(user->nickname,user->username),str));
+            
+            }
+        }
+        close(user->client_fd);
+        user->client_fd = -1;
+    }
+    if(msg.params.size() > 0 || msg.trailing.empty() == false)
     {
         if(user->registerstatus()== false) 
         {
@@ -226,8 +245,9 @@ void Server::commandPath(ircMessage msg, Client * user)
                 callMotd(user);
             }
         }
+        
 	}
-	else
+	else if (msg.command.empty() == false)
         this->definedmessage(user->client_fd,ERR_NEEDMOREPARAMS(this->server_name ,msg.command));
 	str.clear();
 }

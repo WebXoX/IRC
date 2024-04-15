@@ -40,10 +40,11 @@ void Server::kickCommand(ircMessage msg, Client& user) {
             } 
             else { // if the user is not in the channel return this message
                 message = ERR_NOSUCHNICK(kicker, kickedList[i]);
-                send(user.client_fd, message.c_str(), message.size(), 0);
+                this->definedmessage(user.client_fd, message);
             }
         }
         return;
     }
-    send(user.client_fd, message.c_str(), message.size(), 0);
+    this->definedmessage(user.client_fd, message);
+
 }

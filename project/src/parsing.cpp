@@ -82,18 +82,3 @@ void printCommand(ircMessage message)
     }
     std::cout << "Trailing: " << message.trailing << std::endl;
 }
-
-
-// int main(int argc , char *argv[]){
-
-//     while (true)
-//     {
-//         std::string userInput;
-
-//         std::cout << "Enter a message: ";
-//         std::getline(std::cin, userInput);
-//         printCommand(parseMessage(userInput));
-//     }
-    
-//     return 0;
-// }

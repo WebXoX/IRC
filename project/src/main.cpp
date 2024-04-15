@@ -29,6 +29,5 @@ int main (int argc, char *argv[])
 	{
 		std::cerr << "Usage: " << argv[0] << " <port>" << " <password>"<< std::endl;
 	}
-	
 	return 0;
 }

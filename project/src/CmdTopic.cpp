@@ -30,12 +30,8 @@ void Server::topicCommand(ircMessage msg, Client& user) {
             this->channels[chanName].setTopic(topic);
             reply = RPL_CHANGETOPIC(user_id(user.nickname,user.username), chanName, topic);
             this->channels[chanName].broadcast(reply);
-            std::cout << reply << std::endl;
             return;
         }
     }
-
-    send(user.client_fd, reply.c_str(), reply.size(), 0);
-    
-
+this->definedmessage(user.client_fd, reply);
 }

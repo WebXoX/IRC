@@ -1,8 +1,19 @@
 #include "../inc/Server.hpp"
 #include "../inc/Channel.hpp"
-#include <poll.h>
-#include <stack>
-#include <cmath>
+
+bool server_status = true;
+
+void	sighandle(int sig)
+{
+	if (sig == SIGINT)
+	{
+		server_status = false;
+	}
+	else if (sig == SIGTSTP)
+	{
+        server_status = false;
+	}
+}
 /* orth Server / constructor*/
 Server::Server ()
 {
@@ -12,9 +23,21 @@ Server::Server ()
 
 Server::Server (std::string port , std::string pass)
 {
+    this->server_name = "irssi";
     this->port = std::atoi(port.c_str());
+    memset(&this->service, 0, sizeof(this->service));
+    this->fd_poll.clear();
+    this->client.clear();
+    this->nicknames.clear();
+    this->channels.clear();
     this->ports = port;
     this->pass = pass;
+    this->creation_date.resize(80);
+    this->creation_date = date_now((char *)this->creation_date.c_str());
+    this->guestuser = 0;
+    this->server = -1;
+    this->number_of_clients = 0;
+
 	std::cout << "Server default constructor" << std::endl;
 }
 
@@ -28,6 +51,7 @@ Server::Server (const Server &a)
 
 Server::~Server ()
 {
+    free_delete();
 	std::cout << "Server distructor called" << std::endl;
 }
 
@@ -43,27 +67,11 @@ Server& Server::operator=(const Server& rhs)
 }
 /* orth Server */
 /*extra*/
-bool server_status = true;
-
-void	sighandle(int sig)
-{
-	if (sig == SIGINT)
-	{
-		server_status = false;
-	}
-	else if (sig == SIGTSTP)
-	{
-        server_status = false;
-	}
-}
 
 
 int Server::serverInit()
 {
     // initization of server socket port poll 
-    this->creation_date = date_now();
-    this->server_name = "irssi";
-    this->guestuser = 0;
     this->server = socket(AF_INET, SOCK_STREAM, IPPROTO_TCP);
     if (fcntl(this->server, F_SETFL, O_NONBLOCK) == -1)
     {
@@ -75,15 +83,15 @@ int Server::serverInit()
 		std::cerr << "Error creating socket" << std::endl;
 		return 1;
 	}
-    //socket config
     this->service.sin_family = AF_INET;
     this->service.sin_addr.s_addr = INADDR_ANY;
     service.sin_port = htons(this->port);
 	pollfd poll;
+    memset(&poll, 0, sizeof(poll));
 	poll.fd = this->server;
 	poll.events = POLLIN;
 	this->fd_poll.push_back(poll);
-    number_of_clients = 1;
+    this->number_of_clients = 1;
 	return 0;
 }
 
@@ -113,8 +121,8 @@ int Server::runServer()
 int Server::connectionEvent()
 {
     // checking for new connections events
-    // signal(SIGTSTP,  this->sighandle);
-    // signal(SIGINT, sighandle);
+    signal(SIGTSTP, sighandle);
+    signal(SIGINT, sighandle);
     if (this->fd_poll[0].revents & POLLIN)
     {
         Client *new_client = new Client();
@@ -129,6 +137,7 @@ int Server::connectionEvent()
             std::cerr << "Error setting client socket to non-blocking" << std::endl;
             return 1;
         }
+        new_client->port = this->port;
         this->client.push_back(new_client);
         std::cerr << " accepting client" << std::endl;
         // client registration 
@@ -141,6 +150,43 @@ int Server::connectionEvent()
     }
     return 0;
 }
+
+int Server::serverLoop()
+{
+	while(server_status == true)
+    {
+        if (poll((&this->fd_poll[0]), this->number_of_clients, 1000) == -1)
+        {
+            std::cerr << "Error in poll" << std::endl;
+            return 1;
+        }
+        connectionEvent();
+        for(int i = 1; i < this->number_of_clients; i++)
+        {
+            if (this->fd_poll[i].revents & POLLIN )
+            {
+                int readed = this->Recv_end( this->client[i - 1]->client_fd,this->client[i - 1]->line);
+                if (readed > 0 && this->client[i - 1]->line[this->client[i - 1]->line.size() - 1] == '\n')
+                {
+					commandPath(parseMessage(this->client[i - 1]->line),this->client[i - 1]);
+                    this->client[i - 1]->line.clear();
+                }
+                else if (readed <= 0 ){
+                    std::cerr << "Client:- " << this->client[i - 1]->nickname << " disconnected" << std::endl;
+                    close(this->client[i - 1]->client_fd);
+                    if(this->client[i - 1]->nickname.empty() == false)
+                        this->nicknames.erase(std::find(this->nicknames.begin(), this->nicknames.end(), (this->client[i - 1]->nickname)));
+                    delete this->client[i - 1];
+                    this->client.erase(this->client.begin() + i - 1);
+                    this->fd_poll.erase(this->fd_poll.begin() + i);
+                    this->number_of_clients--;
+                }
+            }
+        }
+    }
+    close(this->server);
+    return 0;
+}
 std::string Server::msg(std::string source, std::string command, std::string param, std::string text)
 {
     return (":"+source+ " " +command+" :"+param+" "+text + "\r\n");
@@ -149,7 +195,7 @@ std::string Server::msg(std::string source, std::string command, std::string par
 int Server::definedmessage(int fd,std::string str)
 {
     std::cout << "-------------------" << std::endl;
-    std::cout << "Server send: " << str << std::endl;
+    std::cout << "Server send: " << str ;
     std::cout << "-------------------" << std::endl;
 
     if(send(fd, str.c_str(), str.length(), 0) == -1)
@@ -160,14 +206,13 @@ int Server::definedmessage(int fd,std::string str)
     return 0;
 }
 
-std::string 	Server::date_now()
+std::string 	Server::date_now(char * buffer)
 {
     time_t rawtime;
     struct tm * timeinfo;
     time(&rawtime);
     timeinfo = gmtime(&rawtime);
     
-    char buffer[80];
     strftime(buffer, sizeof(buffer), "%a %b %d %Y at %H:%M:%S UTC", timeinfo);
     return buffer;
 }
@@ -192,56 +237,13 @@ void Server::free_delete()
 {
     for(size_t i = 0; i < this->client.size(); i++)
     {
+        close(this->client[i]->client_fd);
         delete this->client[i];
     }
 }
-
-int Server::serverLoop()
-{
-	while(server_status == true)
-    {
-        if (poll((&this->fd_poll[0]), this->number_of_clients, 1000) == -1)
-        {
-            std::cerr << "Error in poll" << std::endl;
-            return 1;
-        }
-        connectionEvent();
-        for(int i = 1; i < this->number_of_clients; i++)
-        {
-            if (this->fd_poll[i].revents & POLLIN )
-            {
-               
-                int readed = this->Recv_end( this->client[i - 1]->client_fd,this->client[i - 1]->line);
-                if (readed > 0 && this->client[i - 1]->line[this->client[i - 1]->line.size() - 1] == '\n')
-                {
-					commandPath(parseMessage(this->client[i - 1]->line),this->client[i - 1]);
-                    this->client[i - 1]->line.clear();
-                }
-                else if (readed <= 0 ){
-                    std::cerr << "Client disconnected" << std::endl;
-                    close(this->client[i - 1]->client_fd);
-                    if(this->client[i - 1]->nickname.empty() == false)
-                        this->nicknames.erase(std::find(this->nicknames.begin(), this->nicknames.end(), (this->client[i - 1]->nickname)));
-                    delete this->client[i - 1];
-                    this->client.erase(this->client.begin() + i - 1);
-                    this->fd_poll.erase(this->fd_poll.begin() + i);
-                    this->number_of_clients--;
-                }
-            }
-            if (this->fd_poll[i].revents & POLLHUP)
-            {
-                std::cout << "Client " << i << " is ready to write" << std::endl;
-            }
-        }
-    }
-    free_delete();
-    close(this->server);
-    return 0;
-}
 /*extra*/
-/*getter and setters*/
-/*getter and setters*/
 
+/*getter and setters*/
 bool Server::isUser(Client& user) {
     return std::find(this->client.begin(), this->client.end(), &user) != this->client.end();
 }
@@ -292,8 +294,5 @@ Client* Server::getUser(std::string name) {
     }
     return NULL;
 }
-
-
-
-
+/*getter and setters*/
 

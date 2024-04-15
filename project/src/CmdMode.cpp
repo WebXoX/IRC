@@ -166,6 +166,19 @@ void Server::modeCommand(ircMessage& msg, Client& user)
     if (msg.params.size() < 1) {
         reply = ERR_NEEDMOREPARAMS(user.nickname, "MODE");
     }
+    else if (msg.params[0][0] != '#')
+    {
+        std::string target = msg.params[0];
+        if(this->isUserNick(target))
+        {
+            if(msg.params.size() > 1)
+                reply = ERR_UMODEUNKNOWNFLAG(user.nickname);
+            else
+                reply =  RPL_CHANNELMODEIS(user.nickname,"", "");
+        }
+        else
+            reply = ERR_USERSDONTMATCH(user.nickname);
+    }
     else if (chan_it == this->channels.end()) {
         reply = ERR_NOSUCHCHANNEL(user.nickname, channel);
     }
@@ -244,7 +257,7 @@ void Server::modeCommand(ircMessage& msg, Client& user)
         }
     }
 
-    send(user.client_fd, reply.c_str(), reply.length(), 0);
+    this->definedmessage(user.client_fd, reply.c_str());
 
 
 
