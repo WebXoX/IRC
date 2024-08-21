@@ -134,8 +134,8 @@ int Server::register_user(ircMessage msg, Client * user)
                 else
                 {
                     user->toSend.push_back(ERR_PASSWDMISMATCH(this->server_name));
-                    close(user->client_fd);
-                    user->client_fd = -1;
+                    // close(user->client_fd);
+                    // user->client_fd = -1;
                 }
             }
             else
@@ -202,7 +202,7 @@ void Server::commandPath(ircMessage msg, Client * user)
         if(register_user(msg,user) == 1)
         {
         }
-        else 
+        else if (user->registerstatus() == true)
         {
             if(msg.command.compare("PING") == 0)
                 user->toSend.push_back(RPL_PONG(user_id(user->nickname,user->username),msg.params[0]));
