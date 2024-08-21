@@ -1,6 +1,30 @@
 # IRC
 The project entails developing an Internet Relay Chat (IRC) server, referred to as ircserv, using C++ 98. The server must be capable of handling multiple clients simultaneously without hanging and should implement non-blocking I/O operations.
 
+## To run
+```
+make
+``` 
+
+```
+./ircserver <port> <password>
+```
+follow the error cases presented when runing it.
+## To connect
+- THROUGH NC
+```
+nc localhost <port>
+CAP LS
+CAP REQ
+CAP END
+PASS <PASS>
+NICK <NICKNAME>
+USER <USERNAME> 
+```
+- THROUGH irssi CLIENT
+```
+/connect localhost <port> <pass>
+```
 ### Mandatory Requirements:
 - **Program Name:** `ircserv`
 - **Files to be Turned In:**
