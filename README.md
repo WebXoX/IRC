@@ -9,7 +9,7 @@ make
 ```
 ./ircserver <port> <password>
 ```
-follow the error cases presented when runing it.
+follow the error cases presented when running it.
 ## To connect
 - THROUGH NC
 ```
